@@ -1,0 +1,1 @@
+curl -H "Genestack-API-Token: <your API token>" -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"link":"https://s3.amazonaws.com/bio-test-data/Demo/Test_1000g/Test_1000g.vcf", "metadataLink":"https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf.tsv"}' https://occam.genestack.com/frontend/rs/genestack/variantCurator/v0.1/variant/vcf

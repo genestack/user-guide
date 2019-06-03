@@ -1,4 +1,12 @@
-doc-odm-user-guide
-******************
+User Tutorials
+##############
 
-ODM User Guide
+Generate documentation files
+****************************
+
+- install python dependencies::
+
+    pip install Sphinx sphinx-rtd-theme
+
+- ``make html``
+- open ``_build/html/index.html``

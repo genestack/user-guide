@@ -90,7 +90,6 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Import Data Using API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#how-can-i-import-data-to-odm">How can I import data to ODM?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-can-i-import">What can I import?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#can-i-capture-the-relationships-between-studies-samples-and-signals">Can I capture the relationships between studies, samples, and signals?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#where-can-i-import-the-data-from">Where can I import the data from?</a></li>
@@ -163,12 +162,9 @@
             
   <div class="section" id="import-data-using-api">
 <h1>Import Data Using API<a class="headerlink" href="#import-data-using-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="how-can-i-import-data-to-odm">
-<h2>How can I import data to ODM?<a class="headerlink" href="#how-can-i-import-data-to-odm" title="Permalink to this headline">¶</a></h2>
 <p>On this page, you will find a brief explanation about data import via APIs, followed by a step-by-step example that
 you can try. Please note that you need to be a member of the curator group in ODM to be able to import and edit data
 in ODM.</p>
-</div>
 <div class="section" id="what-can-i-import">
 <h2>What can I import?<a class="headerlink" href="#what-can-i-import" title="Permalink to this headline">¶</a></h2>
 <p>You can import studies, samples, and signals:</p>
@@ -187,8 +183,7 @@ APIs, whilst the signal data will only queryable via APIs.</p>
 <p>Data import has two stages. First, you create studies, samples, and signals separately. Then, you can link them
 together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. Below are
 the data model and how it looks in the User Interface:</p>
-<a class="reference internal image-reference" href="../_images/data_model1.png"><img alt="../_images/data_model1.png" class="align-center" src="../_images/data_model1.png" style="width: 515.0px; height: 528.0px;" /></a>
-<a class="reference internal image-reference" href="../_images/metainfo_editor1.png"><img alt="../_images/metainfo_editor1.png" class="align-center" src="../_images/metainfo_editor1.png" style="width: 495.0px; height: 314.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/data-model+metainfo-editor.png"><img alt="../_images/data-model+metainfo-editor.png" class="align-center" src="../_images/data-model+metainfo-editor.png" style="width: 633.0px; height: 272.0px;" /></a>
 </div>
 <div class="section" id="where-can-i-import-the-data-from">
 <h2>Where can I import the data from?<a class="headerlink" href="#where-can-i-import-the-data-from" title="Permalink to this headline">¶</a></h2>
@@ -233,26 +228,36 @@ by ODM. File uploads from a local computer will be supported in a future release
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Study Source</p></th>
-<th class="head" colspan="2"><p>Sample Source ID | Species</p></th>
-<th class="head" colspan="2"><p>Sex | Population</p></th>
+<th class="head"><p>Sample Source ID</p></th>
+<th class="head"><p>Species</p></th>
+<th class="head"><p>Sex</p></th>
+<th class="head"><p>Population</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1000 Genomes Project</p></td>
-<td colspan="2"><p>HG00119      | Homo sapiens</p></td>
-<td colspan="2"><p>M  | British</p></td>
+<td><p>HG00119</p></td>
+<td><p>Homo sapiens</p></td>
+<td><p>M</p></td>
+<td><p>British</p></td>
 </tr>
 <tr class="row-odd"><td><p>1001 Genomes Project</p></td>
-<td colspan="2"><p>HG00121      | Homo sapiens</p></td>
-<td colspan="2"><p>F  | British</p></td>
+<td><p>HG00121</p></td>
+<td><p>Homo sapiens</p></td>
+<td><p>F</p></td>
+<td><p>British</p></td>
 </tr>
 <tr class="row-even"><td><p>1002 Genomes Project</p></td>
-<td colspan="2"><p>HG00183      | Homo sapiens</p></td>
-<td colspan="2"><p>M  | Finnish</p></td>
+<td><p>HG00183</p></td>
+<td><p>Homo sapiens</p></td>
+<td><p>M</p></td>
+<td><p>Finnish</p></td>
 </tr>
 <tr class="row-odd"><td><p>1003 Genomes Project</p></td>
-<td colspan="2"><p>HG00176      | Homo sapiens</p></td>
-<td colspan="2"><p>F  | Finnish</p></td>
+<td><p>HG00176</p></td>
+<td><p>Homo sapiens</p></td>
+<td><p>F</p></td>
+<td><p>Finnish</p></td>
 </tr>
 </tbody>
 </table>
@@ -305,12 +310,14 @@ by ODM. File uploads from a local computer will be supported in a future release
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Expression Source</p></th>
-<th class="head" colspan="2"><p>Normalization Method | Genome Version</p></th>
+<th class="head"><p>Normalization Method</p></th>
+<th class="head"><p>Genome Version</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1000 Genomes Project</p></td>
-<td colspan="2"><p>RPKM         | GRCh38.91</p></td>
+<td><p>RPKM</p></td>
+<td><p>GRCh38.91</p></td>
 </tr>
 </tbody>
 </table>
@@ -355,7 +362,8 @@ by ODM. File uploads from a local computer will be supported in a future release
 <td><p>rs838705</p></td>
 <td><p>G</p></td>
 <td><p>A</p></td>
-<td colspan="2"><p>100  |  PASS</p></td>
+<td><p>100</p></td>
+<td><p>PASS</p></td>
 <td><p>AF=0.64</p></td>
 <td><p>GT</p></td>
 <td><p>0|0</p></td>
@@ -368,7 +376,8 @@ by ODM. File uploads from a local computer will be supported in a future release
 <td><p>rs201966773</p></td>
 <td><p>T</p></td>
 <td><p>TTC</p></td>
-<td colspan="2"><p>987  |  PASS</p></td>
+<td><p>987</p></td>
+<td><p>PASS</p></td>
 <td><p>AF=0.86</p></td>
 <td><p>GT</p></td>
 <td><p>0|0</p></td>
@@ -413,7 +422,7 @@ by ODM. File uploads from a local computer will be supported in a future release
 <p>When using the APIs, you need to provide an API token for authentication.
 You can generate this by going to your <a class="reference external" href="https://occam.genestack.com/frontend/endpoint/application/run/genestack/profile">profile</a>, which can be found by clicking your username at the top right corner
 of the User Interface, or from the Dashboard</p>
-<img alt="../_images/dashboard1.png" src="../_images/dashboard1.png" />
+<img alt="../_images/dashboard.png" src="../_images/dashboard.png" />
 <p>The API token is permanent — there is no expiration date. However, you can revoke it at any time and have multiple
 tokens.</p>
 <ol class="arabic simple" start="2">
@@ -456,7 +465,7 @@ warnings because some of the required attributes from the default metadata templ
 </div>
 <p>You can also confirm this visually, by going to the <a class="reference external" href="https://occam.genestack.com/frontend/endpoint/application/run/genestack/studybrowser-odm?accessFilter=genestack%3Apersonal">Study Browser</a> and check that a new study has been created,
 owned by you:</p>
-<img alt="../_images/empty_study1.png" src="../_images/empty_study1.png" />
+<img alt="../_images/empty_study.png" src="../_images/empty_study.png" />
 <p>To import samples, you should use a different endpoint, <em>sampleCurator</em>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Genestack-API-Token: &lt;your API token&gt;&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Accept: application/json&quot;</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;{&quot;link&quot;:&quot;https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.samples.tsv&quot;}&#39;</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">occam</span><span class="o">.</span><span class="n">genestack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">frontend</span><span class="o">/</span><span class="n">rs</span><span class="o">/</span><span class="n">genestack</span><span class="o">/</span><span class="n">sampleCurator</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="n">samples</span>
 </pre></div>
@@ -507,7 +516,7 @@ linked. The following call will link one of the samples (sample HG00119 with acc
 </div>
 <p>If successful, in the Study Browser you should see (after refreshing the page) that the number of samples next
 to your study has changed from ‘-’ to ‘1’:</p>
-<img alt="../_images/sample_added1.png" src="../_images/sample_added1.png" />
+<img alt="../_images/sample_added.png" src="../_images/sample_added.png" />
 <p>You can link the other samples in the same way. In practice, we’d create a script to automate this process, using common sample IDs.</p>
 <ol class="arabic simple" start="5">
 <li><p><strong>Import and link expression data to samples</strong></p></li>
@@ -549,7 +558,7 @@ the expression object GSF282812 to the sample HG00119 (that’s been linked to t
 </div>
 <p>If successful, in the Study Browser you should see (after refreshing the page) that the Signals of your study has
 changed from ‘-’ to ‘Exp’.</p>
-<img alt="../_images/expression_added1.png" src="../_images/expression_added1.png" />
+<img alt="../_images/expression_added.png" src="../_images/expression_added.png" />
 <ol class="arabic simple" start="6">
 <li><p><strong>Import and link variant data to samples</strong></p></li>
 </ol>
@@ -589,13 +598,13 @@ expression and variant data.</p>
 </pre></div>
 </div>
 <p>Check in the Study Browser that you see both expression and variant signals next to your imported study:</p>
-<img alt="../_images/variant_added1.png" src="../_images/variant_added1.png" />
+<img alt="../_images/variant_added.png" src="../_images/variant_added.png" />
 <ol class="arabic simple" start="7">
 <li><p><strong>Check that you can query the relationships between objects</strong></p></li>
 </ol>
 <p>Once you’ve created and linked the study, sample, expression, and variant objects, you can do integration-aware query via both the User Interface and APIs.</p>
 <p>In the User Interface, you should be able to find your imported study using the study, sample, and signal filters:</p>
-<img alt="../_images/variant_filter1.png" src="../_images/variant_filter1.png" />
+<img alt="../_images/variant_filter.png" src="../_images/variant_filter.png" />
 <p>To do this via APIs, you can use the integration/omics endpoint to filter across studies, samples, and signals,
 and retrieve a specific object type. For example, to get the expression of gene ENSG00000077044 from the sample GSF282801:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Genestack-API-Token: &lt;your API token&gt;&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Accept: application/json&quot;</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s2">&quot;https://occam.genestack.com/frontend/rs/genestack/integrationCurator/v0.1/omics/expression/data?sampleFilter=genestack:accession=GSF282801&amp;exQuery=Gene=ENSG00000077044&quot;</span>

@@ -1,9 +1,6 @@
 Import Data Using API
 +++++++++++++++++++++
 
-How can I import data to ODM?
------------------------------
-
 On this page, you will find a brief explanation about data import via APIs, followed by a step-by-step example that
 you can try. Please note that you need to be a member of the curator group in ODM to be able to import and edit data
 in ODM.
@@ -32,12 +29,7 @@ Data import has two stages. First, you create studies, samples, and signals sepa
 together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. Below are
 the data model and how it looks in the User Interface:
 
-.. image:: images/data_model.png
-   :scale: 50 %
-   :align: center
-
-
-.. image:: images/metainfo_editor.png
+.. image:: images/data-model+metainfo-editor.png
    :scale: 50 %
    :align: center
 
@@ -69,15 +61,15 @@ As an example, we will import tiny data subsets from the 1000 Genomes Project, c
 
 +----------------------+------------------+--------------+-----+------------+
 | Study Source         | Sample Source ID | Species      | Sex | Population |
-+======================+=================================+==================+
++======================+==================+==============+=====+============+
 | 1000 Genomes Project |     HG00119      | Homo sapiens |  M  | British    |
-+----------------------+---------------------------------+------------------+
++----------------------+------------------+--------------+-----+------------+
 | 1001 Genomes Project |     HG00121      | Homo sapiens |  F  | British    |
-+----------------------+---------------------------------+------------------+
++----------------------+------------------+--------------+-----+------------+
 | 1002 Genomes Project |     HG00183      | Homo sapiens |  M  | Finnish    |
-+----------------------+---------------------------------+------------------+
++----------------------+------------------+--------------+-----+------------+
 | 1003 Genomes Project |     HG00176      | Homo sapiens |  F  | Finnish    |
-+----------------------+---------------------------------+------------------+
++----------------------+------------------+--------------+-----+------------+
 
 - `Test_1000g.gct`_, a GCT_ file of expression data from multiple sequencing runs
 
@@ -98,9 +90,9 @@ As an example, we will import tiny data subsets from the 1000 Genomes Project, c
 
 +----------------------+----------------------+-----------------+
 | Expression Source    | Normalization Method | Genome Version  |
-+======================+========================================+
++======================+======================+=================+
 | 1000 Genomes Project |         RPKM         | GRCh38.91       |
-+----------------------+----------------------------------------+
++----------------------+----------------------+-----------------+
 
 - `Test_1000g.vcf`_, a VCF_ file of variant data from multiple sequencing runs
 
@@ -111,9 +103,9 @@ As an example, we will import tiny data subsets from the 1000 Genomes Project, c
 | #CHROM | POS         |     ID      | REF |  ALT  | QUAL | FILTER |  INFO   | FORMAT | HG00119 | HG00121 | HG00183 | HG00176 |
 +========+=============+=============+=====+=======+======+========+=========+========+=========+=========+=========+=========+
 |   2    | 233364596   |  rs838705   |  G  |   A   | 100  |  PASS  | AF=0.64 |   GT   |   0|0   |   0|1   |   1|0   |   1|1   |
-+--------+-------------+-------------+-----+-------+---------------+---------+--------+---------+---------+---------+---------+
++--------+-------------+-------------+-----+-------+------+--------+---------+--------+---------+---------+---------+---------+
 |   2    | 233385915   | rs201966773 |  T  |  TTC  | 987  |  PASS  | AF=0.86 |   GT   |   0|0   |   0|1   |   1|1   |   1|1   |
-+--------+-------------+-------------+-----+-------+---------------+---------+--------+---------+---------+---------+---------+
++--------+-------------+-------------+-----+-------+------+--------+---------+--------+---------+---------+---------+---------+
 
 
 - `Test_1000g.vcf.tsv`_, a tab-separated file that describes the variant data

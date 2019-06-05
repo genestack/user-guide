@@ -1,7 +1,7 @@
 ODM user guide
 ##############
 
-Welcome to ODM user guide's documentation!
+Welcome to the ODM user guide!
 
 Genestack’s Omics Data Manager (ODM_)
 is a data management system for multi-omics, biological and healthcare data, which accelerates

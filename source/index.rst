@@ -13,4 +13,5 @@ data-driven science through data FAIRification.
    :maxdepth: 2
 
    doc-odm-user-guide/index
+   doc-odm-user-guide/quickstart_user
    doc-odm-user-guide/import-data-using-api

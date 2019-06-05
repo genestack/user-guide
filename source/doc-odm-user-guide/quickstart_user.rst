@@ -8,16 +8,16 @@ Dashboard
 ---------
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
-As a regular user the main tasks of interest are searching and browsing studies. Clicking on the 'Browse studies' link from the dashboard takes you to the Study Browser to help you do this.
+As a regular user the main tasks of interest are searching and browsing studies. Clicking on the **Browse studies** link from the dashboard takes you to the Study Browser to help you do this.
 
 Study Browser
 -------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
 By default all studies are shown that you have permission to see, but since you aren't expected to scroll through thousands of studies there are, of course, search and filtering options to help you find studies of interest. These are given in the left hand panel of the Study Browser and they allow you to search by study name, accession or by the text present in any metadata field.
@@ -35,7 +35,7 @@ Study MetainfoEditor ODM
 ------------------------
 
 .. image:: images/quickstart_user_studymetainfoeditor.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
 The Study Metainfo Editor allows you to see all the information about a study, the samples contained in the study and any signal data types associated with the study, for example, expression or variant data.

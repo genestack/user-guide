@@ -31,8 +31,8 @@ The facets beneath the search bar allow you to filter down the results of a sear
 To access more details about a study and to explore it further click the name of the study which will launch the Study Metainfo Editor in a new tab.
 
 
-Study MetainfoEditor ODM
-------------------------
+Study Metainfo Editor ODM
+-------------------------
 
 .. image:: images/quickstart_user_studymetainfoeditor.png
    :scale: 35 %

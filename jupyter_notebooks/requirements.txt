@@ -1,0 +1,4 @@
+-e git+git://github.com/genestack/doc-odm-user-guide.git@notebooks#egg=integrationcurator&subdirectory=jupyter_notebooks_dependencies/integrationCurator
+pandas
+matplotlib
+

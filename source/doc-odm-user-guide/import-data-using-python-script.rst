@@ -8,7 +8,7 @@ Requirements
 
 You need to have:
 
-- The load&link python script itself
+- The load&link python script itself (this will be provided soon or can be requested)
 
 - A Genestack API token
 

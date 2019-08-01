@@ -54,6 +54,8 @@ Then click the "Generate new token" button under API tokens:
    :scale: 50 %
    :align: center
 
+You will then be emailed a link to download your token as plain text. Use this token as required below.
+
 Script usage
 ------------
 

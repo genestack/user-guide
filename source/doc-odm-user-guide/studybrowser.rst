@@ -69,7 +69,7 @@ The main panel in the study browser shows the results of your search, or if no s
 If you hover over the file icon you can also see a small star - you can click this to bookmark a favourite study both to highlight the icon and to enable quick recall at a later date using the 'only bookmarks' option.
 
 .. image:: images/studybrowser_bookmarkfolder.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center
 
 The next column shows the type of the study. If there is information about the general type of study, for example: 'expression profiling by high throughput sequencing', or 'RNA-seq of coding RNA from Single Cells' then it is displayed here. 
@@ -79,7 +79,7 @@ The third column is a summary of the metadata that is associated with the study.
 You can hover over any name in the summary column and the name of the metadata field where the data comes from will appear.
 
 .. image:: images/studybrowser_tooltip.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center
 
 The next column tells us how many samples are present in each study.
@@ -87,5 +87,5 @@ The next column tells us how many samples are present in each study.
 The final column shows what types of experimental signal data are present for each study. 
 
 .. image:: images/studybrowser_signals.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center

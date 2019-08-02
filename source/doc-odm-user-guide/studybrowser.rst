@@ -20,7 +20,7 @@ You can also use the short cut dock in the top lefthand corner of any window.
 
 
 Exploring the Study Browser
-***************************
+---------------------------
 
 .. image:: images/quickstart_user_studybrowser.png
    :scale: 35 %
@@ -31,7 +31,7 @@ The panel down the left-hand side gives you the option to search and filter the 
 The main panel displays the results of your search and filter options, if you have any, otherwise all studies are displayed that your user account has visibility of, ordered by date with the newest at the top.
 
 Search panel
-------------
+************
 
 The search panel consists of a full-text search box and several faceting options to filter down results.
 
@@ -58,7 +58,7 @@ Beneath that are further facets based on the metadata values that are present in
 Exactly which metadata fields are available as search facets is determined by templates, which is also how you specify what metadata are expected to be seen for a given type of omics data, and which controlled vocabularies or ontologies should apply. 
 
 Results panel
--------------
+*************
 
 .. image:: images/studybrowser_resultspanel.png
    :scale: 35 %

@@ -14,4 +14,7 @@ data-driven science through data FAIRification.
 
    doc-odm-user-guide/index
    doc-odm-user-guide/quickstart_user
+   doc-odm-user-guide/studybrowser
    doc-odm-user-guide/import-data-using-api
+   doc-odm-user-guide/import-data-using-python-script
+   doc-odm-user-guide/getting-a-genestack-api-token

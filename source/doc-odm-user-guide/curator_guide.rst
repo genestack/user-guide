@@ -27,7 +27,7 @@ In the study browser you can view studies you've uploaded easily by checking the
 Study Metainfo Editor ODM
 -------------------------
 
-.. image:: images/study-metainfo-editor-new-study.png
+.. image:: images/Study-metainfo-editor-new-study.png
    :scale: 35 %
    :align: center
 
@@ -36,7 +36,7 @@ The Study Metainfo Editor ODM application is where you can make changes to the m
 To rename the study click on the "New Study" link at the top of the page and select "rename". Type in the new name and click the blue "Rename" button.
 
 .. image:: images/New-study-rename1.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center
 
 .. image:: images/New-study-rename2.png
@@ -60,7 +60,7 @@ Sample summary
 The sample tab has a special "Show summary" button, which summarises the metadata for the samples that are present. This summary also highlights metadata terms that don't match the template.
 
 .. image:: images/metainfo-summary.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center
 
 Correcting metadata
@@ -75,7 +75,7 @@ To correct metadata, click the field you wish to change. If the input is text yo
 Fields which have dictionaries specified for them in the template, for example, Organism, allow you to click the triangle in order to select a term from a list given by the dictionary, or you can begin to type and the window will suggest auto-completions for you. Terms matching dictionary terms will turn green.
 
 .. image:: images/auto-complete.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center
 
 Bulk additions/replacements in the sample tab
@@ -86,11 +86,11 @@ In the sample tab there are some functions to aid bulk changes.
 Values in the sample table cells can be propagated by dragging the bottom-right corner of a cell.
 
 .. image:: images/cell-drag.png
-   :scale: 75 %
+   :scale: 50 %
    :align: center
 
 .. image:: images/cell-drag2.png
-   :scale: 75 %
+   :scale: 50 %
    :align: center
 
 The summary table (seen by clicking the "Show summary" button) you can hover over any metadata row and a "Replace..." link will appear.

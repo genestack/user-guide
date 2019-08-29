@@ -1,3 +1,5 @@
+  .. _token-label:
+
 Getting a Genestack API token
 +++++++++++++++++++++++++++++
 

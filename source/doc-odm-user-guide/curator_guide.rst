@@ -31,7 +31,7 @@ Study Metainfo Editor ODM
    :scale: 35 %
    :align: center
 
-The Study Metainfo Editor ODM application is where you can make changes to the metadata of Study, Sample and any processed/experimental metadata.
+The Study Metainfo Editor ODM application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
 
 To rename the study click on the "New Study" link at the top of the page and select "rename". Type in the new name and click the blue "Rename" button.
 
@@ -46,7 +46,7 @@ To rename the study click on the "New Study" link at the top of the page and sel
 Validation
 ----------
 
-Metadata fields are checked against a specific template (given above the Study name), and if required fields are missing or have incorrect values as determined by the template then an "Invalid metadata" flag is shown, together with a red background for the field which is invalid. Templates contain specific rules for each of the Study, Sample and processed/experimental metadata tabs.
+Metadata fields are checked against a specific template (given above the Study name), and if required fields are missing or have incorrect values as determined by the template then an "Invalid metadata" flag is shown, together with a red background for the field which is invalid. Templates contain specific rules for each of the Study, Samples and processed/experimental metadata tabs.
 
 The specific template that applies for a dataset can be changed by clicking the "Choose another.." button.
 
@@ -54,10 +54,10 @@ The specific template that applies for a dataset can be changed by clicking the 
    :scale: 35 %
    :align: center
 
-Sample summary
+Samples summary
 ==============
 
-The sample tab has a special "Show summary" button, which summarises the metadata for the samples that are present. This summary also highlights metadata terms that don't match the template.
+The samples tab has a special "Show summary" button, which summarises the metadata for the samples that are present. This summary also highlights metadata terms that don't match the template.
 
 .. image:: images/metainfo-summary.png
    :scale: 50 %
@@ -78,12 +78,12 @@ Fields which have dictionaries specified for them in the template, for example, 
    :scale: 50 %
    :align: center
 
-Bulk additions/replacements in the sample tab
+Bulk additions/replacements in the samples tab
 =============================================
 
-In the sample tab there are some functions to aid bulk changes.
+In the samples tab there are some functions to aid bulk changes.
 
-Values in the sample table cells can be propagated by dragging the bottom-right corner of a cell.
+Values in the samples table cells can be propagated by dragging the bottom-right corner of a cell.
 
 .. image:: images/cell-drag.png
    :scale: 50 %

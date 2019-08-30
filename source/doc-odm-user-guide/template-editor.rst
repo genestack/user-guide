@@ -70,8 +70,7 @@ importing data or in the **Study Metainfo Editor ODM** app when editing metadata
 
 
 To change a template in the **Study Metainfo Editor ODM** app click **Choose another** on the app page and select
-   the template of interest from the list of suggested files.
-   Click **View in editor** to open it with the Template Editor.
+the template of interest from the list of suggested files. Click **View in editor** to open it with the Template Editor.
 
 .. image:: images/change-template-me.png
    :scale: 65 %

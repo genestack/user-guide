@@ -55,7 +55,7 @@ The specific template that applies for a dataset can be changed by clicking the 
    :align: center
 
 Samples summary
-==============
+===============
 
 The samples tab has a special "Show summary" button, which summarises the metadata for the samples that are present. This summary also highlights metadata terms that don't match the template.
 
@@ -79,7 +79,7 @@ Fields which have dictionaries specified for them in the template, for example, 
    :align: center
 
 Bulk additions/replacements in the samples tab
-=============================================
+==============================================
 
 In the samples tab there are some functions to aid bulk changes.
 

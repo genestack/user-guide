@@ -21,11 +21,13 @@ Optional experimental (signal) data files
 
 You can optionally also provide:
 
-- Expression data in .gct format, hosted at an FTP or HTTP web address
+- Expression data in GCT_ format, hosted at an FTP or HTTP web address
+.. _GCT: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29
 
 - Expression metadata in CSV or TSV format, hosted at an FTP or HTTP web address
 
-- Variant data in .vcf format, hosted at an FTP or HTTP web address
+- Variant data in VCF_ format, hosted at an FTP or HTTP web address
+.. _VCF: https://samtools.github.io/hts-specs/VCFv4.2.pdf
 
 - Variant metadata in CSV or TSV format, hosted at an FTP or HTTP web address
 
@@ -72,3 +74,41 @@ Optionally include data files by appending any or all of the following to the ab
 
 .. literalinclude:: import-data-script-4.py
 
+Example files
+-------------
+
+The following are some example files to illustrate file formats:
+
+- `Test_1000g.study.tsv`_, a tab-delimited file of the study attributes
+
+.. _`Test_1000g.study.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.study.tsv
+
+- `Test_1000g.samples.tsv`_, a tab-delimited file of sample attributes.
+
+.. _`Test_1000g.samples.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.samples.tsv
+
+
+- `Test_1000g.gct`_, a GCT_ file of expression data from multiple sequencing runs
+
+.. _`Test_1000g.gct`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct
+.. _GCT: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29
+
+
+- `Test_1000g.gct.tsv`_, a tab-separated file that describes the expression data
+
+.. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
+
+
+- `Test_1000g.vcf`_, a VCF_ file of variant data from multiple sequencing runs
+
+.. _`Test_1000g.vcf`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf
+.. _VCF: https://samtools.github.io/hts-specs/VCFv4.2.pdf
+
+
+- `Test_1000g.vcf.tsv`_, a tab-separated file that describes the variant data
+
+.. _Test_1000g.vcf.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf.tsv
+
+Run the script with the above by typing the following (inserting your token instead of [token]):
+
+.. literalinclude:: import-data-script-5.py

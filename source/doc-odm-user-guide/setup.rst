@@ -57,8 +57,9 @@ Click **Manage groups** in the short-cut menu will open the application page.
    :align: center
 
 If you are an administrator of your organisation, you will see two groups automatically created for you:
-one group includes all members of your organisation, another one — those members which are granted with additional
-permissions by the administrator of your organisation.
+one group includes all members of your organisation, another one — "Curator" group — includes those members which are granted with additional
+permissions by the administrator of your organisation. All members of the "Curator" group can approve and unapprove studies.
+
 
 If you are not an administrator of your organisation, then on the Manage Group page you will see the group including
 members of your organisation, their email addresses and roles.

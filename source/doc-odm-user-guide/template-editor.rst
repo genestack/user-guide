@@ -6,7 +6,13 @@ The Template Editor application allows you to create, customize, and update temp
 How to access the application?
 ------------------------------
 
-To get started use the short-cut dock and select **Template Editor**.
+To get started, click **Set up templates** on the Dashboard:
+
+.. image:: images/set-up-templates.png
+   :scale: 30 %
+   :align: center
+
+Or use the short-cut dock and select **Template Editor**:
 
 .. image:: images/shortcuts-template-editor.png
    :scale: 45 %
@@ -16,7 +22,7 @@ On the application page you will see the available import templates. Also, you c
 created, updated. Click on the template name to explore it in more detail.
 
 .. image:: images/templates-list.png
-   :scale: 35 %
+   :scale: 30 %
    :align: center
 
 
@@ -36,7 +42,7 @@ Regardless the filetype the import template includes the following metadata fiel
   and is left blank or it is incorrectly filled in, it is highlighted in red;
 - *Metainfo type* — indicates metadata type for the filed, namely: text, integer, decimal, date, yes/no and external link;
 - *Single* — indicates if several values can be added to a given field;
-- *Read-only* — represents permissions for editing, where `yes` means that you cannot edit; the metadata
+- *Read-only* — represents permissions for editing, where "yes" means that you cannot edit; the metadata
 - *Dictionary* — allows you to specify a dictionary providing standardized and unified terms that can be used in data
   curation and to help validate and harmonise metadata.
 
@@ -65,12 +71,12 @@ Change import template
 ----------------------
 
 By default data is imported with the **Default Import Template**, which includes metadata
-columns along with associated dictionaries/ontologies. Feel free to change template before
-importing data or in the **Study Metainfo Editor ODM** app when editing metadata:
+columns along with associated dictionaries/ontologies. Feel free to change template in the **Metainfo Editor**
+when editing metadata.
 
 
-To change a template in the **Study Metainfo Editor ODM** app click **Choose another** on the app page and select
-the template of interest from the list of suggested files. Click **View in editor** to open it with the Template Editor.
+From the **Metainfo Editor**, click the study name, then **Apply another** and select
+the template of interest from the list of suggested files. Click **Explore** to open it with the Template Editor.
 
 .. image:: images/change-template-me.png
    :scale: 65 %

@@ -60,7 +60,7 @@ Click **Create copy** to make your own editable copy of a template and modify it
 .. image:: images/template-copy.png
    :align: center
 
-Autocomplete can help you to specify an appropriate dictionary term to be used in metadata validation in the Study Metainfo Editor.
+Autocomplete can help you to specify an appropriate dictionary term to be used in metadata validation in the Metainfo Editor.
 
 
 .. image:: images/edit-template.png

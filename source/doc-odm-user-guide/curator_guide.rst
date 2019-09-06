@@ -24,16 +24,20 @@ In the study browser you can view studies you've uploaded easily by checking the
    :align: center
 
 
-Study Metainfo Editor ODM
--------------------------
+Metainfo Editor
+---------------
+
+.. update image
 
 .. image:: images/Study-metainfo-editor-new-study.png
    :scale: 35 %
    :align: center
 
-The Study Metainfo Editor ODM application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
+The Metainfo Editor application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
 
 To rename the study click on the "New Study" link at the top of the page and select "rename". Type in the new name and click the blue "Rename" button.
+
+.. update image
 
 .. image:: images/New-study-rename1.png
    :scale: 50 %

@@ -14,6 +14,8 @@ Click 'Browse studies' on the dashboard after you sign in to launch the Study Br
 
 You can also use the short cut dock in the top lefthand corner of any window.
 
+.. update image
+
 .. image:: images/shortcut_dock.png
    :scale: 35 %
    :align: center

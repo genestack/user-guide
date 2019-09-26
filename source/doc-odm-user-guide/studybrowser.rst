@@ -9,15 +9,13 @@ Getting to the Study Browser
 Click 'Browse studies' on the dashboard after you sign in to launch the Study Browser.
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 35 %
+   :scale: 65 %
    :align: center
 
 You can also use the short cut dock in the top lefthand corner of any window.
 
-.. update image
-
 .. image:: images/shortcut_dock.png
-   :scale: 35 %
+   :scale: 75 %
    :align: center
 
 

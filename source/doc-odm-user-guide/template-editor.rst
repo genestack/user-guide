@@ -22,7 +22,7 @@ On the application page you will see the available import templates. Also, you c
 created, updated. Click on the template name to explore it in more detail.
 
 .. image:: images/templates-list.png
-   :scale: 30 %
+   :scale: 70 %
    :align: center
 
 
@@ -55,7 +55,7 @@ Regardless the filetype the import template includes the following metadata fiel
 Create and edit import template
 -------------------------------
 
-Click **Create copy** to make your own editable copy of a template and modify it if needed.
+Click on the template name and, then, select **Make a copy** to create your own editable copy of a template and modify it if needed.
 
 .. image:: images/template-copy.png
    :align: center
@@ -70,8 +70,8 @@ Autocomplete can help you to specify an appropriate dictionary term to be used i
 Change import template
 ----------------------
 
-By default data is imported with the **Default Import Template**, which includes metadata
-columns along with associated dictionaries/ontologies. Feel free to change template in the **Metainfo Editor**
+By default data is imported with the **Default Template**, which includes metadata
+columns along with associated controlled dictionaries and ontologies. Feel free to change template in the **Metainfo Editor**
 when editing metadata.
 
 
@@ -79,5 +79,5 @@ From the **Metainfo Editor**, click the study name, then **Apply another** and s
 the template of interest from the list of suggested files. Click **Explore** to open it with the Template Editor.
 
 .. image:: images/change-template-me.png
-   :scale: 65 %
+   :scale: 40 %
    :align: center

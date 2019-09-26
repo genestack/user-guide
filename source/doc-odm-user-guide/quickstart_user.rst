@@ -8,7 +8,7 @@ Dashboard
 ---------
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 35 %
+   :scale: 70 %
    :align: center
 
 As a regular user the main tasks of interest are searching and browsing studies. Clicking on the **Browse studies** link from the dashboard takes you to the Study Browser to help you do this.
@@ -34,10 +34,8 @@ To access more details about a study and to explore it further click the name of
 Metainfo Editor
 ---------------
 
-.. update image
-
 .. image:: images/quickstart_user_studymetainfoeditor.png
-   :scale: 35 %
+   :scale: 70 %
    :align: center
 
 The Metainfo Editor allows you to see all the information about a study, the samples contained in the study and any signal data types associated with the study, for example, expression or variant data.

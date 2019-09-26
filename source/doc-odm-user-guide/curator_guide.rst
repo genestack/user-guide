@@ -20,7 +20,7 @@ Study Browser
 In the study browser you can view studies you've uploaded easily by checking the "Owned by me" option. By clicking on the study title ("New Study" by default) you can enter the Metainfo Editor application which allows you to make changes to the study and associated data.
 
 .. image:: images/Study-browser-new-study.png
-   :scale: 35 %
+   :scale: 30 %
    :align: center
 
 

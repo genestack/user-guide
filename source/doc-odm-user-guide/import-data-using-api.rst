@@ -221,7 +221,6 @@ To import the variant data:
 
 Which should give you four run-level variant objects, corresponding to the four sample columns in the VCF file:
 
-
 .. literalinclude:: var-2.py
 
 To link the variant object GSF282825 with the sample HG00119:

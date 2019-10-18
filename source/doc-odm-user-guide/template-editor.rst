@@ -3,8 +3,8 @@ Template Editor
 
 The Template Editor application allows you to create, customize, and update templates for data import/validation.
 
-How to access the application?
-------------------------------
+How to access the Template Editor?
+----------------------------------
 
 To get started, click **Set up templates** on the Dashboard:
 
@@ -18,7 +18,7 @@ Or use the short-cut dock and select **Template Editor**:
    :scale: 45 %
    :align: center
 
-On the application page you will see the available import templates. Also, you can find out by whom and when it was
+On the application page you will see the available templates. Also, you can find out by whom and when it was
 created, updated. Click on the template name to explore it in more detail.
 
 .. image:: images/templates-list.png
@@ -27,15 +27,14 @@ created, updated. Click on the template name to explore it in more detail.
 
 
 
-What is the import template?
-----------------------------
+What is a template?
+-------------------
 
-Import templates contain metadata attributes that should be associated with a file being imported.
-A separate template is created for each supported file type, namely "Study", "Sample", "Expression", "Variant"
-and "Flow cytometry", and includes metadata fields that can be used in the subsequent curation process.
+Templates control metadata attributes in Genestack, which allow terms and values to be harmonized and validated.
+A separate template is used for each data object, e.g. "Study", "Sample", "Expression", "Variant"
+and "Flow cytometry".
 
-
-Regardless the filetype the import template includes the following metadata fields:
+Templates include the following metadata options:
 
 - *Name* — name of metadata field that should be included in the metainfo (e.g. "Accession", "Organism");
 - *Required* — determines whether the metadata field should be mandatory or not; if a field is marked as required
@@ -52,10 +51,10 @@ Regardless the filetype the import template includes the following metadata fiel
    :align: center
 
 
-Create and edit import template
--------------------------------
+Create and edit template
+------------------------
 
-Click on the template name and, then, select **Make a copy** to create your own editable copy of a template and modify it if needed.
+Click on the template name and select **Make a copy** to create your own editable copy of a template and modify it if needed.
 
 .. image:: images/template-copy.png
    :align: center
@@ -66,12 +65,20 @@ Autocomplete can help you to specify an appropriate dictionary term to be used i
 .. image:: images/edit-template.png
    :align: center
 
+Grouping/compounding metadata fields
+------------------------------------
 
-Change import template
-----------------------
+Metadata fields can be grouped together under a common header using the **/** character. Use the common header before the **/** character. For example:
 
-By default data is imported with the **Default Template**, which includes metadata
-columns along with associated controlled dictionaries and ontologies. Feel free to change template in the **Metainfo Editor**
+.. image:: images/template_grouping.png
+   :align: center
+
+
+Change template
+---------------
+
+By default a **Default Template** is associated with data, which includes metadata
+columns along with associated controlled dictionaries and ontologies. The associated template can be changed in the **Metainfo Editor**
 when editing metadata.
 
 

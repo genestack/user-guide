@@ -23,7 +23,7 @@ Exploring the Study Browser
 ---------------------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 35 %
+   :scale: 30 %
    :align: center
 
 At the top of the window is the main search bar. In the text box you can search by the name of a study, the accession of a study, sample or signal object, or by any text that is in any metadata field across all of the data you have visibility of.

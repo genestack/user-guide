@@ -20,20 +20,24 @@ Study Browser
 In the study browser you can view studies you've uploaded easily by checking the "Owned by me" option. By clicking on the study title ("New Study" by default) you can enter the Metainfo Editor application which allows you to make changes to the study and associated data.
 
 .. image:: images/Study-browser-new-study.png
-   :scale: 35 %
+   :scale: 30 %
    :align: center
 
 
-Study Metainfo Editor ODM
--------------------------
+Metainfo Editor
+---------------
+
+.. update image
 
 .. image:: images/Study-metainfo-editor-new-study.png
    :scale: 35 %
    :align: center
 
-The Study Metainfo Editor ODM application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
+The Metainfo Editor application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
 
 To rename the study click on the "New Study" link at the top of the page and select "rename". Type in the new name and click the blue "Rename" button.
+
+.. update image
 
 .. image:: images/New-study-rename1.png
    :scale: 50 %
@@ -55,7 +59,7 @@ The specific template that applies for a dataset can be changed by clicking the 
    :align: center
 
 Samples summary
-==============
+===============
 
 The samples tab has a special "Show summary" button, which summarises the metadata for the samples that are present. This summary also highlights metadata terms that don't match the template.
 
@@ -79,7 +83,7 @@ Fields which have dictionaries specified for them in the template, for example, 
    :align: center
 
 Bulk additions/replacements in the samples tab
-=============================================
+==============================================
 
 In the samples tab there are some functions to aid bulk changes.
 

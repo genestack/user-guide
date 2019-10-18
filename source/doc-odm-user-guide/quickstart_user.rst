@@ -8,7 +8,7 @@ Dashboard
 ---------
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 35 %
+   :scale: 70 %
    :align: center
 
 As a regular user the main tasks of interest are searching and browsing studies. Clicking on the **Browse studies** link from the dashboard takes you to the Study Browser to help you do this.
@@ -28,14 +28,14 @@ The search is also controlled vocabulary/ontology aware, and will suggest auto-c
 
 The facets beneath the search bar allow you to filter down the results of a search based on the metadata fields that are present in your results.
 
-To access more details about a study and to explore it further click the name of the study which will launch the Study Metainfo Editor in a new tab.
+To access more details about a study and to explore it further click the name of the study which will launch the Metainfo Editor in a new tab.
 
 
-Study Metainfo Editor ODM
--------------------------
+Metainfo Editor
+---------------
 
 .. image:: images/quickstart_user_studymetainfoeditor.png
-   :scale: 35 %
+   :scale: 70 %
    :align: center
 
-The Study Metainfo Editor allows you to see all the information about a study, the samples contained in the study and any signal data types associated with the study, for example, expression or variant data.
+The Metainfo Editor allows you to see all the information about a study, the samples contained in the study and any signal data types associated with the study, for example, expression or variant data.

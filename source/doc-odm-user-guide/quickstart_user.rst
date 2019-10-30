@@ -31,11 +31,11 @@ The facets beneath the search bar allow you to filter down the results of a sear
 To access more details about a study and to explore it further click the name of the study which will launch the Metainfo Editor in a new tab.
 
 
-Metainfo Editor
+Metadata Editor
 ---------------
 
 .. image:: images/quickstart_user_studymetainfoeditor.png
    :scale: 70 %
    :align: center
 
-The Metainfo Editor allows you to see all the information about a study, the samples contained in the study and any signal data types associated with the study, for example, expression or variant data.
+The Metadata Editor allows you to see all the information about a study, the samples contained in the study and any signal data types associated with the study, for example, expression or variant data.

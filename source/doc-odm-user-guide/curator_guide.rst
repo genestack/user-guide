@@ -17,34 +17,30 @@ From the dashboard where you first log in, select "Browse studies" to enter the 
 Study Browser
 -------------
 
-In the study browser you can view studies you've uploaded easily by checking the "Owned by me" option. By clicking on the study title ("New Study" by default) you can enter the Metainfo Editor application which allows you to make changes to the study and associated data.
+In the Study Browser you can view studies you've uploaded easily by checking the "Owned by me" option. By clicking on the study title ("New Study" by default) you can enter the Metadata Editor application which allows you to make changes to the study and associated data.
 
 .. image:: images/Study-browser-new-study.png
    :scale: 30 %
    :align: center
 
 
-Metainfo Editor
+Metadata Editor
 ---------------
 
-.. update image
-
 .. image:: images/Study-metainfo-editor-new-study.png
-   :scale: 35 %
+   :scale: 80 %
    :align: center
 
-The Metainfo Editor application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
+The Metadata Editor application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
 
 To rename the study click on the "New Study" link at the top of the page and select "rename". Type in the new name and click the blue "Rename" button.
 
-.. update image
-
 .. image:: images/New-study-rename1.png
-   :scale: 50 %
+   :scale: 90 %
    :align: center
 
 .. image:: images/New-study-rename2.png
-   :scale: 35 %
+   :scale: 70 %
    :align: center
 
 Validation
@@ -73,7 +69,7 @@ Correcting metadata
 To correct metadata, click the field you wish to change. If the input is text you can type a new value in directly. When all the fields in a tab have been corrected the Invalid metadata flag will be removed an instead a green "Metadata is valid" flag will show.
 
 .. image:: images/corrected-metadata.png
-   :scale: 35 %
+   :scale: 80 %
    :align: center
 
 Fields which have dictionaries specified for them in the template, for example, Organism, allow you to click the triangle in order to select a term from a list given by the dictionary, or you can begin to type and the window will suggest auto-completions for you. Terms matching dictionary terms will turn green.

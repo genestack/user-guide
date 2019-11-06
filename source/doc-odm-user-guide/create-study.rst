@@ -1,5 +1,5 @@
-Create Study
-++++++++++++
+Create new study
+++++++++++++++++
 
 To create new study go to Dashboard and click the **New study** button.
 
@@ -10,7 +10,11 @@ change Default template if necessary.
 
 
 .. image:: images/new-study-me.png
+   :scale: 70 %
+   :align: center
 
 Hover over a template name and click **Explore** to open it in the Template Editor application.
 
-..image:: images/template-editor.png
+.. image:: images/template-editor.png
+   :scale: 70 %
+   :align: center

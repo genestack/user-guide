@@ -12,7 +12,7 @@ in the top-right corner of the page and, then, select the menu item **Profile**.
 On the opening page you'll find the following sections:
 
 .. image:: images/profile-2.png
-   :scale: 50 %
+   :scale: 70 %
    :align: center
 
 - **Basic information** about your profile, namely *Name*, *Password*, *Email*, *Organization*, *Vendor*.

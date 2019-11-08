@@ -53,7 +53,7 @@ and manage them according to your privileges.
 Click **Manage groups** in the short-cut menu to navigate to the application page.
 
 .. image:: images/shortcuts-manage-groups.png
-   :scale: 40 %
+   :scale: 70 %
    :align: center
 
 If you are an administrator of your organisation, you'll see two groups automatically created for you:

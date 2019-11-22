@@ -1,7 +1,7 @@
-Sharing
-+++++++
+Sharing Studies
++++++++++++++++
 
-Sharing enables you to allow people in specific groups to view datasets that you upload (i.e. own), and is typically done once you have curated your study.
+Sharing in ODM enables you to allow people in specific groups to view datasets that you upload (i.e. own), and is typically done once you have curated the study.
 
 Sharing from the Study Browser
 ------------------------------

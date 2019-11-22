@@ -3,7 +3,6 @@ Sharing
 
 Sharing enables you to allow people in specific groups to view datasets that you upload (i.e. own), and is typically done once you have curated your study.
 
-
 Sharing from the Study Browser
 ------------------------------
 
@@ -24,8 +23,6 @@ Members of this group will now be able to view this study using the **Shared wit
 .. image:: images/shared_with_me.png
    :scale: 70 %
    :align: center
-
-
 
 Sharing from the Metainfo Editor
 --------------------------------

@@ -23,21 +23,26 @@ Exploring the Study Browser
 ---------------------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 30 %
+   :scale: 50 %
    :align: center
 
-At the top of the window is the main search bar. In the text box you can search by the name of a study, the accession of a study, sample or signal object, or by any text that is in any metadata field across all of the data you have visibility of.
-
-As you begin typing you will be offered auto-complete suggestions based on dictionaries of terms that are present in ODM.
+At the top of the window is the main search bar. In the text box you can search by the name of a study,
+the accession of a study, sample or signal object, or by any text that is in any metadata field across
+all of the data you have visibility of. As you begin typing you will be offered auto-complete suggestions
+based on dictionaries of terms that are present in ODM.
 
 The search is synonym-aware, so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans.
 
-The main panel displays the results of your search and filter options, if you have any, otherwise all studies are displayed that your user account has visibility of, ordered by date with the newest at the top.
+The main panel displays the results of your search and filter options, if you have any,
+otherwise all studies are displayed that your user account has visibility of,
+ordered by date with the newest at the top.
 
 Filter panel
 ************
 
-The filter panel allows you to filter your results with search facets.
+The filter panel allows you to filter your results with search facets. Set facets to refine search results. Facets are
+automatically generated from the metadata of available datasets, and the suggested list of facets varies
+depending on a search results. Click 'More' to explore the whole list of suggested items.
 
 .. image:: images/studybrowser_searchpanel.png
    :scale: 35 %
@@ -45,8 +50,8 @@ The filter panel allows you to filter your results with search facets.
 
 Bookmarked studies can be shown by clicking on the Bookmarks icon. Access allows you to see your studies, those that are accessible to you (for example, public studies) or those that have been shared with your user account/group.
 
-If there are additional facet terms a **Find more** link will be displayed. Clicking on this allows you to type in terms and you can select from the presented list of options.
-
+If there are additional facet terms a **Find more** link will be displayed.
+Clicking on this allows you to type in terms and you can select from the presented list of options.
 
 .. image:: images/studybrowser_autocomplete.png
    :scale: 35 %

@@ -16,8 +16,6 @@ You need to have:
 
 - A Samples file containing metadata about the samples in TSV format, hosted at an FTP or HTTP web address
 
-- The linking is done according the the **sample source ID** key, so this needs to be consistent in the above files for linking to occur
-
 Optional experimental (signal) data files
 -----------------------------------------
 
@@ -41,6 +39,11 @@ You can optionally also provide:
 
 Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and
 APIs, whilst the signal data will only queryable via APIs.
+
+Linking using sample source ID
+------------------------------
+
+By default linking is done according the the **sample source ID** key, so this needs to be consistent in the above files for linking to occur
 
 
 Getting a Genestack API token

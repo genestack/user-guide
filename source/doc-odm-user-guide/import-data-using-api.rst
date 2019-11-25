@@ -25,9 +25,8 @@ The accepted file formats will be described in the step-by-step example.
 Can I capture the relationships between studies, samples, and signals?
 ----------------------------------------------------------------------
 
-Data import has two stages. First, you create studies, samples, and signals separately. Then, you can link them
-together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. Below are
-the data model and how it looks in the User Interface:
+Importing data has two stages. First, you create studies, samples, and signals separately. Then, you can link them
+together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. The **sample source ID** is used as the linking key, make sure that this is present and consistent in all the files you wish to link. The data model and how it looks in the User Interface is shown below:
 
 .. image:: images/data-model+metainfo-editor.png
    :scale: 50 %
@@ -248,4 +247,3 @@ and retrieve a specific object type. For example, to get the expression of gene 
 Which will return:
 
 .. literalinclude:: check-query-output.py
-

@@ -23,37 +23,39 @@ Exploring the Study Browser
 ---------------------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 35 %
+   :scale: 50 %
    :align: center
 
-The panel down the left-hand side gives you the option to search and filter the results. 
+At the top of the window is the main search bar. In the text box you can search by the name of a study,
+the accession of a study, sample or signal object, or by any text that is in any metadata field across
+all of the data you have visibility of. As you begin typing you will be offered auto-complete suggestions
+based on dictionaries of terms that are present in ODM.
 
-The main panel displays the results of your search and filter options, if you have any, otherwise all studies are displayed that your user account has visibility of, ordered by date with the newest at the top.
+The search is synonym-aware, so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans.
 
-Search panel
+The main panel displays the results of your search and filter options, if you have any,
+otherwise all studies are displayed that your user account has visibility of,
+ordered by date with the newest at the top.
+
+Filter panel
 ************
 
-The search panel consists of a full-text search box and several faceting options to filter down results.
+The filter panel allows you to filter your results with search facets. Set facets to refine search results. Facets are
+automatically generated from the metadata of available datasets, and the suggested list of facets varies
+depending on a search results. Click 'More' to explore the whole list of suggested items.
 
 .. image:: images/studybrowser_searchpanel.png
    :scale: 35 %
    :align: center
 
-In the text box you can search by the name of a study, the accession of a study, sample or signal object, or by any text that is in any metadata field across all of the data you have visibility of.
+Bookmarked studies can be shown by clicking on the Bookmarks icon. Access allows you to see your studies, those that are accessible to you (for example, public studies) or those that have been shared with your user account/group.
 
-As you begin typing you will be offered auto-complete suggestions based on dictionaries of terms that are present in ODM.
+If there are additional facet terms a **Find more** link will be displayed.
+Clicking on this allows you to type in terms and you can select from the presented list of options.
 
 .. image:: images/studybrowser_autocomplete.png
    :scale: 35 %
    :align: center
-
-These dictionaries are controlled vocabularies or ontologies, and they are one of the keys to making data in ODM 'FAIR', that is: Findable, Accessible, Interoperable and Reuseable.
-
-The search is synonym-aware, so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans.
-
-Underneath the search box there are filters for study ownership so you can quickly filter down to say, public, data, and filters for which signal types you wish to be present in your studies.
-
-Beneath that are further facets based on the metadata values that are present in ODM - grouped into Study, Samples and then the individual Signal types.
 
 Exactly which metadata fields are available as search facets is determined by templates, which is also how you specify what metadata are expected to be seen for a given type of omics data, and which controlled vocabularies or ontologies should apply. 
 
@@ -66,11 +68,12 @@ Results panel
 
 The main panel in the study browser shows the results of your search, or if no search terms/filters have been applied, all studies that you have visibility of. The first column displays the name of the study, and you can click this to look at the study in more detail. It also lists information about which user created or imported the study, and the date.
 
-If you hover over the file icon you can also see a small star - you can click this to bookmark a favourite study both to highlight the icon and to enable quick recall at a later date using the 'only bookmarks' option.
+To the left of the study titles is a three dot link. Click this is open a menu that allows you to rename the study (if you have permission), copy the accession of the study, add it to your bookmarks, or view more information.
 
-.. image:: images/studybrowser_bookmarkfolder.png
-   :scale: 50 %
+.. image:: images/three_dots_menu.png
+   :scale: 35 %
    :align: center
+
 
 The next column shows the type of the study. If there is information about the general type of study, for example: 'expression profiling by high throughput sequencing', or 'RNA-seq of coding RNA from Single Cells' then it is displayed here. 
 
@@ -84,8 +87,10 @@ You can hover over any name in the summary column and the name of the metadata f
 
 The next column tells us how many samples are present in each study.
 
-The final column shows what types of experimental signal data are present for each study. 
+The penultimate column shows what types of experimental signal data are present for each study. 
 
 .. image:: images/studybrowser_signals.png
    :scale: 50 %
    :align: center
+
+And finally you can use the bookmark flag at the end to flag studies for viewing later.

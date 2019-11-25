@@ -133,7 +133,7 @@ We will go through the following steps:
 
 When using the APIs, you need to provide an API token for authentication.
 You can generate this by going to your profile_, which can be found by clicking your username at the top right corner
-of the User Interface, or from the Dashboard
+of the User Interface, or from the Dashboard.
 
 .. _profile: https://occam.genestack.com/frontend/endpoint/application/run/genestack/profile
 

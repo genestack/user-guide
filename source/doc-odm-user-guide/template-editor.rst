@@ -15,7 +15,7 @@ To get started, click **Set up templates** on the Dashboard:
 Or use the short-cut dock and select **Template Editor**:
 
 .. image:: images/shortcuts-template-editor.png
-   :scale: 45 %
+   :scale: 75 %
    :align: center
 
 On the application page you will see the available templates. Also, you can find out by whom and when it was
@@ -71,6 +71,7 @@ Grouping/compounding metadata fields
 Metadata fields can be grouped together under a common header using the **/** character. Use the common header before the **/** character. For example:
 
 .. image:: images/template_grouping.png
+   :scale: 85 %
    :align: center
 
 

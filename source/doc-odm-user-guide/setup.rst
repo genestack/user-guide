@@ -12,7 +12,7 @@ in the top-right corner of the page and, then, select the menu item **Profile**.
 On the opening page you'll find the following sections:
 
 .. image:: images/profile-2.png
-   :scale: 50 %
+   :scale: 70 %
    :align: center
 
 - **Basic information** about your profile, namely *Name*, *Password*, *Email*, *Organization*, *Vendor*.
@@ -53,7 +53,7 @@ and manage them according to your privileges.
 Click **Manage groups** in the short-cut menu to navigate to the application page.
 
 .. image:: images/shortcuts-manage-groups.png
-   :scale: 40 %
+   :scale: 70 %
    :align: center
 
 If you are an administrator of your organisation, you'll see two groups automatically created for you:

@@ -26,7 +26,7 @@ Can I capture the relationships between studies, samples, and signals?
 ----------------------------------------------------------------------
 
 Importing data has two stages. First, you create studies, samples, and signals separately. Then, you can link them
-together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. The **sample source ID** is used as the linking key, make sure that this is present and consistent in all the files you wish to link. The data model and how it looks in the User Interface is shown below:
+together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. The **Sample Source ID** is used as the linking key, make sure that this is present and consistent in all the files you wish to link. The data model and how it looks in the User Interface is shown below:
 
 .. image:: images/data-model+metainfo-editor.png
    :scale: 50 %

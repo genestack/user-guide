@@ -35,7 +35,7 @@ The facets beneath the search bar allow you to filter down the results of a sear
 are present in your results.
 
 To access more details about a study and to explore it further click the name of the study which will launch
-the Metainfo Editor in a new tab.
+the Metadata Editor in a new tab.
 
 
 Metadata Editor

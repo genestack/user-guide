@@ -1,4 +1,4 @@
-Supported Signal Data files
+Supported Signal Data Files
 ++++++++++++++++++++++++++++
 
 Expression data
@@ -7,7 +7,9 @@ Expression data
 **GCT (Gene Cluster Text, .gct)** file is a tab-delimited text file containing gene expression data
 (e.g. microarray, RNA-seq data). GCT is automatically recognised as an Expression file in ODM.
 
-.. .. image:: images
+.. image:: images/gct-file.png
+   :scale: 75 %
+   :align: center
 
 The first line contains the version: #1.2
 The second line shows the number of rows (‘56202’) and columns (‘2’) in the data matrix.
@@ -27,7 +29,9 @@ Variant data
 
 In ODM a Variant Data file corresponds to VCF. **VCF (Variant Call Format, .vcf)** is the tab-delimited text file containing information about the position of genetic variations in the genome. Output of variant calling analysis.
 
-.. .. image:: images
+.. image:: images/vcf-file.png
+   :scale: 75 %
+   :align: center
 
 Basic structure of VCF
 **********************
@@ -52,14 +56,18 @@ Annotation Table
 
 Annotation table file is tab-delimited table. Each row is one sample, each column is one property type (first column contains unique identifiers of each sample).
 
-.. .. image:: images
+.. image:: images/facs-annot.png
+   :scale: 75 %
+   :align: center
 
 Signal Table
 ************
 
 Tab-delimited file, where first columns describe features; then, each column corresponds to one sample.
 
-.. .. image:: images
+.. image:: images/facs-signals.png
+   :scale: 75 %
+   :align: center
 
 Each row in the file is one feature:
 
@@ -68,5 +76,3 @@ Cell counts — a combination of cell markers (=genes/proteins) and modifiers: p
 MFI_CellMarker — like counts, but the intensity of one particular cell marker on a given cell subpopulation defines as for counts is measured.
 Percentage — like counts, but the percentage of cells positive/negative for a particular cell marker relative to the parent population as defined like for cell counts is provided.
 Cell populations can have nicknames, e.g. CD45+CD3+CD4+FOXP3+ (’MarkerCombination’) cells are also called Tregs.
-
-

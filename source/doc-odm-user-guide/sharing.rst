@@ -3,7 +3,6 @@ Sharing Studies
 
 Sharing in ODM enables you to allow people in specific groups to view datasets that you upload (i.e. own), and is typically done once you have curated the study.
 
-
 Sharing from the Study Browser
 ------------------------------
 
@@ -25,12 +24,10 @@ Members of this group will now be able to view this study using the **Shared wit
    :scale: 50 %
    :align: center
 
-
-
 Sharing from the Metainfo Editor
 --------------------------------
 
-Sharing from the Metainfo Editor is similar to the above, except that to access the sharing menu you must click on the name of the study/folder icon at the top of the page:
+Sharing from the Metadata Editor is similar to the above, except that to access the sharing menu you must click on the name of the study/folder icon at the top of the page:
 
 .. image:: images/Metainfo_sharing.png
    :scale: 40 %

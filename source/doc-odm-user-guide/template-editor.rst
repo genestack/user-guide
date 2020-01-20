@@ -59,7 +59,7 @@ Click on the template name and select **Make a copy** to create your own editabl
 .. image:: images/template-copy.png
    :align: center
 
-Autocomplete can help you to specify an appropriate dictionary term to be used in metadata validation in the Metainfo Editor.
+Autocomplete can help you to specify an appropriate dictionary term to be used in metadata validation in the Metadata Editor.
 
 
 .. image:: images/edit-template.png
@@ -68,7 +68,8 @@ Autocomplete can help you to specify an appropriate dictionary term to be used i
 Grouping/compounding metadata fields
 ------------------------------------
 
-Metadata fields can be grouped together under a common header using the **/** character. Use the common header before the **/** character. For example:
+Metadata fields can be grouped together under a common header using the **/** character. Use the common header before
+the **/** character. For example:
 
 .. image:: images/template_grouping.png
    :scale: 85 %
@@ -79,11 +80,11 @@ Change template
 ---------------
 
 By default a **Default Template** is associated with data, which includes metadata
-columns along with associated controlled dictionaries and ontologies. The associated template can be changed in the **Metainfo Editor**
+columns along with associated controlled dictionaries and ontologies. The associated template can be changed in the **Metadata Editor**
 when editing metadata.
 
 
-From the **Metainfo Editor**, click the study name, then **Apply another** and select
+From the **Metadata Editor**, click the study name, then **Apply another** and select
 the template of interest from the list of suggested files. Click **Explore** to open it with the Template Editor.
 
 .. image:: images/change-template-me.png

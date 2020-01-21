@@ -1,23 +1,29 @@
-Supported Signal Data Files
-++++++++++++++++++++++++++++
+Supported File Formats
+++++++++++++++++++++++
 
-Expression data
----------------
+Expression data (transcriptomics)
+---------------------------------
 
-**GCT (Gene Cluster Text, .gct)** file is a tab-delimited text file containing gene expression data
-(e.g. microarray, RNA-seq data). GCT is automatically recognised as an Expression file in ODM.
+**GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset
+(e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
 
 .. image:: images/gct-file.png
    :scale: 75 %
    :align: center
 
-The first line contains the version: #1.2
-The second line shows the number of rows (‘56202’) and columns (‘2’) in the data matrix.
-The third line shows unique column headings: ‘gene_id’, ‘Description’, ‘Bladder’ etc.
-The first left column shows unique values (e.g. Ensembl gene ID), the second one contains
-metadata (‘DDX11L1’). The raw expression values are shown in the bottom right part of the file.
-Each column corresponds to a separate assay (expression data measured in  a specific tissue);
-each row of the data matrix shows an expression value, for example, of a particular gene.
+The first line contains the file version and for gct format is always: #1.2
+
+The second line shows the number of rows (‘56202’) and columns (‘2’) of the expression matrix, excluding the identifier and description columns.
+
+The third line contains headers for the identifier column (first), description (second) and sample metadata (remainder) labels, which must all be unique. For example: ‘gene_id’, ‘Description’, ‘Bladder’.
+
+Below the header row is the data matrix. The first column contains the unique identifier values (e.g. Ensembl gene ID), the second column has a text description, the remaining columns contain values for the assay that was carried out (for example intensity of a sample gene expression measured in a specific tissue);
+
+In the data matrix there is a row for each gene, and a column for each sample. The number of rows and columns should agree with the rows and columns specified on row two of the file.
+
+Names and descriptions may contain spaces, but may not contain nothing - NA or NULL text strings should be used.
+
+Intensity values in the data matrix can be left empty if they are missing.
 
 To learn more take a look at the GCT specification_.
 
@@ -25,8 +31,20 @@ To learn more take a look at the GCT specification_.
 
 .. [broken link; another option => https://software.broadinstitute.org/software/igv/GCT]
 
-Variant data
-------------
+- `Test_1000g.gct`_, an example GCT file
+.. _`Test_1000g.gct`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct
+
+**.gct.tsv** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
++----------------------+----------------------+-----------------+
+| Expression Source    | Normalization Method | Genome Version  |
++======================+======================+=================+
+| 1000 Genomes Project |         RPKM         | GRCh38.91       |
++----------------------+----------------------+-----------------+
+- `Test_1000g.gct.tsv`_, an example expression metadata file
+.. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
+
+Variant data (genomics)
+-----------------------
 
 In ODM a Variant Data file corresponds to VCF. **VCF (Variant Call Format, .vcf)** is the tab-delimited text file containing information about the position of genetic variations in the genome. Output of variant calling analysis.
 

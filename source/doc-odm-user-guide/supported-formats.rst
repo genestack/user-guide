@@ -35,11 +35,13 @@ To learn more take a look at the GCT specification_.
 .. _`Test_1000g.gct`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct
 
 **.gct.tsv** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
+
 +----------------------+----------------------+-----------------+
 | Expression Source    | Normalization Method | Genome Version  |
 +======================+======================+=================+
 | 1000 Genomes Project |         RPKM         | GRCh38.91       |
 +----------------------+----------------------+-----------------+
+
 - `Test_1000g.gct.tsv`_, an example expression metadata file
 .. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
 

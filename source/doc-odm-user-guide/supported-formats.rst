@@ -75,7 +75,7 @@ Header line syntax
 
 The header line names the 8 fixed, mandatory columns. These columns are as follows:
 
-1. #CHROM
+1. \#CHROM
 2. POS
 3. ID
 4. REF
@@ -85,12 +85,6 @@ The header line names the 8 fixed, mandatory columns. These columns are as follo
 8. INFO
 
 If genotype data is present in the file, these are followed by a FORMAT column header, then an arbitrary number of sample IDs. Duplicate sample IDs are not allowed. The header line is tab-delimited.
-
-Data lines
-==========
-
-Fixed fields\:
-
 
 To learn more take a look at the VCF specification_.
 

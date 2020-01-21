@@ -89,7 +89,7 @@ If genotype data is present in the file, these are followed by a FORMAT column h
 Data lines
 ==========
 
-Fixed fields:
+Fixed fields\:
 
 
 To learn more take a look at the VCF specification_.

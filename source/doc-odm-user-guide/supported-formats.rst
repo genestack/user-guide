@@ -4,8 +4,7 @@ Supported File Formats
 Expression data (transcriptomics)
 ---------------------------------
 
-**GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset
-(e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
+**GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset (e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
 
 .. image:: images/gct-file.png
    :scale: 75 %
@@ -69,10 +68,7 @@ A VCF file contains three main parts:
 Meta-information lines
 ^^^^^^^^^^^^^^^^^^^^^^
 
-File meta-information is included after the ## string and must be key=value pairs. It is strongly encouraged that
-information lines describing the INFO, FILTER and FORMAT entries used in the body of the VCF file be included
-in the meta-information section. Although they are optional, if these lines are present then they must be completely
-well-formed.
+File meta-information is included after the ## string and must be key=value pairs. It is strongly encouraged that information lines describing the INFO, FILTER and FORMAT entries used in the body of the VCF file be included in the meta-information section. Although they are optional, if these lines are present then they must be completely well-formed.
 
 Header line syntax
 ^^^^^^^^^^^^^^^^^^
@@ -88,67 +84,34 @@ The header line names the 8 fixed, mandatory columns. These columns are as follo
 7. FILTER
 8. INFO
 
-If genotype data is present in the file, these are followed by a FORMAT column header, then an arbitrary number
-of sample IDs. Duplicate sample IDs are not allowed. The header line is tab-delimited.
+If genotype data is present in the file, these are followed by a FORMAT column header, then an arbitrary number of sample IDs. Duplicate sample IDs are not allowed. The header line is tab-delimited.
 
 Data lines
 ^^^^^^^^^^
 
 Fixed fields:
 
-There are 8 fixed fields per record. All data lines are tab-delimited. In all cases, missing values are specified with a
-dot (‘.’).
+There are 8 fixed fields per record. All data lines are tab-delimited. In all cases, missing values are specified with a dot (‘.’).
 
 Fixed fields are:
 
-1. CHROM - chromosome: An identifier from the reference genome or an angle-bracketed ID String (“<ID>”)
-pointing to a contig in the assembly file (cf. the ##assembly line in the header). All entries for a specific
-CHROM should form a contiguous block within the VCF file. The colon symbol (:) must be absent from all
-chromosome names to avoid parsing errors when dealing with breakends. (String, no white-space permitted,
-Required).
+1. CHROM - chromosome: An identifier from the reference genome or an angle-bracketed ID String (“<ID>”) pointing to a contig in the assembly file (cf. the ##assembly line in the header). All entries for a specific CHROM should form a contiguous block within the VCF file. The colon symbol (:) must be absent from all chromosome names to avoid parsing errors when dealing with breakends. (String, no white-space permitted, Required).
 
-2. POS - position: The reference position, with the 1st base having position 1. Positions are sorted numerically,
-in increasing order, within each reference sequence CHROM. It is permitted to have multiple records with the
-same POS. Telomeres are indicated by using positions 0 or N+1, where N is the length of the corresponding
-chromosome or contig. (Integer, Required)
+2. POS - position: The reference position, with the 1st base having position 1. Positions are sorted numerically, in increasing order, within each reference sequence CHROM. It is permitted to have multiple records with the same POS. Telomeres are indicated by using positions 0 or N+1, where N is the length of the corresponding chromosome or contig. (Integer, Required)
 
-3. ID - identifier: Semi-colon separated list of unique identifiers where available. If this is a dbSNP variant it is
-encouraged to use the rs number(s). No identifier should be present in more than one data record. If there is no
-identifier available, then the missing value should be used. (String, no white-space or semi-colons permitted)
+3. ID - identifier: Semi-colon separated list of unique identifiers where available. If this is a dbSNP variant it is encouraged to use the rs number(s). No identifier should be present in more than one data record. If there is no identifier available, then the missing value should be used. (String, no white-space or semi-colons permitted)
 
-4. REF - reference base(s): Each base must be one of A,C,G,T,N (case insensitive). Multiple bases are permitted.
-The value in the POS field refers to the position of the first base in the String. For simple insertions and
-deletions in which either the REF or one of the ALT alleles would otherwise be null/empty, the REF and ALT
-Strings must include the base before the event (which must be reflected in the POS field), unless the event
-occurs at position 1 on the contig in which case it must include the base after the event; this padding base is
-not required (although it is permitted) for e.g. complex substitutions or other events where all alleles have at
-least one base represented in their Strings. If any of the ALT alleles is a symbolic allele (an angle-bracketed
-ID String “<ID>”) then the padding base is required and POS denotes the coordinate of the base preceding
-the polymorphism. Tools processing VCF files are not required to preserve case in the allele Strings. (String,
-Required).
+4. REF - reference base(s): Each base must be one of A,C,G,T,N (case insensitive). Multiple bases are permitted. The value in the POS field refers to the position of the first base in the String. For simple insertions and deletions in which either the REF or one of the ALT alleles would otherwise be null/empty, the REF and ALT Strings must include the base before the event (which must be reflected in the POS field), unless the event occurs at position 1 on the contig in which case it must include the base after the event; this padding base is not required (although it is permitted) for e.g. complex substitutions or other events where all alleles have at least one base represented in their Strings. If any of the ALT alleles is a symbolic allele (an angle-bracketed ID String “<ID>”) then the padding base is required and POS denotes the coordinate of the base preceding the polymorphism. Tools processing VCF files are not required to preserve case in the allele Strings. (String, Required).
 
-5. ALT - alternate base(s): Comma separated list of alternate non-reference alleles. These alleles do not have to
-be called in any of the samples. Options are base Strings made up of the bases A,C,G,T,N,*, (case insensitive)
-or an angle-bracketed ID String (“<ID>”) or a breakend replacement string as described in the section on
-breakends. The ‘*’ allele is reserved to indicate that the allele is missing due to a upstream deletion. If there
-are no alternative alleles, then the missing value should be used. Tools processing VCF files are not required
-to preserve case in the allele String, except for IDs, which are case sensitive. (String; no whitespace, commas,
-or angle-brackets are permitted in the ID String itself)
+5. ALT - alternate base(s): Comma separated list of alternate non-reference alleles. These alleles do not have to be called in any of the samples. Options are base Strings made up of the bases A,C,G,T,N,*, (case insensitive) or an angle-bracketed ID String (“<ID>”) or a breakend replacement string as described in the section on breakends. The ‘*’ allele is reserved to indicate that the allele is missing due to a upstream deletion. If there are no alternative alleles, then the missing value should be used. Tools processing VCF files are not required to preserve case in the allele String, except for IDs, which are case sensitive. (String; no whitespace, commas, or angle-brackets are permitted in the ID String itself)
 
-6. QUAL - quality: Phred-scaled quality score for the assertion made in ALT. i.e. −10log10 prob(call in ALT is
-wrong). If ALT is ‘.’ (no variant) then this is −10log10 prob(variant), and if ALT is not ‘.’ this is −10log10
-prob(no variant). If unknown, the missing value should be specified. (Numeric)
+6. QUAL - quality: Phred-scaled quality score for the assertion made in ALT. i.e. −10log10 prob(call in ALT is wrong). If ALT is ‘.’ (no variant) then this is −10log10 prob(variant), and if ALT is not ‘.’ this is −10log10 prob(no variant). If unknown, the missing value should be specified. (Numeric)
 
 7. FILTER - filter status: PASS if this position has passed all filters, i.e., a call is made at this position. Otherwise,
 if the site has not passed all filters, a semicolon-separated list of codes for filters that fail. e.g. “q10;s50” might
-indicate that at this site the quality is below 10 and the number of samples with data is below 50% of the total
-number of samples. ‘0’ is reserved and should not be used as a filter String. If filters have not been applied,
-then this field should be set to the missing value. (String, no white-space or semi-colons permitted)
+indicate that at this site the quality is below 10 and the number of samples with data is below 50% of the total number of samples. ‘0’ is reserved and should not be used as a filter String. If filters have not been applied, then this field should be set to the missing value. (String, no white-space or semi-colons permitted)
 
-8. INFO - additional information: (String, no white-space, semi-colons, or equals-signs permitted; commas are
-permitted only as delimiters for lists of values) INFO fields are encoded as a semicolon-separated series of short
-keys with optional values in the format: <key>=<data>[,data]. Arbitrary keys are permitted, although the
-following sub-fields are reserved (albeit optional):
+8. INFO - additional information: (String, no white-space, semi-colons, or equals-signs permitted; commas are permitted only as delimiters for lists of values) INFO fields are encoded as a semicolon-separated series of short keys with optional values in the format: <key>=<data>[,data]. Arbitrary keys are permitted, although the following sub-fields are reserved (albeit optional):
 
 - AA : ancestral allele
 - AC : allele count in genotypes, for each ALT allele, in the same order as listed
@@ -169,11 +132,7 @@ following sub-fields are reserved (albeit optional):
 - VALIDATED : validated by follow-up experiment
 - 1000G : membership in 1000 Genomes
 
-The exact format of each INFO sub-field should be specified in the meta-information (as described above). Example
-for an INFO field: DP=154;MQ=52;H2. Keys without corresponding values are allowed in order to indicate group
-membership (e.g. H2 indicates the SNP is found in HapMap 2). It is not necessary to list all the properties that
-a site does NOT have, by e.g. H2=0. See below for additional reserved INFO sub-fields used to encode structural
-variants.
+The exact format of each INFO sub-field should be specified in the meta-information (as described above). Example for an INFO field: DP=154;MQ=52;H2. Keys without corresponding values are allowed in order to indicate group membership (e.g. H2 indicates the SNP is found in HapMap 2). It is not necessary to list all the properties that a site does NOT have, by e.g. H2=0. See below for additional reserved INFO sub-fields used to encode structural variants.
 
 Genotype fields:
 

@@ -70,11 +70,6 @@ Meta-information lines
 
 File meta-information is included after the ## string and must be key=value pairs. It is strongly encouraged that information lines describing the INFO, FILTER and FORMAT entries used in the body of the VCF file be included in the meta-information section. Although they are optional, if these lines are present then they must be completely well-formed.
 
-Header line syntax
-
-To learn more take a look at the VCF specification_.
-
-.. _VCF specification: https://samtools.github.io/hts-specs/VCFv4.3.pdf
 
 Flow cytometry data
 -------------------

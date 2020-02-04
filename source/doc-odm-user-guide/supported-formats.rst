@@ -187,7 +187,7 @@ Cell populations can have nicknames, e.g. CD45+CD3+CD4+FOXP3+ (’MarkerCombinat
 Meta data file
 **************
 
-Meta data (annotation) about FACS data can be supplied as a tab-delimited table text file. Each row is one sample, each column is one property type (the first column contains unique identifiers of each sample).
+Meta data (annotation) about FACS data samples can be supplied as a tab-delimited table text file. Each row is one sample, each column is one property type (the first column contains unique identifiers of each sample).
 
 .. image:: images/facs-annot.png
    :scale: 55 %

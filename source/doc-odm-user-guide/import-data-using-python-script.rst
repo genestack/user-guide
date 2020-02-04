@@ -22,13 +22,11 @@ Optional experimental (signal) data files
 You can optionally also provide:
 
 - Expression data in GCT_ format, hosted at an FTP or HTTP web address
-
 .. _GCT: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29
 
 - Expression metadata in TSV format, hosted at an FTP or HTTP web address
 
 - Variant data in VCF_ format, hosted at an FTP or HTTP web address
-
 .. _VCF: https://samtools.github.io/hts-specs/VCFv4.2.pdf
 
 - Variant metadata in TSV format, hosted at an FTP or HTTP web address

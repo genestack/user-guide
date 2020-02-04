@@ -163,21 +163,13 @@ To learn more take a look at the VCF specification_.
 Flow cytometry data
 -------------------
 
-**FACS (.facs)** file is a TXT file with tab-delimited table that stores quantification data for proteins.
+Flow cytometry data can be stored with data in a **FACS (.facs)** file and metadata in TXT file.
 
-Annotation Table
-****************
 
-Annotation table file is tab-delimited table. Each row is one sample, each column is one property type (first column contains unique identifiers of each sample).
+Data files
+**********
 
-.. image:: images/facs-annot.png
-   :scale: 55 %
-   :align: center
-
-Signal Table
-************
-
-Tab-delimited file, where first columns describe features; then, each column corresponds to one sample.
+A .facs tab-delimited file. The first columns describes features; subsequent columns correspond to samples, one per column.
 
 .. image:: images/facs-signals.png
    :scale: 75 %
@@ -191,3 +183,12 @@ Each row in the file is one feature:
 - *Percentage* — like counts, but the percentage of cells positive/negative for a particular cell marker relative to the parent population as defined like for cell counts is provided.
 
 Cell populations can have nicknames, e.g. CD45+CD3+CD4+FOXP3+ (’MarkerCombination’) cells are also called Tregs.
+
+Meta data file
+**************
+
+Meta data (annotation) about FACS data can be supplied as a tab-delimited table text file. Each row is one sample, each column is one property type (the first column contains unique identifiers of each sample).
+
+.. image:: images/facs-annot.png
+   :scale: 55 %
+   :align: center

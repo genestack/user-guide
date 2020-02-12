@@ -16,7 +16,7 @@ change the template from the Default template if necessary.
 You can view any template by hovering over its name and click **Explore** to open it in the Template Editor application.
 
 .. image:: images/template-editor.png
-   :scale: 35 %
+   :scale: 30 %
    :align: center
 
 You can also create a new study from the Metadata Editor page:

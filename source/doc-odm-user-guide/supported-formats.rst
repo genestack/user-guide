@@ -4,6 +4,14 @@ Supported File Formats
 Expression data (transcriptomics)
 ---------------------------------
 
+- `Test_1000g.gct`_, an example GCT file
+
+.. _`Test_1000g.gct`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct
+
+- `Test_1000g.gct.tsv`_, an example expression metadata file
+
+.. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
+
 **GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset (e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
 
 .. image:: images/gct-file.png
@@ -30,9 +38,6 @@ To learn more take a look at the GCT specification_.
 
 .. [broken link; another option => https://software.broadinstitute.org/software/igv/GCT]
 
-- `Test_1000g.gct`_, an example GCT file
-
-.. _`Test_1000g.gct`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct
 
 **.gct.tsv** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
 
@@ -42,12 +47,18 @@ To learn more take a look at the GCT specification_.
 | 1000 Genomes Project |         RPKM         | GRCh38.91       |
 +----------------------+----------------------+-----------------+
 
-- `Test_1000g.gct.tsv`_, an example expression metadata file
 
-.. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
 
 Variant data (genomics)
 -----------------------
+
+- `Test_1000g.vcf`_, a VCF_ file of variant data from multiple sequencing runs
+
+.. _`Test_1000g.vcf`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf
+
+- `Test_1000g.vcf.tsv`_, a tab-separated file that describes the variant data
+
+.. _Test_1000g.vcf.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf.tsv
 
 ODM accepts **VCF files(Variant Call Format, .vcf)** for variant Data. VCF files are tab-delimited text files containing information about the position of genetic variations in the genome, and are produced as output of variant calling analysis.
 

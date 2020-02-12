@@ -12,9 +12,9 @@ You need to have:
 
 - A Genestack API token
 
-- A Study file containing metadata about the study in CSV or TSV format, hosted at an FTP or HTTP web address
+- A Study file containing metadata about the study in TSV format, hosted at an FTP or HTTP web address
 
-- A Samples file containing metadata about the samples in CSV or TSV format, hosted at an FTP or HTTP web address
+- A Samples file containing metadata about the samples in TSV format, hosted at an FTP or HTTP web address
 
 Optional experimental (signal) data files
 -----------------------------------------
@@ -22,23 +22,26 @@ Optional experimental (signal) data files
 You can optionally also provide:
 
 - Expression data in GCT_ format, hosted at an FTP or HTTP web address
-
 .. _GCT: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29
 
-- Expression metadata in CSV or TSV format, hosted at an FTP or HTTP web address
+- Expression metadata in TSV format, hosted at an FTP or HTTP web address
 
 - Variant data in VCF_ format, hosted at an FTP or HTTP web address
-
 .. _VCF: https://samtools.github.io/hts-specs/VCFv4.2.pdf
 
-- Variant metadata in CSV or TSV format, hosted at an FTP or HTTP web address
+- Variant metadata in TSV format, hosted at an FTP or HTTP web address
 
 - Flow cytometry data in .facs format, hosted at an FTP or HTTP web address
 
-- Flow cytometry metadata in CSV or TSV format, hosted at an FTP or HTTP web address
+- Flow cytometry metadata in TSV format, hosted at an FTP or HTTP web address
 
 Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and
 APIs, whilst the signal data will only queryable via APIs.
+
+Linking using sample source ID
+------------------------------
+
+By default linking is done via the **Sample Source ID** key, so this needs to be consistent in the above files for linking to occur.
 
 
 Getting a Genestack API token

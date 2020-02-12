@@ -52,7 +52,7 @@ To learn more take a look at the GCT specification_.
 Variant data (genomics)
 -----------------------
 
-- `Test_1000g.vcf`_, a VCF_ file of variant data from multiple sequencing runs
+- `Test_1000g.vcf`_, a VCF file of variant data from multiple sequencing runs
 
 .. _`Test_1000g.vcf`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf
 

@@ -17,7 +17,7 @@ The third line shows unique column headings: ‘gene_id’, ‘Description’, �
 The first left column shows unique values (e.g. Ensembl gene ID), the second one contains
 metadata (‘DDX11L1’). The raw expression values are shown in the bottom right part of the file.
 Each column corresponds to a separate assay (expression data measured in  a specific tissue);
-each row of the data matrix shows an expression value, for example, of a particular gene.
+each row of the data matrix shows an expression value of a particular gene, for example.
 
 To learn more take a look at the GCT specification_.
 
@@ -40,7 +40,7 @@ Basic structure of VCF
 The file contains three main parts:
 
 - *Meta-information lines* (marked with “##”) — includes VCF format version number (##fileformat=VCFv4.3);
-- *FILTER lines* (filters applied to the data, e.g. ##FILTER=<ID=LowQual, Description="Low quality">” ), FORMAT and INFO lines (explanations for abbreviations in the FORMAT and INFO columns of data lines,  e.g. “##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">”);
+- *FILTER lines* (filters applied to the data, e.g. ##FILTER=<ID=LowQual, Description="Low quality">”), FORMAT and INFO lines (explanations for abbreviations in the FORMAT and INFO columns of data lines,  e.g. “##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">”);
 - *Header line* (marked with “#”) — includes eight mandatory columns, namely #CHROM (chromosome), POS (genomic position), ID (identifier), REF (reference allele), ALT (alternate allele(s)), QUAL (Phred-scaled quality score for ALT), FILTER (filter status, where “PASS” means that this position has passed all filters), INFO (additional information described in the header lines, e.g. “DP=100”);
 - *Data lines* — provide information about a genomic position of a variation and genotype information on samples for each position; each line represents a single variant, represented in the header.
 

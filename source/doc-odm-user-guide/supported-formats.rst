@@ -1,23 +1,36 @@
-Supported Signal Data Files
-++++++++++++++++++++++++++++
+Supported File Formats
+++++++++++++++++++++++
 
-Expression data
----------------
+Expression data (transcriptomics)
+---------------------------------
 
-**GCT (Gene Cluster Text, .gct)** file is a tab-delimited text file containing gene expression data
-(e.g. microarray, RNA-seq data). GCT is automatically recognised as an Expression file in ODM.
+- `Test_1000g.gct`_, an example GCT file
+
+.. _`Test_1000g.gct`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct
+
+- `Test_1000g.gct.tsv`_, an example expression metadata file
+
+.. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
+
+**GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset (e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
 
 .. image:: images/gct-file.png
    :scale: 75 %
    :align: center
 
-The first line contains the version: #1.2
-The second line shows the number of rows (‘56202’) and columns (‘2’) in the data matrix.
-The third line shows unique column headings: ‘gene_id’, ‘Description’, ‘Bladder’ etc.
-The first left column shows unique values (e.g. Ensembl gene ID), the second one contains
-metadata (‘DDX11L1’). The raw expression values are shown in the bottom right part of the file.
-Each column corresponds to a separate assay (expression data measured in  a specific tissue);
-each row of the data matrix shows an expression value of a particular gene, for example.
+The first line contains the file version and for gct format is always: #1.2
+
+The second line shows the number of rows (‘56202’) and columns (‘2’) of the expression matrix, excluding the identifier and description columns.
+
+The third line contains headers for the identifier column (first), description (second) and sample metadata (remainder) labels, which must all be unique. For example: ‘gene_id’, ‘Description’, ‘Bladder’.
+
+Below the header row is the data matrix. The first column contains the unique identifier values (e.g. Ensembl gene ID), the second column has a text description, the remaining columns contain values for the assay that was carried out (for example intensity of a sample gene expression measured in a specific tissue);
+
+In the data matrix there is a row for each gene, and a column for each sample. The number of rows and columns should agree with the rows and columns specified on row two of the file.
+
+Names and descriptions may contain spaces, but may not contain nothing - NA or NULL text strings should be used.
+
+Intensity values in the data matrix can be left empty if they are missing.
 
 To learn more take a look at the GCT specification_.
 
@@ -25,47 +38,149 @@ To learn more take a look at the GCT specification_.
 
 .. [broken link; another option => https://software.broadinstitute.org/software/igv/GCT]
 
-Variant data
-------------
 
-In ODM a Variant Data file corresponds to VCF. **VCF (Variant Call Format, .vcf)** is the tab-delimited text file containing information about the position of genetic variations in the genome. Output of variant calling analysis.
+**.gct.tsv** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
+
++----------------------+----------------------+-----------------+
+| Expression Source    | Normalization Method | Genome Version  |
++======================+======================+=================+
+| 1000 Genomes Project |         RPKM         | GRCh38.91       |
++----------------------+----------------------+-----------------+
+
+
+
+Variant data (genomics)
+-----------------------
+
+- `Test_1000g.vcf`_, a VCF file of variant data from multiple sequencing runs
+
+.. _`Test_1000g.vcf`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf
+
+- `Test_1000g.vcf.tsv`_, a tab-separated file that describes the variant data
+
+.. _Test_1000g.vcf.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf.tsv
+
+ODM accepts **VCF files(Variant Call Format, .vcf)** for variant Data. VCF files are tab-delimited text files containing information about the position of genetic variations in the genome, and are produced as output of variant calling analysis.
 
 .. image:: images/vcf-file.png
    :scale: 55 %
    :align: center
 
-Basic structure of VCF
-**********************
+Basic structure of a VCF file
+*****************************
 
-The file contains three main parts:
+A VCF file contains three main parts:
 
 - *Meta-information lines* (marked with “##”) — includes VCF format version number (##fileformat=VCFv4.3);
-- *FILTER lines* (filters applied to the data, e.g. ##FILTER=<ID=LowQual, Description="Low quality">”), FORMAT and INFO lines (explanations for abbreviations in the FORMAT and INFO columns of data lines,  e.g. “##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">”);
-- *Header line* (marked with “#”) — includes eight mandatory columns, namely #CHROM (chromosome), POS (genomic position), ID (identifier), REF (reference allele), ALT (alternate allele(s)), QUAL (Phred-scaled quality score for ALT), FILTER (filter status, where “PASS” means that this position has passed all filters), INFO (additional information described in the header lines, e.g. “DP=100”);
+- *FILTER lines* (filters applied to the data, e.g. ##FILTER=<ID=LowQual, Description="Low quality">” ), FORMAT and INFO lines (explanations for abbreviations in the FORMAT and INFO columns of data lines,  e.g. “##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">”);
+- A vcf *Header line* (marked with “#”) — includes eight mandatory columns, namely #CHROM (chromosome), POS (genomic position), ID (identifier), REF (reference allele), ALT (alternate allele(s)), QUAL (Phred-scaled quality score for ALT), FILTER (filter status, where “PASS” means that this position has passed all filters), INFO (additional information described in the header lines, e.g. “DP=100”);
 - *Data lines* — provide information about a genomic position of a variation and genotype information on samples for each position; each line represents a single variant, represented in the header.
+
+Meta-information lines
+======================
+
+File meta-information is included after the ## string and must be key=value pairs. It is strongly encouraged that information lines describing the INFO, FILTER and FORMAT entries used in the body of the VCF file be included in the meta-information section. Although they are optional, if these lines are present then they must be completely well-formed.
+
+Header line syntax
+==================
+
+The header line names the 8 fixed, mandatory columns. These columns are as follows:
+
+1. #CHROM
+2. POS
+3. ID
+4. REF
+5. ALT
+6. QUAL
+7. FILTER
+8. INFO
+
+If genotype data is present in the file, these are followed by a FORMAT column header, then an arbitrary number of sample IDs. Duplicate sample IDs are not allowed. The header line is tab-delimited.
+
+Data lines
+==========
+
+Fixed fields:
+
+There are 8 fixed fields per record. All data lines are tab-delimited. In all cases, missing values are specified with a dot (‘.’).
+
+Fixed fields are:
+
+1. CHROM - chromosome: An identifier from the reference genome or an angle-bracketed ID String (“<ID>”) pointing to a contig in the assembly file (cf. the ##assembly line in the header). All entries for a specific CHROM should form a contiguous block within the VCF file. The colon symbol (:) must be absent from all chromosome names to avoid parsing errors when dealing with breakends. (String, no white-space permitted, Required).
+
+2. POS - position: The reference position, with the 1st base having position 1. Positions are sorted numerically, in increasing order, within each reference sequence CHROM. It is permitted to have multiple records with the same POS. Telomeres are indicated by using positions 0 or N+1, where N is the length of the corresponding chromosome or contig. (Integer, Required)
+
+3. ID - identifier: Semi-colon separated list of unique identifiers where available. If this is a dbSNP variant it is encouraged to use the rs number(s). No identifier should be present in more than one data record. If there is no identifier available, then the missing value should be used. (String, no white-space or semi-colons permitted)
+
+4. REF - reference base(s): Each base must be one of A,C,G,T,N (case insensitive). Multiple bases are permitted. The value in the POS field refers to the position of the first base in the String. For simple insertions and deletions in which either the REF or one of the ALT alleles would otherwise be null/empty, the REF and ALT Strings must include the base before the event (which must be reflected in the POS field), unless the event occurs at position 1 on the contig in which case it must include the base after the event; this padding base is not required (although it is permitted) for e.g. complex substitutions or other events where all alleles have at least one base represented in their Strings. If any of the ALT alleles is a symbolic allele (an angle-bracketed ID String “<ID>”) then the padding base is required and POS denotes the coordinate of the base preceding the polymorphism. Tools processing VCF files are not required to preserve case in the allele Strings. (String, Required).
+
+5. ALT - alternate base(s): Comma separated list of alternate non-reference alleles. These alleles do not have to be called in any of the samples. Options are base Strings made up of the bases A,C,G,T,N,*, (case insensitive) or an angle-bracketed ID String (“<ID>”) or a breakend replacement string as described in the section on breakends. The ‘*’ allele is reserved to indicate that the allele is missing due to a upstream deletion. If there are no alternative alleles, then the missing value should be used. Tools processing VCF files are not required to preserve case in the allele String, except for IDs, which are case sensitive. (String; no whitespace, commas, or angle-brackets are permitted in the ID String itself)
+
+6. QUAL - quality: Phred-scaled quality score for the assertion made in ALT. i.e. −10log10 prob(call in ALT is wrong). If ALT is ‘.’ (no variant) then this is −10log10 prob(variant), and if ALT is not ‘.’ this is −10log10 prob(no variant). If unknown, the missing value should be specified. (Numeric)
+7. FILTER - filter status: PASS if this position has passed all filters, i.e., a call is made at this position. Otherwise, if the site has not passed all filters, a semicolon-separated list of codes for filters that fail. e.g. “q10;s50” might indicate that at this site the quality is below 10 and the number of samples with data is below 50% of the total number of samples. ‘0’ is reserved and should not be used as a filter String. If filters have not been applied, then this field should be set to the missing value. (String, no white-space or semi-colons permitted)
+
+8. INFO - additional information: (String, no white-space, semi-colons, or equals-signs permitted; commas are permitted only as delimiters for lists of values) INFO fields are encoded as a semicolon-separated series of short keys with optional values in the format: <key>=<data>[,data]. Arbitrary keys are permitted, although the following sub-fields are reserved (albeit optional):
+
+- AA : ancestral allele
+- AC : allele count in genotypes, for each ALT allele, in the same order as listed
+- AF : allele frequency for each ALT allele in the same order as listed: use this when estimated from primary data, not called genotypes
+- AN : total number of alleles in called genotypes
+- BQ : RMS base quality at this position
+- CIGAR : cigar string describing how to align an alternate allele to the reference allele
+- DB : dbSNP membership
+- DP : combined depth across samples, e.g. DP=154
+- END : end position of the variant described in this record (for use with symbolic alleles)
+- H2 : membership in hapmap2
+- H3 : membership in hapmap3
+- MQ : RMS mapping quality, e.g. MQ=52
+- MQ0 : Number of MAPQ == 0 reads covering this record
+- NS : Number of samples with data
+- SB : strand bias at this position
+- SOMATIC : indicates that the record is a somatic mutation, for cancer genomics
+- VALIDATED : validated by follow-up experiment
+- 1000G : membership in 1000 Genomes
+
+The exact format of each INFO sub-field should be specified in the meta-information (as described above). Example for an INFO field: DP=154;MQ=52;H2. Keys without corresponding values are allowed in order to indicate group membership (e.g. H2 indicates the SNP is found in HapMap 2). It is not necessary to list all the properties that a site does NOT have, by e.g. H2=0. See below for additional reserved INFO sub-fields used to encode structural variants.
+
+Genotype fields:
+
+If genotype information is present, then the same types of data must be present for all samples. First a FORMAT field is given specifying the data types and order (colon-separated alphanumeric String). This is followed by one field per sample, with the colon-separated data in this field corresponding to the types specified in the format. The first sub-field must always be the genotype (GT) if it is present. There are no required sub-fields. As with the INFO field, there are several common, reserved keywords that are standards across the community:
+- GT : genotype, encoded as allele values separated by either of / or \|. The allele values are 0 for the reference
+allele (what is in the REF field), 1 for the first allele listed in ALT, 2 for the second allele list in ALT and
+so on. For diploid calls examples could be 0/1, 1 | 0, or 1/2, etc. For haploid calls, e.g. on Y, male nonpseudoautosomal X, or mitochondrion, only one allele value should be given; a triploid call might look like 0/0/1. If a call cannot be made for a sample at a given locus, ‘.’ should be specified for each missing allele in the GT field (for example ‘./.’ for a diploid genotype and ‘.’ for haploid genotype). The meanings of the separators are as follows (see the PS field below for more details on incorporating phasing information into the genotypes):
+
+- \/ : genotype unphased
+- \| : genotype phased
+- DP : read depth at this position for this sample (Integer)
+- FT : sample genotype filter indicating if this genotype was “called” (similar in concept to the FILTER field). Again, use PASS to indicate that all filters have been passed, a semi-colon separated list of codes for filters that fail, or ‘.’ to indicate that filters have not been applied. These values should be described in the metainformation in the same way as FILTERs (String, no white-space or semi-colons permitted)
+- GL : genotype likelihoods comprised of comma separated floating point log10-scaled likelihoods for all possible genotypes given the set of alleles defined in the REF and ALT fields. In presence of the GT field the same ploidy is expected and the canonical order is used; without GT field, diploidy is assumed. If A is the allele in REF and B,C,... are the alleles as ordered in ALT, the ordering of genotypes for the likelihoods is given by: F(j/k) = (k*(k+1)/2)+j. In other words, for biallelic sites the ordering is: AA,AB,BB; for triallelic sites the ordering is: AA,AB,BB,AC,BC,CC, etc. For example: GT:GL 0/1:-323.03,-99.29,-802.53 (Floats)
+- GLE : genotype likelihoods of heterogeneous ploidy, used in presence of uncertain copy number. For example: GLE=0:-75.22,1:-223.42,0/0:-323.03,1/0:-99.29,1/1:-802.53 (String)
+- PL : the phred-scaled genotype likelihoods rounded to the closest integer (and otherwise defined precisely as the GL field) (Integers)
+- GP : the phred-scaled genotype posterior probabilities (and otherwise defined precisely as the GL field); intended to store imputed genotype probabilities (Floats)
+- GQ : conditional genotype quality, encoded as a phred quality −10log10 p(genotype call is wrong, conditioned on the site’s being variant) (Integer)
+- HQ : haplotype qualities, two comma separated phred qualities (Integers)
+- PS : phase set. A phase set is defined as a set of phased genotypes to which this genotype belongs. Phased genotypes for an individual that are on the same chromosome and have the same PS value are in the same phased set. A phase set specifies multi-marker haplotypes for the phased genotypes in the set. All phased genotypes that do not contain a PS subfield are assumed to belong to the same phased set. If the genotype in the GT field is unphased, the corresponding PS field is ignored. The recommended convention is to use the position of the first variant in the set as the PS identifier (although this is not required). (Non-negative 32-bit Integer)
+- PQ : phasing quality, the phred-scaled probability that alleles are ordered incorrectly in a heterozygote (against all other members in the phase set). We note that we have not yet included the specific measure for precisely defining “phasing quality”; our intention for now is simply to reserve the PQ tag for future use as a measure of phasing quality. (Integer)
+- EC : comma separated list of expected alternate allele counts for each alternate allele in the same order as listed in the ALT field (typically used in association analyses) (Integers)
+- MQ : RMS mapping quality, similar to the version in the INFO field. (Integer)
+
+If any of the fields is missing, it is replaced with the missing value. For example if the FORMAT is GT:GQ:DP:HQ then 0 | 0 : . : 23 : 23, 34 indicates that GQ is missing. Trailing fields can be dropped (with the exception of the GT field, which should always be present if specified in the FORMAT field).
 
 To learn more take a look at the VCF specification_.
 
 .. _VCF specification: https://samtools.github.io/hts-specs/VCFv4.3.pdf
 
+
 Flow cytometry data
 -------------------
 
-**FACS (.facs)** file is a TXT file with tab-delimited table that stores quantification data for proteins.
+Flow cytometry data can be stored with data in a **FACS (.facs)** file and metadata in TXT file.
 
-Annotation Table
-****************
 
-Annotation table file is tab-delimited table. Each row is one sample, each column is one property type (first column contains unique identifiers of each sample).
+Data files
+**********
 
-.. image:: images/facs-annot.png
-   :scale: 55 %
-   :align: center
-
-Signal Table
-************
-
-Tab-delimited file, where first columns describe features; then, each column corresponds to one sample.
+A .facs tab-delimited file. The first columns describes features; subsequent columns correspond to samples, one per column.
 
 .. image:: images/facs-signals.png
    :scale: 75 %
@@ -79,3 +194,12 @@ Each row in the file is one feature:
 - *Percentage* — like counts, but the percentage of cells positive/negative for a particular cell marker relative to the parent population as defined like for cell counts is provided.
 
 Cell populations can have nicknames, e.g. CD45+CD3+CD4+FOXP3+ (’MarkerCombination’) cells are also called Tregs.
+
+Metadata file
+*************
+
+Metadata (annotation) about FACS data samples can be supplied as a tab-delimited table text file. Each row is one sample, each column is one property type (the first column contains unique identifiers of each sample).
+
+.. image:: images/facs-annot.png
+   :scale: 55 %
+   :align: center

@@ -22,7 +22,7 @@ The first line contains the file version and for gct format is always: #1.2
 
 The second line shows the number of rows (‘56202’) and columns (‘2’) of the expression matrix, excluding the identifier and description columns.
 
-The third line contains headers for the identifier column (first), description (second) and sample metadata (remainder) labels, which must all be unique. For example: ‘gene_id’, ‘Description’, ‘Bladder’.
+The third line contains headers for the identifier column (first), description (second) and sample metadata (remainder) labels, which must all be unique and a single word with no whitespace. For example: ‘gene_id’, ‘Description’, ‘Bladder’.
 
 Below the header row is the data matrix. The first column contains the unique identifier values (e.g. Ensembl gene ID), the second column has a text description, the remaining columns contain values for the assay that was carried out (for example intensity of a sample gene expression measured in a specific tissue);
 

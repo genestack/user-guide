@@ -12,7 +12,7 @@ You need to have:
 
 - A Genestack API token
 
-- A Study file containing metadata about the study in TSV format, hosted at an FTP or HTTP web address
+- Either a Study file containing metadata about the study in TSV format, hosted at an FTP or HTTP web address, OR the accession of an existing study in ODM that you will add files to.
 
 - A Samples file containing metadata about the samples in TSV format, hosted at an FTP or HTTP web address
 
@@ -20,6 +20,10 @@ Optional experimental (signal) data files
 -----------------------------------------
 
 You can optionally also provide:
+
+- The accession of a template to validate against rather than the default. Use **--template <ACCESSION>** to specify.
+
+- The server address if you want to apply the script to a different ODM server.  Use **--server <ADDRESS>** to specify.
 
 - Expression data in GCT_ format, hosted at an FTP or HTTP web address
 .. _GCT: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29

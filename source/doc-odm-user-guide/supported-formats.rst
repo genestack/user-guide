@@ -15,7 +15,7 @@ Expression data (transcriptomics)
 **GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset (e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
 
 .. image:: images/gct-file.png
-   :scale: 75 %
+   :scale: 50 %
    :align: center
 
 The first line contains the file version and for gct format is always: #1.2

@@ -29,9 +29,7 @@ Names and descriptions may contain spaces, but may not contain nothing - NA or N
 Intensity values in the data matrix can be left empty if they are missing.
 To learn more take a look at the GCT specification_.
 
-.. _specification: http://software.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gct
-
-.. [broken link; another option => https://software.broadinstitute.org/software/igv/GCT]
+.. _specification: https://software.broadinstitute.org/software/igv/GCT
 
 **.gct.tsv** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
 

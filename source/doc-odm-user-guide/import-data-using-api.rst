@@ -59,7 +59,7 @@ As an example, we will import tiny data subsets from the 1000 Genomes Project, c
 .. _`Test_1000g.samples.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.samples.tsv
 
 +----------------------+------------------+--------------+-----+------------+
-| Sample Source         | Sample Source ID | Species      | Sex | Population |
+| Sample Source        | Sample Source ID | Species      | Sex | Population |
 +======================+==================+==============+=====+============+
 | 1000 Genomes Project |     HG00119      | Homo sapiens |  M  | British    |
 +----------------------+------------------+--------------+-----+------------+

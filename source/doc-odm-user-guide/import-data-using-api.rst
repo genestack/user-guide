@@ -161,6 +161,8 @@ owned by you:
 
 .. image:: images/empty_study.png
 
+3. **Import samples**
+
 To import samples, you should use a different endpoint, *sampleCurator*:
 
 .. literalinclude:: import-samples-1.py

@@ -205,3 +205,26 @@ To learn more take a look at the VCF specification_.
 .. .. image:: images/facs-annot.png
    :scale: 55 %
    :align: center
+
+
+Metadata information
+--------------------
+
+Study
+*****
+
+Study metadata provides description of the created study. It can be imported in TXT or CSV formats.
+
+During the importing process a user specify import template including metadata fields that will be used.
+Metadata for a study can include technical information, such as Study Source or Genestack accession number of the study.
+
+provide information on the background, aim, design of the study and obtained results (e.g. Study Description), owner of the study (Study owner)
+and the main experimental factors (Target disease).
+
+Some metainfo fields are mandatory and they are highlighted in red if they are empty or filled in with incorrect values.
+For example, in the picture below the metainfo field Type is empty and must be filled with appropriate value.
+
+
+Sample
+******
+

@@ -28,15 +28,15 @@ Metadata Editor
 ---------------
 
 .. image:: images/Study-metainfo-editor-new-study.png
-   :scale: 80 %
+   :scale: 60 %
    :align: center
 
 The Metadata Editor application is where you can make changes to the metadata of Study, Samples and any processed/experimental metadata.
 
-To rename the study click on the "New Study" link at the top of the page and select "rename". Type in the new name and click the blue "Rename" button.
+To rename the study click on the "New Study" link at the top of the page and select "Rename". Type in the new name and click the blue "Rename" button.
 
 .. image:: images/New-study-rename1.png
-   :scale: 90 %
+   :scale: 60 %
    :align: center
 
 .. image:: images/New-study-rename2.png
@@ -54,14 +54,14 @@ The specific template that applies for a dataset can be changed by clicking the 
    :scale: 35 %
    :align: center
 
-Samples summary
-===============
+If some metadata fields are filled in incorrectly, for example a specified value has some typos or metadata terms
+don't match the template, you will see the **Invalid metadata** link in the upper right corner.
+Click on this link opens the **Validation Summary** pop-up window where you could find metadata that should be corrected.
 
-The samples tab has a special "Show summary" button, which summarises the metadata for the samples that are present. This summary also highlights metadata terms that don't match the template.
-
-.. image:: images/metainfo-summary.png
+.. image:: images/validation-summary.png
    :scale: 50 %
    :align: center
+
 
 Correcting metadata
 ===================

@@ -15,11 +15,12 @@ data-driven science through data FAIRification.
    doc-odm-user-guide/quickstart_user
    doc-odm-user-guide/setup
    doc-odm-user-guide/create-study
+   doc-odm-user-guide/import-samples-spreadsheet
+   doc-odm-user-guide/import-data-using-api
+   doc-odm-user-guide/import-data-using-python-script
    doc-odm-user-guide/studybrowser
    doc-odm-user-guide/template-editor
    doc-odm-user-guide/curator_guide
    doc-odm-user-guide/sharing
-   doc-odm-user-guide/import-data-using-api
-   doc-odm-user-guide/import-data-using-python-script
    doc-odm-user-guide/getting-a-genestack-api-token
    doc-odm-user-guide/supported-formats

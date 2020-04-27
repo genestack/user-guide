@@ -1,13 +1,13 @@
 Import Samples Spreadsheet
 ++++++++++++++++++++++++++
 
-If your study doesn't already have samples metadata (for example you have just created a new study) it is possible to import a spreadsheet of samples metadata through the GUI. This functionality is available in the Metadata editor, on the samples tab.
+If your study doesn't already have samples metadata with linked data (for example you have just created a new study) it is possible to import a spreadsheet of samples metadata through the GUI. This functionality is available in the Metadata Editor, on the samples tab.
 
 
 Requirements
 ------------
 
-You need a study which has no sample metadata file associated with it.
+You need a study which has no previously uploaded sample information that is linked to data.
 
 You need a TSV format file (with a filename extension of .tsv) containing sample information. The first row of the table is a list of the metadata attribute names, which must not be duplicated.
 See the example below:
@@ -51,4 +51,4 @@ Once you have selected a .tsv file a preview of the import is shown:
    :scale: 50 %
    :align: center
 
-Click the import button and the samples will now be visible in the samples tab.
+Click the import button and the samples will now be visible in the samples tab. Any previous sample metadata will be deleted.

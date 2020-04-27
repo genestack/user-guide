@@ -28,27 +28,27 @@ See the example below:
 | 1003 Genomes Project |     HG00176      | Homo sapiens |  F  | Finnish    |
 +----------------------+------------------+--------------+-----+------------+
 
-Metadata editor
----------------
+Importing via the Metadata Editor
+---------------------------------
 
 To import samples via the GUI you need to go to the Metadata Editor and then the samples tab. Each new study will be populated with some dummy sample entries but these will be deleted when you import a samples file.
 
 Click on the cloud icon to the right of the samples tab:
 
 .. image:: images/import-sample-icon.png
-   :scale: 80 %
+   :scale: 60 %
    :align: center
 
 This will open a dialogue box that prompts you to select a local TSV file.
 
 .. image:: images/import-dialogue.png
-   :scale: 50 %
+   :scale: 30 %
    :align: center
 
 Once you have selected a .tsv file a preview of the import is shown:
 
 .. image:: images/import-sample-preview.png
-   :scale: 50 %
+   :scale: 30 %
    :align: center
 
 Click the import button and the samples will now be visible in the samples tab. Any previous sample metadata will be deleted.

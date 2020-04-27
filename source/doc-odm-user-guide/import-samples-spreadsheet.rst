@@ -7,7 +7,7 @@ If your study doesn't already have samples metadata with linked data (for exampl
 Requirements
 ------------
 
-You need a study which either has no previously uploaded sample information that is linked to data.
+You need a study which has no previously uploaded sample information that is linked to data.
 
 You need a TSV format file (with a filename extension of .tsv) containing sample information. The first row of the table is a list of the metadata attribute names, which must not be duplicated.
 See the example below:

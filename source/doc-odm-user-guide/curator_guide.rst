@@ -64,7 +64,7 @@ don't match the template, you will see the **Invalid metadata** link in the uppe
    :scale: 30 %
    :align: center
 
-Another option to aid bul replace is to click the name a metadata filed that include incorrect values
+Another option to aid bulk replace is to click the name a metadata filed that include incorrect values
 and select "Bulk replace" in the drop down list.
 
 .. image:: images/bulk-replace-dropdown.png
@@ -109,7 +109,7 @@ If there are some filters applied (for example, "Sex" - "male"), you can replace
    :scale: 40 %
    :align: center
 
-As a result, valkus for only filtered samples will be changed.
+As a result, values for only the filtered samples will be changed.
 
 .. image:: images/only-filtered2.png
    :scale: 40 %
@@ -149,6 +149,6 @@ Values in the samples table cells can be propagated by dragging the bottom-right
 
 .. The summary table (seen by clicking the "Show summary" button) you can hover over any metadata row and a "Replace..." link will appear.
 
-.. .. image:: images/bulk-replace1.png
+.. image:: images/bulk-replace1.png
    :scale: 75 %
    :align: center

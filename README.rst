@@ -1,4 +1,4 @@
-User Tutorials
+Omics Data Manager user guide
 ##############
 
 Generate documentation files

@@ -61,10 +61,10 @@ To obtain a token, sign in to ODM via a web browser, click on your email address
    :scale: 50 %
    :align: center
 
-Then click the "Generate new token" button under API tokens:
+Then click the "Create new token" button under API tokens:
 
-.. image:: images/import_data_script_API_token.png
-   :scale: 50 %
+.. image:: images/odm_profile.png
+   :scale: 40 %
    :align: center
 
 You will then be emailed a link to download your token as plain text. Use this token as required below.

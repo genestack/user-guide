@@ -12,7 +12,7 @@ in the top-right corner of the page and, then, select the menu item **Profile**.
 On the opening page you'll find the following sections:
 
 .. image:: images/odm_profile.png
-   :scale: 70 %
+   :scale: 50 %
    :align: center
 
 - The first section contains your personal information, whether you are an admin and/or a curator user, which organisation you belong to and which groups you belong to. You can click the group name to taken directly to the group in the Manage Users application.

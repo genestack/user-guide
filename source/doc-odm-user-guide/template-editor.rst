@@ -77,8 +77,8 @@ the **/** character. For example:
    :align: center
 
 
-Export templates
-----------------
+Export template
+---------------
 
 You can export a JSON file which contains the template information by clicking the template name and selecting export from the drop down menu:
 

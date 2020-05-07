@@ -54,9 +54,10 @@ Templates include the following metadata options:
 Create and edit template
 ------------------------
 
-Click on the template name and select **Make a copy** to create your own editable copy of a template and modify it if needed.
+Click on the template name and select **Duplicate** to create your own editable copy of a template and modify it if needed.
 
-.. image:: images/template-copy.png
+.. image:: images/Template_dropdown.png
+   :scale: 50 %
    :align: center
 
 Autocomplete can help you to specify an appropriate dictionary term to be used in metadata validation in the Metadata Editor.
@@ -75,6 +76,15 @@ the **/** character. For example:
    :scale: 85 %
    :align: center
 
+
+Export template
+---------------
+
+You can export a JSON file which contains the template information by clicking the template name and selecting export from the drop down menu:
+
+.. image:: images/Template_dropdown.png
+   :scale: 50 %
+   :align: center
 
 Change template
 ---------------

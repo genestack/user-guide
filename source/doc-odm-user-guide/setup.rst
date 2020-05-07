@@ -11,24 +11,21 @@ in the top-right corner of the page and, then, select the menu item **Profile**.
 
 On the opening page you'll find the following sections:
 
-.. image:: images/profile-2.png
-   :scale: 70 %
+.. image:: images/odm_profile.png
+   :scale: 50 %
    :align: center
 
-- **Basic information** about your profile, namely *Name*, *Password*, *Email*, *Organization*, *Vendor*.
-  You can change your name and password if it is needed.
+- The first section contains your personal information, whether you are an admin and/or a curator user, which organisation you belong to and which groups you belong to. You can click the group name to taken directly to the group in the Manage Users application.
 
-- **API tokens** section create an access-token which allows to use scripts without the need to specify regular
-  credential explicitly. Learn more about how to generate Genestack REST API tokens in the section :ref:`token-label`.
+- The  **API tokens** section is where you can download an access-token which allows the use of scripts/APIs. Learn more about how to generate Genestack REST API tokens in the section :ref:`token-label`.
 
-After you click **Generate new token** the confirmation email is sent to your email address. To generate API token,
-follow the link specified in the email. This redirects you to the **Profile** where you can change token name and
-download it by click **Download API token**.
+After you click **Generate new token** an email is sent to your email address. To generate the API token,
+follow the link specified in the email. You can rename or delete previously generated tokens in your profile.
 
 .. image:: images/token.png
 
-- **Application to show after sign in** — allows you to specify which application (Dashboard or Study Browser) should
-  be your starting point.
+- **Default langing page** — allows you to specify which window (Dashboard or Study Browser) should
+  be your starting point when you sign in.
 
 
 

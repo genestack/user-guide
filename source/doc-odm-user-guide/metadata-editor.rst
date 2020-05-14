@@ -7,7 +7,6 @@ Any obtained results you can explore further with Metadata Editor app.
 Besides, in the Metadata Editor app curators can validate and make changes to the Study, Samples and any processed
 metadata.
 
-
 Getting to the Metadata Editor
 ------------------------------
 

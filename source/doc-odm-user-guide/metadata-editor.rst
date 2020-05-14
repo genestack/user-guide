@@ -175,7 +175,7 @@ Clicking on the Invalid metadata link or opens the **Validation Summary** pop-up
 invalid metadata terms will be shown. Click on a term you would like to update, immediately, **Replace values**
 window will open, allowing you to type in the correct value.
 
-Apart from editing metadata manually, user can also import and validate the metadata. Click Import data from spreadsheet button and select a local CSV or Excel file containing metadata you would like
+Apart from editing metadata manually, user can also import and validate the metadata. Click Iimport icon in the upper right corner and select a local CSV or Excel file containing metadata you would like
 to associate with the imported files.
 
 .. image:: images/import-from-spreadsheet.png

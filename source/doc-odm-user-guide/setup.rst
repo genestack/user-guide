@@ -12,7 +12,7 @@ in the top-right corner of the page and, then, select the menu item **Profile**.
 On the opening page you'll find the following sections:
 
 .. image:: images/odm_profile.png
-   :scale: 50 %
+   :scale: 45 %
    :align: center
 
 - The first section contains your personal information, whether you are an admin and/or a curator user, which organisation you belong to and which groups you belong to. You can click the group name to taken directly to the group in the Manage Users application.
@@ -24,7 +24,7 @@ follow the link specified in the email. You can rename or delete previously gene
 
 .. image:: images/token.png
 
-- **Default langing page** — allows you to specify which window (Dashboard or Study Browser) should
+- **Default landing page** section allows you to specify which window (Dashboard or Study Browser) should
   be your starting point when you sign in.
 
 
@@ -42,7 +42,7 @@ Depending on a role a user have, they can have different privileges in sharing p
 - *Group Administrator* — in addition to the sharing user rights, can invite or remove users and change their privileges.
   By default, you'll be a group administrator of any group that is created by your user.
 
-.. For more information on using groups and sharing files, see the "Sharing" section.
+For more information on using groups and sharing files, see the section :ref:`sharing-label`.
 
 **Manage groups** application lets you to view the list of groups you are invited in as well as their members,
 and manage them according to your privileges.

@@ -56,13 +56,13 @@ the new user their name, email and password.
 
 After the user is created they can log in using the specified credentials.
 
-Manage groups
-*************
+Groups
+******
 
-**Groups** are used to share files with other users, so that they are accessible for all members
+**Groups** are used to share studies with other users, so that they are accessible for all members
 of that group. Any user can create one or several groups and invite their collaborators.
 
-Depending on a role a user have, they can have different privileges in sharing process and managing the group, namely:
+Depending on the role a users has, they can have different privileges in sharing process and managing the group, namely:
 
 - *Non-sharing* — can only view the files shared with the group, however they have no sharing permissions;
 - *Sharing User* — not only have an access to the shared files but also can share data themselves;
@@ -71,43 +71,41 @@ Depending on a role a user have, they can have different privileges in sharing p
 
 For more information on using groups and sharing files, see the section :ref:`sharing-label`.
 
-**Manage groups** application lets you to view the list of groups you are invited in as well as their members,
+The **Groups** page lets you to view the list of groups you are a member of as well as their other members,
 and manage them according to your privileges.
 
-Click **Manage groups** in the short-cut menu to navigate to the application page.
+Click **Groups** in the short-cut menu to navigate to the Groups page.
 
 .. image:: images/shortcuts-manage-groups.png
    :scale: 70 %
    :align: center
 
 If you are an administrator of your organisation, you'll see two groups automatically created for you:
-one group lists all members of your organisation, another one — "Curator" group — includes those members which are
-granted with additional permissions by the administrator of your organisation. All members of the "Curator" group
-can approve and unapprove studies.
+one group lists all members of your organisation, another one — "Curator" group — includes those members which have additional permissions, namely, the ability to load data/metadata and to curate it.
 
-If you are not an administrator of your organisation, then, on the Manage Group page you'll see the group including
+If you are not an administrator of your organisation then on the Groups page you'll see the group including
 members of your organisation, their email addresses and roles.
 
 .. image:: images/manage-groups-members&curator.png
    :scale: 40 %
    :align: center
 
-Regardless your role in organisation, if you have no groups yet, you can create one by click **Create group**.
-In the appeared pop-up window you'll be asked to give the group a name.
+Regardless of your role in your organisation, if you have no groups yet, you can create one by clicking **Create group**.
+In the pop-up window that appears you'll be asked to give the group a name.
 
 .. image:: images/create-group.png
    :scale: 40 %
    :align: center
 
-As the new group is created, you can invite other users to join by click on **Add member**.
-You can also delete the created group by click on **Remove group**.
+After the new group is created you can invite other users to join by clicking on **Add member**.
+You can also delete the created group by clicking on **Remove group**.
 
 .. image:: images/add-user.png
    :scale: 40 %
    :align: center
 
-Then, in the dialog that appears, you'll be prompted for the new member email. If they are in your organisation,
-you could take advantage of autocomplete.
+In the dialog that appears, you'll be prompted for the new member email. If they are in your organisation,
+you can take advantage of autocomplete.
 
 .. image:: images/invite-by-email.png
    :scale: 40 %
@@ -115,7 +113,7 @@ you could take advantage of autocomplete.
 
 If you would like to invite a collaborator from other organisation to join the group,
 the invitation has to be approved by an organisation administrator from both sides.
-To approve incoming invitations, you should go to the **Invitations** tab.
+To approve incoming invitations, you should go to the **Invitations** tab, which otherwise will not be visible.
 
 .. image:: images/invitations-tab.png
    :scale: 40 %

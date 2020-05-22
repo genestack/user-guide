@@ -54,7 +54,7 @@ Templates include the following metadata options:
 Create and edit template
 ------------------------
 
-Click on the template name and select **Duplicate** to create your own editable copy of a template and modify it if needed.
+If you have permission to edit/manage templates you can click on the template name and select **Duplicate** to create your own editable copy of a template and modify it if needed.
 
 .. image:: images/Template_dropdown.png
    :scale: 50 %

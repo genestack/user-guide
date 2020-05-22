@@ -28,33 +28,33 @@ follow the link specified in the email. You can rename or delete previously gene
   be your starting point when you sign in.
 
 
-  Users and organization
-  **********************
+Users and organization
+**********************
 
-  The **Users and organization** page allows you not only to get an overview of the existing users in your organisation,
-  but also to create new users and assign permission to manage templates. This page is accessible only if you are
-  an administrator of your organisation. You can check your role out in the **Profile**.
+The **Users and organization** page allows you not only to get an overview of the existing users in your organisation,
+but also to create new users and assign permission to manage templates. This page is accessible only if you are
+an administrator of your organisation. You can check your role out in the **Profile**.
 
-  In order to open the application, you can use the shortcut menu and select **Users and organization**.
+In order to open the application, you can use the shortcut menu and select **Users and organization**.
 
-  .. image:: images/shortcut_1_23.png
-     :scale: 40 %
-     :align: center
+.. image:: images/shortcut_1_23.png
+   :scale: 40 %
+   :align: center
 
-  On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, an admin user or has permission to edit and manage templates, including setting the default template.
+On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, an admin user or has permission to edit and manage templates, including setting the default template.
 
-  .. image:: images/manage_users_1_23.png
-     :scale: 40 %
-     :align: center
+.. image:: images/manage_users_1_23.png
+   :scale: 40 %
+   :align: center
 
-  To create a new user, click on the **Create user** button. In the pop-up window you should specify for
-  the new user their name, email and password.
+To create a new user, click on the **Create user** button. In the pop-up window you should specify for
+the new user their name, email and password.
 
-  .. image:: images/new-user_1_23.png
-     :scale: 35 %
-     :align: center
+.. image:: images/new-user_1_23.png
+   :scale: 35 %
+   :align: center
 
-  After the user is created they can log in using the specified credentials.
+After the user is created they can log in using the specified credentials.
 
 Manage groups
 *************

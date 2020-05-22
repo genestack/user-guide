@@ -47,8 +47,7 @@ On the page you can change passwords of the users by clicking the three dots ico
    :scale: 40 %
    :align: center
 
-To create a new user, click on the **Create user** button. In the pop-up window you should specify for
-the new user their name, email and password.
+To create a new user, click on the **+ New user** button. In the pop-up window specify their name, email and starting password.
 
 .. image:: images/new-user_1_23.png
    :scale: 35 %

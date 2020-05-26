@@ -31,8 +31,8 @@ follow the link specified in the email. You can rename or delete previously gene
 Users and organization
 **********************
 
-The **Users and organization** page allows you not only to get an overview of the existing users in your organisation,
-but also to create new users and assign permission to manage templates. This page is accessible only if you are
+The **Users and organization** page allows you to get an overview of the existing users in your organisation,
+to create new users and assign permissions to manage other users and templates. This page is accessible only if you are
 an administrator of your organisation. You can check your role out in the **Profile**.
 
 In order to open the application, you can use the shortcut menu and select **Users and organization**.

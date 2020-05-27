@@ -51,4 +51,4 @@ Once you have selected a .tsv file a preview of the import is shown:
    :scale: 30 %
    :align: center
 
-Click the import button and the samples will now be visible in the samples tab. Any previous sample metadata will be deleted.
+Click the Import button and the samples will now be visible in the samples tab. Any previous sample metadata will be deleted.

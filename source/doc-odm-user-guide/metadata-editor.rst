@@ -1,16 +1,18 @@
 Metadata Editor
 +++++++++++++++
 
-Study Browser allows to explore created studies and associated data as well as data sets pre-imported from external
-resources and search for a specific data using facets and free-text search box.
-Any obtained results you can explore further with **Metadata Editor** app.
-Besides, in the Metadata Editor app curators can validate and make changes to the Study, Samples and any processed
-metadata.
+The **Metadata Editor** allows you to explore study, sample and omics metadata and validate it against templates, correcting/curating it if needed.
 
 Getting to the Metadata Editor
 ------------------------------
 
-When you click **Create a new study** button on the Dashboard, Metadata Editor app is opened and suggests you to specify metadata template (by default, the Default template is applied).
+To open an existing experiment with Metadata Editor, click on the study name in the search results in the Study Browser application.
+
+.. image:: images/open-me-1.png
+   :scale: 40 %
+   :align: center
+
+You can also get to the Metadata Editor when you click **Create a new study** button on the Dashboard. The Metadata Editor app will open and it suggests you specify a metadata template (by default, the Default template is applied).
 You can explore each template by hovering over it's name and clicking **Explore** link.
 By default, new study contains two tabs, namely Study and Sample providing metadata for Study and Samples, respectively.
 
@@ -18,11 +20,6 @@ By default, new study contains two tabs, namely Study and Sample providing metad
    :scale: 40 %
    :align: center
 
-To open an existing experiment with Metadata Editor, click on the study name in the search results in the Study Browser application.
-
-.. image:: images/open-me-1.png
-   :scale: 40 %
-   :align: center
 
 Note that users not included in the **"Curator" group** do not have permissions to make changes (update metadata, change
 templates etc.) for experiments which are not owned by them.
@@ -34,14 +31,14 @@ Exploring the Metadata Editor
    :scale: 35 %
    :align: center
 
-Click on application name shows drop-down menu allowing to create new study ('New study...'), explore and/or change the
-applied template if it is needed ('Default template' > 'Explore' or 'Apply another'), and open tutorials ('User Guide').
+Click on application name to show a drop-down menu, allowing you to create new study ('New study...'), explore and/or change the
+applied template if needed ('Default template' > 'Explore' or 'Apply another'), and open tutorials ('User Guide').
 
 .. image:: images/me-dropdown.png
    :scale: 35 %
    :align: center
 
-When you click on the study name, drop-down menu will appear allowing you to:
+When you click on the study name, a drop-down menu will appear allowing you to:
 
 .. image:: images/me-dropdown-2.png
    :scale: 50 %
@@ -53,7 +50,7 @@ When you click on the study name, drop-down menu will appear allowing you to:
    :scale: 35 %
    :align: center
 
--  **Export** all data by creating a link that can be used to download data and can be shared with your coleagues
+-  **Export** all data by creating a link that can be used to download data and can be shared with your colleagues
 
 .. image:: images/export.png
    :scale: 35 %
@@ -241,30 +238,10 @@ Clicking on the Invalid metadata link opens the **Validation Summary** pop-up wi
 invalid metadata terms will be shown. Click on a term you would like to update, immediately, **Replace values**
 window will open, allowing you to type in the correct value.
 
-Apart from editing metadata manually, user can also import and validate the metadata. Click on the "Import" icon in
+Apart from editing metadata manually, you can also import and validate the metadata. Click on the "Import" icon in
 the upper-right corner and select a local CSV or Excel file containing metadata you would like
 to associate with the imported files.
 
 .. image:: images/import-from-spreadsheet.png
    :scale: 40 %
    :align: center
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

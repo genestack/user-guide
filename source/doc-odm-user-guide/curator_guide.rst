@@ -136,7 +136,7 @@ The incorrect metadata values will be replaced with the new terms.
       :scale: 40 %
       :align: center
 
-If there are any filters applied (for example, "Sex" - "male"), you can chose to replace values only for the samples that match your filter:
+If there are any filters applied (for example, "Sex" - "male"), you can choose to replace values only for the samples that match your filter:
 
 .. image:: images/only-filtered.png
       :scale: 40 %

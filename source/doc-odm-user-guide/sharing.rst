@@ -1,3 +1,5 @@
+  .. _sharing-label:
+
 Sharing Studies
 +++++++++++++++
 

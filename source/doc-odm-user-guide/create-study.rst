@@ -9,7 +9,7 @@ The new study will be opened in the **Metadata Editor** where you can name the s
 change the template from the Default template if necessary.
 
 
-.. image:: images/new-study-me.png
+.. image:: images/new-study-template.png
    :scale: 40 %
    :align: center
 

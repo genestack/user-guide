@@ -1,6 +1,36 @@
 Supported File Formats
 ++++++++++++++++++++++
 
+Study metadata file
+-------------------
+
+- `Test_1000g.study.tsv`_, a tab-delimited file of the study attributes
+
+.. _`Test_1000g.study.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.study.tsv
+
+Study metadata can be supplied in a TSV format file.
+
+Samples metadata file
+---------------------
+
+- `Test_1000g.samples.tsv`_, a tab-delimited file of sample attributes.
+
+.. _`Test_1000g.samples.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.samples.tsv
+
+Samples metadata is supplied in TSV format file. There needs to be a **Sample Source** column with values filled in, and a **Sample Source ID** column whose values match the column headers for samples in the GCT/VCF etc. files. The remaining columns are for metadata attributes and the names of these cannot be duplicated.
+
++----------------------+------------------+--------------+-----+------------+
+| Sample Source        | Sample Source ID | Species      | Sex | Population |
++======================+==================+==============+=====+============+
+| 1000 Genomes Project |     HG00119      | Homo sapiens |  M  | British    |
++----------------------+------------------+--------------+-----+------------+
+| 1001 Genomes Project |     HG00121      | Homo sapiens |  F  | British    |
++----------------------+------------------+--------------+-----+------------+
+| 1002 Genomes Project |     HG00183      | Homo sapiens |  M  | Finnish    |
++----------------------+------------------+--------------+-----+------------+
+| 1003 Genomes Project |     HG00176      | Homo sapiens |  F  | Finnish    |
++----------------------+------------------+--------------+-----+------------+
+
 Expression data (transcriptomics)
 ---------------------------------
 

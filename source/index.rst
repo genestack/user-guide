@@ -25,3 +25,4 @@ data-driven science through data FAIRification.
    doc-odm-user-guide/sharing
    doc-odm-user-guide/getting-a-genestack-api-token
    doc-odm-user-guide/supported-formats
+   doc-odm-user-guide/system-requirements

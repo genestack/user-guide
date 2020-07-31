@@ -1,7 +1,7 @@
 Gene-Transcript Mapping
 +++++++++++++++++++++++
 
-ODM provides the capability to import and link a gene-transcript mapping file.
+ODM provides the capability to import and link a gene-transcript mapping file. This allows you to look up genes for a given set of transcripts and vice versa. Mappings are associated with expression data files, but if desired all mapping files can be queried to return all mappings.
 
 What can I import?
 ------------------

@@ -30,7 +30,7 @@ To import the gene-transcript mapping file submit a **POST** request to the **/g
 
 .. literalinclude:: import-g-t-mapping.py
 
-Because uploading is asynchronous the system returns confirmation message with a **jobExecId**. This can then be supplied as a **GET** request to the **/{jobExecId}​/output** endpoint to monitor status of the job, which when complete this will return the accession of the gene-transcript mapping object that has been created.
+Because uploading is asynchronous the system returns a confirmation message with a **jobExecId**. This can then be supplied as a **GET** request to the **/{jobExecId}​/output** endpoint to monitor status of the job, which when complete this will return the accession of the gene-transcript mapping object that has been created.
 
 Linking the gene-transcript mapping file to an expression matrix file
 *********************************************************************

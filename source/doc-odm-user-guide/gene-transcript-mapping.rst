@@ -6,7 +6,7 @@ ODM provides the capability to import and link a gene-transcript mapping file.
 What can I import?
 ------------------
 
-A gene-transcript mapping file can be uploaded. It needs to be a TSV consisting of two columns. The first row must contain the headers TXNAME and GENEID, and the first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTP/FTP location accessible to ODM.
+A gene-transcript mapping file can be uploaded. This needs to be a TSV file consisting of two columns. The first row must contain the headers TXNAME and GENEID, and the first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTP/FTP location accessible to ODM.
 
 +-------------------+--------------------+
 | TXNAME            | GENEID             |
@@ -26,7 +26,7 @@ You import gene-transcript mapping in two stages. First, import the mapping file
 Importing the gene-transcript mapping file
 ******************************************
 
-To import the gene-transcript mapping file submit a **POST** request to the /gene-transcript-mapping endpoint, with the body of the message containing a datalink of the URL of the file you wish to import, and any additional metadata:
+To import the gene-transcript mapping file submit a **POST** request to the **/gene-transcript-mapping** endpoint, with the body of the message containing a datalink of the URL of the file you wish to import, and any additional metadata:
 
 .. literalinclude:: import-g-t-mapping.py
 
@@ -42,13 +42,13 @@ To link the mapping file to expression data submit a **POST** request to the /li
 Querying gene-transcript mappings
 ---------------------------------
 
-To return the geneIDs for a given set of transcripts across all mapping files, supply the transcript IDs of interest to **GET** /gene-transcript-mapping/genes?transcriptId=transcript1,transcriptId=transcript2**
+To return the geneIDs for a given set of transcripts across all mapping files, supply the transcript IDs of interest to **GET** **/gene-transcript-mapping/genes?transcriptId=transcript1,transcriptId=transcript2**
 
 To return the geneIDs for a given set of transcripts in a particular mapping file, supply the accession of the mapping file and the transcript IDs of interest to **GET** **/gene-transcript-mapping/{id}/genes?transcriptId=transcript1,transcriptID=transcript2**
 
-To return the transcript IDs for a given list of geneIDs across all mapping files supply the genesIDs of interest to **GET** /gene-transcript-mapping/transcripts?geneId=gene1&geneId=gene2**
+To return the transcript IDs for a given list of geneIDs across all mapping files supply the genesIDs of interest to **GET** **/gene-transcript-mapping/transcripts?geneId=gene1&geneId=gene2**
 
-To return the transcript IDs for a given list of geneIDs in a particular mapping files supply supply the accession of the mapping file and the genesIDs of interest to **GET** gene-transcript-mapping/{id}/transcripts?geneId=gene1&geneId=gene2**
+To return the transcript IDs for a given list of geneIDs in a particular mapping files supply supply the accession of the mapping file and the genesIDs of interest to **GET** **/gene-transcript-mapping/{id}/transcripts?geneId=gene1&geneId=gene2**
 
 Retrieving a mapping for given GeneIDs in a study
 --------------------------------------------------
@@ -70,7 +70,7 @@ Post **GET** to the endpoint **/gene-transcript-mapping/{id}/transcripts?geneId=
 Performing OMICS queries using transcript IDs
 ---------------------------------------------
 
-Transcript IDs can be provided to OMICS queries (GET /omics​/expression/data) by passing transcript IDs to the exQuery parameter using for example "feature = ENST00000230368,ENST00000188976"
+Transcript IDs can be provided to OMICS queries (**GET** **/omics​/expression/data**) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**
 
 Updating a gene-transcript mapping file
 ---------------------------------------
@@ -80,4 +80,4 @@ There is currently no method to update a mapping file, so to update a mapping th
 Removing a gene-transcript mapping file
 ***************************************
 
-Mapping files can be deleted by sending a **DELETE** request to the /gene-transcript-mapping/{id} endpoint. It is possible to remove a mapping file regardless of whether the mapping file is linked to an expression data file or not. Any existing links are not removed by this endpoint, but instead need to be removed by sending a **DELETE** request to the /links endpoint. Likewise when a study is deleted, linked mapping files are not removed.
+Mapping files can be deleted by sending a **DELETE** request to the **/gene-transcript-mapping/{id}** endpoint. It is possible to remove a mapping file regardless of whether the mapping file is linked to an expression data file or not. Any existing links are not removed by this endpoint, but instead need to be removed by sending a **DELETE** request to the **/links** endpoint. Likewise when a study is deleted, linked mapping files are not removed.

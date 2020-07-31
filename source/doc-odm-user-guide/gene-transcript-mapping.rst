@@ -35,7 +35,7 @@ Because uploading is asynchronous the system returns confirmation message with a
 Linking the gene-transcript mapping file to an expression matrix file
 *********************************************************************
 
-To link the mapping file to expression data submit a **POST** request to the /links endpoint which can be found under the integrationCurator set of endpoints. The body of the request needs to supply accessions of the mapping file (returned after successful import) and the expression data file, together with a 'type' label which identifies which is which. See below for an example:
+To link the mapping file to expression data submit a **POST** request to the **/links** endpoint which can be found under the integrationCurator set of endpoints. The body of the request needs to supply accessions of the mapping file (returned after successful import) and the expression data file, together with a 'type' label which identifies which is which. See below for an example:
 
 .. literalinclude:: link-g-t-mapping.py
 
@@ -72,12 +72,26 @@ Performing OMICS queries using transcript IDs
 
 Transcript IDs can be provided to OMICS queries (**GET** **/omics​/expression/data**) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**
 
+Checking a mapping is available for a given expression data file
+-------------------------------------------------------------------
+
+The **/links** endpoint can be queried to determine which mapping files have been linked to a given expression data file. First use the endpoint **GET** with **"firstId = accession of expression group"**, and , **secondType = “geneTranscriptMapping”** to return the accession of the mapping file.
+
+Then to view the mapping file supply this accession as the {id} in **GET** **/gene-transcript-mapping/{id}**.
+
+It is also possible to add mapping file URL information to metadata templates in order to view this information in the GUI.
+
+Checking which expression data files are linked to a given mapping file
+-----------------------------------------------------------------------
+
+The **/links** endpoint can be queried to determine which expression data files have been linked to a given mapping file (so you know which links to delete after removing the mapping file, for example). Send a **GET** request to the **/links** endpoint with **"firstId = accession of mapping file"**
+
 Updating a gene-transcript mapping file
 ---------------------------------------
 
 There is currently no method to update a mapping file, so to update a mapping the existing mapping file should be deleted and a new file uploaded.
 
 Removing a gene-transcript mapping file
-***************************************
+---------------------------------------
 
 Mapping files can be deleted by sending a **DELETE** request to the **/gene-transcript-mapping/{id}** endpoint. It is possible to remove a mapping file regardless of whether the mapping file is linked to an expression data file or not. Any existing links are not removed by this endpoint, but instead need to be removed by sending a **DELETE** request to the **/links** endpoint. Likewise when a study is deleted, linked mapping files are not removed.

@@ -48,7 +48,7 @@ To return the geneIDs for a given set of transcripts in a particular mapping fil
 
 To return the transcript IDs for a given list of geneIDs across all mapping files supply the genesIDs of interest to **GET** **/gene-transcript-mapping/transcripts?geneId=gene1&geneId=gene2**
 
-To return the transcript IDs for a given list of geneIDs in a particular mapping files supply supply the accession of the mapping file and the genesIDs of interest to **GET** **/gene-transcript-mapping/{id}/transcripts?geneId=gene1&geneId=gene2**
+To return the transcript IDs for a given list of geneIDs in a particular mapping files supply the accession of the mapping file and the genesIDs of interest to **GET** **/gene-transcript-mapping/{id}/transcripts?geneId=gene1&geneId=gene2**
 
 Retrieving a mapping for given GeneIDs in a study
 --------------------------------------------------

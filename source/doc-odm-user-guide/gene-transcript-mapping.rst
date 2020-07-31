@@ -21,7 +21,7 @@ Metadata about the transcript mapped (for e.g. 'organism') can be supplied as ke
 Importing a gene-transcript mapping
 -----------------------------------
 
-You import gene-transcript mapping in two stages. First, import the mapping file. Then, link the mapping file to the expression matrix file (GCT). Importing uses ODM's APIs - you will need an API token (see :ref:'token-label' )
+You import gene-transcript mapping in two stages. First, import the mapping file. Then, link the mapping file to the expression matrix file (GCT). Importing uses ODM's APIs - you will need an API token (see :ref:`token-label` )
 
 Importing the gene-transcript mapping file
 ******************************************

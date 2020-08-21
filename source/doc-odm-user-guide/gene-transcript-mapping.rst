@@ -26,11 +26,15 @@ You import gene-transcript mapping in two stages. First, import the mapping file
 Importing the gene-transcript mapping file
 ******************************************
 
-To import the gene-transcript mapping file submit a **POST** request to the **/gene-transcript-mapping** endpoint, with the body of the message containing a datalink of the URL of the file you wish to import, and any additional metadata:
+To import the gene-transcript mapping file submit a **POST** request to the **/import/transcript-mapping_** endpoint, with the body of the message containing a datalink of the URL of the file you wish to import, and any additional metadata:
+
+_/import/transcript-mapping: https://swagger.occam.genestack.com/job/#/Data%20import%20jobs/import
 
 .. literalinclude:: import-g-t-mapping.py
 
-Because uploading is asynchronous the system returns a confirmation message with a **jobExecId**. This can then be supplied as a **GET** request to the **/{jobExecId}​/output** endpoint to monitor status of the job, which when complete this will return the accession of the gene-transcript mapping object that has been created.
+Because uploading is asynchronous the system returns a confirmation message with a **jobExecId**. This can then be supplied as a **GET** request to the **/{jobExecId}​/output_** endpoint to monitor status of the job, which when complete this will return the accession of the gene-transcript mapping object that has been created.
+
+_//{jobExecId}​/output: https://swagger.occam.genestack.com/job/#/Job%20operations/output
 
 Linking the gene-transcript mapping file to an expression matrix file
 *********************************************************************

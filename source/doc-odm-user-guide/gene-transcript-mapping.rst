@@ -46,9 +46,9 @@ Querying gene-transcript mappings
 
 To return the geneIDs for a given set of transcripts across all mapping files, supply the transcript IDs of interest to **GET** `/gene-transcript-mapping/genes <https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/searchByTranscripts>`_ endpoint
 
-To return the geneIDs for a given set of transcripts in a particular mapping file, supply the accession of the mapping file and the transcript IDs of interest to the **GET** `/gene-transcript-mapping/{id}/genes<https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/searchByTranscriptsWithinFile>`_ endpoint
+To return the geneIDs for a given set of transcripts in a particular mapping file, supply the accession of the mapping file and the transcript IDs of interest to the **GET** `/gene-transcript-mapping/{id}/genes <https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/searchByTranscriptsWithinFile>`_ endpoint
 
-To return the transcript IDs for a given list of geneIDs across all mapping files supply the genesIDs of interest to **GET** `/gene-transcript-mapping/transcripts<https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/searchByGenes>`_ endpoint
+To return the transcript IDs for a given list of geneIDs across all mapping files supply the genesIDs of interest to **GET** `/gene-transcript-mapping/transcripts <https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/searchByGenes>`_ endpoint
 
 To return the transcript IDs for a given list of geneIDs in a particular mapping files supply the accession of the mapping file and the genesIDs of interest to **GET** `/gene-transcript-mapping/{id}/transcripts <https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/searchByGenesWithinFile>`_ endpoint.
 

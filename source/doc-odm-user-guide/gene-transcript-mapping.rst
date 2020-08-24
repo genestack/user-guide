@@ -72,7 +72,7 @@ Submit a **GET** request to the endpoint `/gene-transcript-mapping/{id}/transcri
 Performing OMICS queries using transcript IDs
 ---------------------------------------------
 
-Transcript IDs can be provided to OMICS queries (**GET** `/omics​/expression/data<https://swagger.occam.genestack.com/integrationUser/#/Omics%20queries/searchExpressionData>`_) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**
+Transcript IDs can be provided to OMICS queries (**GET** `/omics​/expression/data <https://swagger.occam.genestack.com/integrationUser/#/Omics%20queries/searchExpressionData>`_) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**
 
 Checking a mapping is available for a given expression data file
 -------------------------------------------------------------------

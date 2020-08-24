@@ -101,7 +101,7 @@ Mapping files can be deleted by sending a **DELETE** request to the `/gene-trans
 Who can do what?
 ----------------
 
-- To upload and create links: Users must be part of the curator user group
+- To upload files, create and delete links: Users must be part of the curator user group
 
 - To query mapping: Any user can do this. Mappings are shared across all members of an organisation
 

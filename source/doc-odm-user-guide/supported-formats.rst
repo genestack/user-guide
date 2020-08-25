@@ -42,7 +42,7 @@ Expression data (transcriptomics)
 
 .. _Test_1000g.gct.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.gct.tsv
 
-**GCT (Gene Cluster Text, .gct)** data files are supported by ODM. This is a tab-delimited text file describing a gene expression dataset (e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
+**GCT (Gene Cluster Text, .gct, .gct.gz, .gct.zip)** data files are supported by ODM. Gz and Zip archived versions are also accepted. This is a tab-delimited text file describing a gene expression dataset (e.g. microarray, RNA-seq data). GCT files are automatically recognised as Expression files in ODM.
 
 .. image:: images/gct-file.png
    :scale: 50 %
@@ -61,7 +61,7 @@ To learn more take a look at the GCT specification_.
 
 .. _specification: https://software.broadinstitute.org/software/igv/GCT
 
-**.gct.tsv** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
+**.gct.tsv, gct.tsv.gz, gct.tsv.zip** files are tab delimited files that contain text metadata that describes the expression data, e.g. normalisation method, genome version.  The first row contains the key names, the second row contains the values.
 
 +----------------------+----------------------+-----------------+
 | Expression Source    | Normalization Method | Genome Version  |
@@ -78,11 +78,11 @@ Variant data (genomics)
 
 .. _`Test_1000g.vcf`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf
 
-- `Test_1000g.vcf.tsv`_, a tab-separated file that describes the variant data
+- `Test_1000g.vcf.tsv`_, a tab-separated file that describes the variant data (.gz and .zip also accepted)
 
 .. _Test_1000g.vcf.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf.tsv
 
-ODM accepts **VCF files(Variant Call Format, .vcf)** for variant Data. VCF files are tab-delimited text files containing information about the position of genetic variations in the genome, and are produced as output of variant calling analysis.
+ODM accepts **VCF files(Variant Call Format, .vcf, .vcf.gz, .vcf.zip)** for variant Data. VCF files are tab-delimited text files containing information about the position of genetic variations in the genome, and are produced as output of variant calling analysis. Gz and Zip archived versions are also accepted.
 
 .. image:: images/vcf-file.png
    :scale: 55 %

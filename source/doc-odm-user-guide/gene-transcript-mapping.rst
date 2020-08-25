@@ -63,7 +63,7 @@ Supply the study accession as the studyQuery parameter to **GET** `/omics/expres
 
 2. Retrieve the accession for the mapping linked to that expression group (if more than one, choose one)
 
-Submit a **GET** request to the ​`/links <https://swagger.occam.genestack.com/integrationUser/#/Linkage/getLinksByParams>`_ endpoint with the parameters:  firstId = accession of expression group, secondType = “geneTranscriptMapping”. The API endpoint returns an array of accessions, you can check each mapping file via the API endpoint **GET** `/gene-transcript-mapping/{id} <https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/getDetailsByAccession>`_ and choose the mapping of interest.
+Submit a **GET** request to the `/links <https://swagger.occam.genestack.com/integrationUser/#/Linkage/getLinksByParams>`_ endpoint​ with the parameters:  firstId = accession of expression group, secondType = “geneTranscriptMapping”. The API endpoint returns an array of accessions, you can check each mapping file via the API endpoint **GET** `/gene-transcript-mapping/{id} <https://swagger.occam.genestack.com/gene-transcript-mapping/#/Gene%20Transcript%20Mappping%20queries/getDetailsByAccession>`_ and choose the mapping of interest.
 
 3. Retrieve transcript IDs for genes of interest
 

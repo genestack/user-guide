@@ -26,7 +26,7 @@ You import gene-transcript mapping in two stages. First, import the mapping file
 Importing the gene-transcript mapping file
 ******************************************
 
-To import the gene-transcript mapping file submit a **POST** request to the `/import/transcript-mapping <https://occam.genestack.com/swagger/?urls.primaryName=job#/Data%20import%20jobs/import/>`_ endpoint, with the body of the message containing a datalink of the URL of the file you wish to import, and any additional metadata:
+To import the gene-transcript mapping file submit a **POST** request to the `/import/transcript-mapping <https://occam.genestack.com/swagger/?urls.primaryName=job#/Data%20import%20jobs/startImportJob>`_ endpoint, with the body of the message containing a datalink of the URL of the file you wish to import, and any additional metadata:
 
 .. literalinclude:: import-g-t-mapping.py
 

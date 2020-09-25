@@ -166,7 +166,7 @@ As a result only samples obtained from H. sapiens are shown in the Samples tab.
    :scale: 35 %
    :align: center
 
-Omics Tabs
+Omics tabs
 **********
 
 The remaining tabs in the Metadata Editor display metadata for the omics data files associated with a study, such as GCT files. If more than one version of an omics file is available the different versions can be toggled.

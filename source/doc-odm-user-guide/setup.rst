@@ -80,47 +80,35 @@ Click **Groups** in the short-cut menu to navigate to the Groups page.
    :align: center
 
 If you are an administrator of your organisation, you'll see two groups automatically created for you:
-one group lists all members of your organisation, another one — "Curator" group — includes those members which have additional permissions, namely, the ability to load data/metadata and to curate it.
+the members group lists all members of your organisation, another one — "Curator" group — includes those members which have additional permissions, namely, the ability to load data/metadata and to curate it.
 
 If you are not an administrator of your organisation then on the Groups page you'll see the group including
 members of your organisation, their email addresses and roles.
 
-.. image:: images/manage-groups-members&curator.png
+.. image:: images/groups.png
    :scale: 40 %
    :align: center
 
-Regardless of your role in your organisation, if you have no groups yet, you can create one by clicking **Create group**.
+Regardless of your role in your organisation, if you have no groups yet, you can create one by clicking **+ New group**.
 In the pop-up window that appears you'll be asked to give the group a name.
 
-.. image:: images/create-group.png
+.. image:: images/new-group.png
    :scale: 40 %
    :align: center
 
-After the new group is created you can invite other users to join by clicking on **Add member**.
-You can also delete the created group by clicking on **Remove group**.
+After the new group is created you can invite other users to join by clicking on **New members**.
+You can also delete the created group by clicking on **Remove group**. If a group contains members you need to remove the members from the group before you can delete it.
 
-.. image:: images/add-user.png
+.. image:: images/add-members.png
    :scale: 40 %
    :align: center
 
 In the dialog that appears, you'll be prompted for the new member email. If they are in your organisation,
 you can take advantage of autocomplete.
 
-.. image:: images/invite-by-email.png
-   :scale: 40 %
-   :align: center
-
 If you would like to invite a collaborator from other organisation to join the group,
 the invitation has to be approved by an organisation administrator from both sides.
 To approve incoming invitations, you should go to the **Invitations** tab, which otherwise will not be visible.
 
-.. image:: images/invitations-tab.png
-   :scale: 40 %
-   :align: center
-
 Once you have added a user to the newly created group, you'll also
-be able to set up their permissions within the group (by default, new members are non-sharing users).
-
-.. image:: images/change-permissions.png
-   :scale: 80 %
-   :align: center
+be able to set up their role within the group (by default, new members are non-sharing users).

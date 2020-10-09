@@ -4,11 +4,11 @@ Supported File Formats
 Study metadata file
 -------------------
 
-- `Test_1000g.study.tsv`_, a tab-delimited file of the study attributes
+- `Test_1000g.study.tsv`_, a tab-delimited file of the study attributes.
 
 .. _`Test_1000g.study.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.study.tsv
 
-Study metadata can be supplied in a TSV format file.
+Study metadata can be supplied in a TSV format file. There is a limit of 255 characters for attribute names.
 
 Samples metadata file
 ---------------------
@@ -17,7 +17,7 @@ Samples metadata file
 
 .. _`Test_1000g.samples.tsv`: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.samples.tsv
 
-Samples metadata is supplied in TSV format file. There needs to be a **Sample Source** column with values filled in, and a **Sample Source ID** column whose values match the column headers for samples in the GCT/VCF etc. files. The remaining columns are for metadata attributes and the names of these cannot be duplicated.
+Samples metadata is supplied in TSV format file. There needs to be a **Sample Source** column with values filled in, and a **Sample Source ID** column whose values match the column headers for samples in the GCT/VCF etc. files. The remaining columns are for metadata attributes and the names of these cannot be duplicated. There is a limit of 255 characters for attribute names.
 
 +----------------------+------------------+--------------+-----+------------+
 | Sample Source        | Sample Source ID | Species      | Sex | Population |
@@ -49,8 +49,11 @@ Expression data (transcriptomics)
    :align: center
 
 The first line contains the file version and for gct format is always: #1.2
-The second line shows the number of rows (‘56202’) and columns (‘53’) of the expression matrix, excluding the identifier and description columns.
-The third line is the matrix header row. The first column must be labelled 'Name' (case insensitive) and the second 'Description' (case insensitive), the following columns correspond to sample identifiers eg: ‘Bladder’ which must all be unique and a single word with no whitespace..
+
+The second line shows the number of rows (‘2’) and columns (‘4’) of the expression matrix, which correspond to the number of features (eg genes) and samples respectively (ie excluding the identifier and description columns).
+
+The third line is the matrix header row. The first column must be labelled 'Name' (case insensitive) and the second 'Description' (case insensitive), the following columns correspond to sample identifiers eg: ‘Bladder’ which must all be unique and a single word with no whitespace.
+
 Below the header row is the data matrix. The first column contains the unique identifier values (e.g. Ensembl gene ID), the second column has a text description, the remaining columns contain values for the assay that was carried out (for example intensity of a sample gene expression measured in a specific tissue);
 In the data matrix there is a row for each gene, and a column for each sample. The number of rows and columns should agree with the rows and columns specified on row two of the file.
 

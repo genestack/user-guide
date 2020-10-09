@@ -89,6 +89,13 @@ Optionally include data files by appending any or all of the following to the ab
 
 .. literalinclude:: import-data-script-6.py
 
+Updating (signal) data files
+----------------------------
+
+To update a signal data file (e.g. GCT, VCF file) rather than adding another data file, append the accession of the data file to be updated in square brackets to the URL of the data file import. Existing study and sample accessions must be supplied. See the example below:
+
+.. literalinclude:: import-data-script-7.py
+
 Example files
 -------------
 

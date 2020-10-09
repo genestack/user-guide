@@ -1,0 +1,6 @@
+--study_accession GSF994039 \
+--samples GSF994040 \
+--expression http://exampl.com/expression.gct[GSF994565]  \
+--expression_metadata http://exampl.com/expression_metadata.tsv  \
+--variant http://exampl.com/variations.vcf[GSF994700] \
+--variant_metadata http://exampl.com/variant_metadata.tsv

@@ -17,7 +17,7 @@ You can view the R scripts directly on GitHub. To modify/run the Shiny app yours
 Run the Shiny application in the R console (R/RStudio/Jupyter notebooks)
 - Copy and paste your API token to the "token" variable in scripts app.R and dictionaries_api.R (e.g. `token <- "<your token here>""`), and save the files
 - Set your working directory to where the Shiny app folder is located using `setwd('~/shinyappfolder')`
-  load Shiny package using `library(shiny)`
+- load Shiny package using `library(shiny)`
 - Run the app using `runApp()`
 
 Alternatively, run the Shiny application in a terminal or console window

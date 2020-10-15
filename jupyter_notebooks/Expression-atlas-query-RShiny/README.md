@@ -11,8 +11,8 @@ You can view the R scripts directly on GitHub. To modify/run the Shiny app yours
 - Prerequisite libraries:
   - R packages: 
     `intall.packages(c("shiny", "ggbeeswarm", "plyr", "gridExtra", "tidyverse", "httr", "RJSONIO"))`
-  - Ask us for the ODM R client libraries, and then 
-    `install.packages(c("studyCurator", "integrationCurator"))`
+  - Ask us for the ODM R client libraries (in this case, install "studyCurator", "integrationCurator"), and then
+    `install.packages('<path to the r/integrationCurator folder>', repos = NULL, type="source")`
 
 Run the Shiny application in the R console (R/RStudio/Jupyter notebooks)
 - Copy and paste your API token to the "token" variable in scripts app.R and dictionaries_api.R (e.g. `token <- "<your token here>""`), and save the files

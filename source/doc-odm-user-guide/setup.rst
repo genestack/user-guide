@@ -32,8 +32,7 @@ Users and organization
 **********************
 
 The **Users and organization** page allows you to get an overview of the existing users in your organisation,
-to create new users and assign permissions to manage other users and templates. This page is accessible only if you are
-an administrator of your organisation. You can check your role out in the **Profile**.
+to create new users and assign permissions to manage the organization and templates. This page is accessible only if you have permission to manage the organization.
 
 In order to open the application, you can use the shortcut menu and select **Users and organization**.
 
@@ -41,9 +40,9 @@ In order to open the application, you can use the shortcut menu and select **Use
    :scale: 40 %
    :align: center
 
-On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, an admin user or has permission to edit and manage templates, including setting the default template.
+On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, has permission to manage the organization (add/deactivate users, manage their permissions) and whether they can edit and manage templates, including setting the default template.
 
-.. image:: images/manage_users_1_23.png
+.. image:: images/manage_users_1_31.png
    :scale: 40 %
    :align: center
 

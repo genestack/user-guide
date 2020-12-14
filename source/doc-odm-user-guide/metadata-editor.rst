@@ -50,9 +50,9 @@ When you click on the study name, a drop-down menu will appear allowing you to:
    :scale: 35 %
    :align: center
 
--  **Export** all data by creating a link that can be used to download data and can be shared with your colleagues
+-  **Export** data by creating a link that can be used to download data and can be shared with your colleagues
 
-.. image:: images/export.png
+.. image:: images/export-data-link.png
    :scale: 35 %
    :align: center
 

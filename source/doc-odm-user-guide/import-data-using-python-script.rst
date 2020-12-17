@@ -43,9 +43,9 @@ You can optionally also provide:
 
 - A gene-transcript mapping file, in TSV format, hosted at an FTP or HTTP web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
 
-- A libraries file in TSV format, hosted at an FTP or HTTP web address
+- A libraries file in TSV format, hosted at an FTP or HTTP web address, or the accession of an existing library file
 
-- A preparations file in TSV format, hosted at an FTP or HTTP web address
+- A preparations file in TSV format, hosted at an FTP or HTTP web address, or the accession of an existing preparations file.
 
 Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and
 APIs, whilst the signal data will only queryable via APIs.

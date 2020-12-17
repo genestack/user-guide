@@ -43,6 +43,10 @@ You can optionally also provide:
 
 - A gene-transcript mapping file, in TSV format, hosted at an FTP or HTTP web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
 
+- A libraries file in TSV format, hosted at an FTP or HTTP web address
+
+- A preparations file in TSV format, hosted at an FTP or HTTP web address
+
 Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and
 APIs, whilst the signal data will only queryable via APIs.
 
@@ -88,6 +92,11 @@ Optionally include data files by appending any or all of the following to the ab
 .. literalinclude:: import-data-script-4.py
 
 .. literalinclude:: import-data-script-6.py
+
+.. literalinclude:: import-data-script-8.py
+
+.. literalinclude:: import-data-script-9.py
+
 
 Updating (signal) data files
 ----------------------------

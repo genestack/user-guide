@@ -1,4 +1,4 @@
-Exporting data
+Exporting Data
 ++++++++++++++
 
 To export data from a study either click the three buttons icon next to the study title from the Study Browser or click the study name in the Metadata editor and select **Export data**.

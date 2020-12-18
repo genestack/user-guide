@@ -20,7 +20,14 @@ You can import studies, samples, and signals:
 Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and
 APIs, whilst the signal data will only queryable via APIs.
 
-The accepted file formats will be described in the step-by-step example.
+You can optionally also import:
+
+- *Gene-transcript mapping*: a list of transcript and gene ids and how they map to each other.
+
+- *Libraries metadata*: metadata about sample library preparation for expression data.
+
+- *Preprations metadata*: metadata about sample preparation for proteomics data.
+
 
 Can I capture the relationships between studies, samples, and signals?
 ----------------------------------------------------------------------

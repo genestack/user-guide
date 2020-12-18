@@ -256,10 +256,10 @@ A gene-transcript mapping file can be imported. This is a TSV file consisting of
 Libraries file
 --------------
 
-Library metadata is a TSV file with information about how samples were prepared. It contains data related to the quality of samples, barcodes and library properties (single-end vs pair-end). Each sample can have more than 1 corresponding library. Multiple samples can be pooled into the same library, e.g. pooling female and male samples to remove gender-specific signals in the sequencing output (unrelated to multiplexing of libraries with barcodes).
+Libraries metadata is a TSV file with information about how samples were prepared. It contains data related to the quality of samples, barcodes and library properties (single-end vs pair-end). Each sample can have more than 1 corresponding library. Multiple samples can be pooled into the same library, e.g. pooling female and male samples to remove gender-specific signals in the sequencing output (unrelated to multiplexing of libraries with barcodes). **Sample Source ID** and **Library ID** are required headings.
 
 +-------------------+--------------------+--------------------+--------------------+
-| Sample ID         | Library ID         | Library barcode    | Library pool       |
+| Sample Source ID  | Library ID         | Library barcode    | Library pool       |
 +===================+====================+====================+====================+
 | 1                 | 1                  | A                  |                    |
 +-------------------+--------------------+--------------------+--------------------+
@@ -271,4 +271,4 @@ Library metadata is a TSV file with information about how samples were prepared.
 Preparations file
 -----------------
 
-Preparations metadata follows the same format as libraries above, but containing proteomics specific metadata.
+Preparations metadata follows the same format as libraries above, but containing proteomics specific metadata. **Sample Source ID** and **Preparation ID** are required headings.

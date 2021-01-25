@@ -49,7 +49,7 @@ To return the entries across all mapping files, supply gene or transcript IDs of
 To return the gene or transcript IDs for a given set of entries a particular mapping file, supply the accession of the mapping file and the transcript IDs of interest to the **GET** `/xrefsets/{id}/entries <https://occam.genestack.com/swagger/?urls.primaryName=reference-data#/Xrefset%20queries/searchEntriesWithinFile>`_ endpoint
 
 
-Retrieving a mapping for a given gene in a study
+Retrieving the mapping for a given gene in a study
 --------------------------------------------------
 
 To look at the mapping for given genes in a study you need to:
@@ -69,7 +69,7 @@ Submit a **GET** request to the endpoint `/xrefsets/{id}/entries <https://occam.
 Performing OMICS queries using gene/transcript IDs
 ---------------------------------------------
 
-Transcript IDs can be provided to OMICS queries (**GET** `/omics​/expression/data <https://occam.genestack.com/swagger/?urls.primaryName=integrationCurator#/Omics%20queries/searchExpressionData>`_) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**
+Gene/transcript IDs can be provided to OMICS queries (**GET** `/omics​/expression/data <https://occam.genestack.com/swagger/?urls.primaryName=integrationCurator#/Omics%20queries/searchExpressionData>`_) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**
 
 Checking a mapping is available for a given expression data file
 -------------------------------------------------------------------

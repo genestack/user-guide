@@ -5,7 +5,7 @@ library(gridExtra)
 suppressMessages(library(tidyverse))
 
 host <- "occam.genestack.com"
-token <- "<your token here>"
+token <- "6139dc4be955529e0910992cc0d8cbadd1dcd421"
 
 source("r_client_api.R")
 source("dictionaries_api.R")
@@ -101,6 +101,7 @@ ui <- fluidPage(
         mainPanel(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
+                        tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
                         tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),
@@ -204,6 +205,25 @@ server <- function(input, output, session) {
             theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
     })
     
+    output$alleles <- renderUI({
+        if (!StudiesHasVariantData(studies())) {
+            return("")
+        }
+        
+        plotOutput('alleles_show')
+    })
+
+    output$alleles_show <- renderPlot({
+        vx_query <- 'Intervals=7:116312444-116438440 info_AF=(0.001:1)'
+        af <- ComputeAlleleFrequencies(studies(), vx_query)
+        
+        if (is.null(af)) {
+            return("")
+        }
+        
+        ggplot(af, mapping = aes(x = Start, y = Freq)) + geom_bar(stat = 'identity')
+    })
+        
     output$tsne <- renderUI({
         se = samples_expressions()[['data']]
         if (is_empty(se) || nrow(se) == 0 ) {

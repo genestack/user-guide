@@ -2,7 +2,7 @@ library(httr)
 library(RJSONIO)
 
 host <- "occam.genestack.com"
-token <- "<your token here>"
+token <- "6139dc4be955529e0910992cc0d8cbadd1dcd421"
 
 authenticate = function() {
     sign_in = sprintf('https://%s/frontend/endpoint/application/invoke/genestack/signin', host)

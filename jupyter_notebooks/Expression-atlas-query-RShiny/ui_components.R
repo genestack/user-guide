@@ -9,8 +9,8 @@ cell.populations.input <- selectizeInput('cell.populations.input', 'Cell types',
 study.type.input <- selectInput(
     inputId = "study.type.input",
     label = "Study type",
-    choices = c("Bulk Study", "Single-cell Study"),
-    selected = "Bulk Study"
+    choices = c("Bulk Study", "Single-cell Study", "Biobank Study"),
+    selected = "Biobank Study"
 )
 
 GetTherapeuticAreaInput <- function() {

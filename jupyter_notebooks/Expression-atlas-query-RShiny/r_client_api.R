@@ -3,7 +3,13 @@ library(integrationCurator)
 
 GetStudies <- function(therapeutic.area, study_type) {
     start_time <- Sys.time()
-    filter = sprintf('"Therapeutic Area"="%s" AND "Study Type"="%s"', therapeutic.area, study_type)
+    
+    if (therapeutic.area != '') {
+        filter <- sprintf('"Therapeutic Area"="%s" AND "Study Type"="%s"', therapeutic.area, study_type)  
+    } else {
+        filter <- sprintf('"Study Type"="%s"', study_type)
+    }
+    
     studies <- studyCurator::StudySPoTApi_search_studies(
         filter = filter)$content$data
 
@@ -18,12 +24,22 @@ GetStudies <- function(therapeutic.area, study_type) {
     return(list('data'=studies, 'logs'=logs))
 }
 
+StudiesHasVariantData <- function(studies) {
+    if (is.null(studies) || nrow(studies) == 0) {
+        return(FALSE)
+    }
+    
+    study_filter <- paste(sprintf('genestack:accession=%s', studies[,'genestack:accession']), collapse=' OR ')
+    variant_groups_content <- OmicsQueriesApi_search_variant_groups(study_filter = study_filter)$content
+    return(!is.null(variant_groups_content) && nrow(variant_groups_content$data) > 0)
+}
+
 GetSamplesAndExpressions <- function(studies, sample_filter, cell_types, expression_filter, genes) {
     if (is_empty(studies) || nrow(studies) == 0) {
         return(NULL)
     }
     
-    study_filter = paste(sprintf('genestack:accession=%s', studies[,'genestack:accession']), collapse=' OR ')
+    study_filter = paste(sprintf('genestack:accession=%s', studies[, 'genestack:accession']), collapse=' OR ')
     
     ### get samples
     start_time <- Sys.time()
@@ -161,4 +177,60 @@ GetSamplesAndExpressions <- function(studies, sample_filter, cell_types, express
     }
     
     return(return(list('data'=se, 'logs'=logs)))
+}
+
+ComputeAlleleFrequencies <- function(studies, vx_query) {
+    if (is.null(studies) || nrow(studies) == 0) {
+        return(NULL)
+    }
+    
+    study_filter <- paste(sprintf('genestack:accession=%s', studies[, 'genestack:accession']), collapse=' OR ')
+    
+    samples_content <- OmicsQueriesApi_search_samples(
+        study_filter = study_filter,
+        sample_filter = ''
+    )$content
+    
+    if (is.null(samples_content)) {
+        return(NULL)
+    }
+    
+    samples <- samples_content$data[['metadata']]
+    
+    variants_content <- OmicsQueriesApi_search_variant_data(
+        study_filter = study_filter,
+        sample_filter = '',
+        vx_query = vx_query,
+        page_limit = 20000
+    )$content
+    
+    if (is.null(variants_content) || nrow(variants_content$data) == 0) {
+        return(NULL)
+    }
+    
+    variants <- variants_content$data
+    variants <- cbind(
+        'SampleID' = variants$relationships$sample,
+        VariantID = variants$variationId,
+        Chr = variants$contig,
+        Start = variants$start,
+        Ref = variants$reference,
+        Alt = variants$alteration,
+        do.call(cbind, variants$genotype),
+        do.call(cbind, variants$info)
+    ) %>% as_tibble %>% mutate_all(function(x) map_chr(x, ~paste(., collapse=', ')))
+    
+    variants <- filter(variants, VT == 'SNP')
+    
+    if (nrow(variants) == 0) {
+        return(NULL)
+    }
+    
+    af <- variants %>% group_by(Start) %>%
+        summarise(AlleleTotalCount = sum(
+            sapply(GT, function(x) if (x == '1|1') 2 else if (x == '1|0' || x == '0|1') 1 else 0))
+        ) %>% filter(AlleleTotalCount > 0)
+    
+    af$Freq <- af$AlleleTotalCount / (2 * nrow(samples))
+    return(af)
 }

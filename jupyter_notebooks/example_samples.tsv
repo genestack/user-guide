@@ -1,0 +1,5 @@
+Sample Source ID	Subject ID	Organism	Disease	Sex	Age	Age Unit	Sample Collection Site	Sample Collection Date	Tissue	Sample Treatment / Compound	Sample Treatment / Dose	Sample Treatment / Unit	Experiment Instrument	Experiment Type	Library Type	Library Preparation Protocol	Read length	RNA Integrity Number	Fastq Read 1 File	Fastq Read 2 File	Sample Source
+Sample1	Subject1	Mus musculus		female	34	week	Cambridge, UK		liver	ibprofen	2	milligram per millilitre	Illumina HiSeq 2000	Tx	paired-end	NGS	75	7	~/sample1_1.fq	~/sample1_2.fq	Internal
+Sample2	Subject2	Mus musculus		male	40	week	Cambridge, UK		liver	ibprofen	2	milligram per millilitre	Illumina HiSeq 2000	Tx	paired-end	NGS	75	8	~/sample2_1.fq	~/sample2_2.fq	Internal
+Sample3	Subject3	Mus musculus		male	2	week	Cambridge, UK		liver	ibprofen	2	milligram per millilitre	Illumina HiSeq 2000	Tx	paired-end	NGS	75	9	~/sample3_1.fq	~/sample3_2.fq	Internal
+Sample4	Subject4	Mus musculus		female	10	week	Cambridge, UK		liver	ibprofen	2	milligram per millilitre	Illumina HiSeq 2000	Tx	paired-end	NGS	150	10	~/sample4_1.fq	~/sample4_2.fq	Internal

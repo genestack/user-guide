@@ -5,7 +5,7 @@ library(gridExtra)
 suppressMessages(library(tidyverse))
 
 host <- "occam.genestack.com"
-token <- "<your token here>"
+token <- "bd7ebdc3ea0ac8be98ecad5a7570589513885a81"
 
 source("r_client_api.R")
 source("dictionaries_api.R")
@@ -16,15 +16,6 @@ Sys.setenv(
     PRED_SPOT_TOKEN = token, 
     PRED_SPOT_VERSION = "default-released"
 )
-
-GenerateGeneSummary <- function(genes) {
-    print('generate gene summary')
-    genes = genes[,c('gene', 'description'), drop=FALSE]
-    colnames(genes) = c('Gene', 'Description')
-    genes[,'Gene'] = gsub('/', '', genes[,'Gene'])
-    
-    return(genes)
-}
 
 GenerateStudySummary <- function(studies) {
     print('generate study summary')
@@ -68,7 +59,7 @@ GenerateSampleSummary <- function(se) {
     e = y %>% group_by(Study, `Cell Type`) %>% count() %>% 
         unite(`Cell Type`, n, `Cell Type`, sep=' ') %>% group_by(Study) %>% 
         summarise(`Cell Type`=paste(`Cell Type`, collapse='<br>'))
-
+    
     reduce(list(a,b,c,d,e), full_join, by = "Study")
 }
 
@@ -86,7 +77,8 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             genes.input,
-            cell.populations.input,
+            # cell.populations.input,
+            group.input,
             hr(),
             study.type.input,
             GetTherapeuticAreaInput(),
@@ -102,7 +94,8 @@ ui <- fluidPage(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
-                        tabPanel("Gene Info", h1(''), uiOutput("genes")),
+                        tabPanel("Variant Plot", h1(''), uiOutput("variant")),
+                        # tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),
                         tabPanel("Sample Info", h1(''), uiOutput("samples")),
                         tabPanel("Expression Info", h1(''), uiOutput("expression_metadata")),
@@ -114,16 +107,21 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
     genes_go_choices = readLines('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/genes_go.txt')
-    cell_types_choices = readLines('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/cell_types.txt')
 
     updateSelectizeInput(session, 'gene.input', choices = genes_go_choices, server = TRUE)
-    updateSelectizeInput(session, 'cell.populations.input', choices = cell_types_choices, server = TRUE)
-    
+
     observeEvent(input$study.type.input, {
         if (input$study.type.input == 'Single-cell Study') {
             showTab(inputId = "tabs", target = "t-SNE Plot")
+            hideTab(inputId = "tabs", target = "Variant Plot")
         } else {
-            hideTab(inputId = "tabs", target = "t-SNE Plot")
+            if (input$study.type.input == 'Biobank Study'){
+                showTab(inputId = "tabs", target = "Variant Plot")
+                hideTab(inputId = "tabs", target = "t-SNE Plot")
+            }else{
+                hideTab(inputId = "tabs", target = "t-SNE Plot")
+                hideTab(inputId = "tabs", target = "Variant Plot")
+            }
         }
     })
     
@@ -133,16 +131,14 @@ server <- function(input, output, session) {
         if (is_empty(x) || x == '') {
             return('')
         }
-        GetGeneSynonyms(x)
+        
+        x
     })
     
-    cell_types <- reactive({
-        print('get cell types')
-        cell.subtypes = list()
-        for (cell.type in input$cell.populations.input) {
-            cell.subtypes <- c(cell.subtypes, GetCellSubtypes(cell.type))
-        }
-        cell.subtypes
+    
+    group_filter <- reactive({
+        print('get group')
+        input$group.input
     })
     
     studies_options <- reactive({
@@ -161,7 +157,7 @@ server <- function(input, output, session) {
     
     samples_expressions <- reactive({
         print("get samples and expressions")
-        GetSamplesAndExpressions(studies(), input$sample.filter.input, cell_types(), input$expression.filter.input, genes())
+        GetSamplesAndExpressions(studies(), input$sample.filter.input, input$group.input, input$expression.filter.input, genes())
     })
     
     output$studies.checkbox.input <- renderUI({
@@ -198,10 +194,13 @@ server <- function(input, output, session) {
         se = samples_expressions()[['data']]
         se = subset(se, !is.na(expression))
         
-        ggplot(se, mapping=aes(x=`Cell Type`, y=expression, color=`Sample Source`)) + facet_wrap(~ gene + metadata.Source, ncol=2) +
-            geom_beeswarm(cex=2, size=2, alpha=0.5) +
-            theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-            theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
+        ggplot(se, aes_string(x=group_filter(), y="expression", color=factor("Sample Source"))) + facet_wrap(~ gene + metadata.Source, ncol=2) +
+                    geom_beeswarm(cex=2, size=2, alpha=0.5) +
+                    theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+                    theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
+
+        
+        
     })
     
     output$tsne <- renderUI({
@@ -226,14 +225,15 @@ server <- function(input, output, session) {
         
         plots = lapply(sample_sources, function(ss) {
             se = se[se[['Sample Source']] == ss, ]
-            c = se[,c('Barcode', 'x', 'y', 'Cell Type')] %>% distinct()
+            c = se[,c('Barcode', 'x', 'y', as.character(group_filter()))] %>% distinct()
             
-            plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Cell Type`)) +
-                            geom_point(cex=1, alpha=0.5) +
-                            theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                            theme(legend.title = element_blank()) + labs(y = "", x = "") +
-                            ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
+            plots =list(ggplot(c, aes_string(x="x", y="y", color=group_filter())) +
+                                                geom_point(cex=1, alpha=0.5) +
+                                                theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+                                                theme(legend.title = element_blank()) + labs(y = "", x = "") +
+                                                ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
             )
+            
             
             if ('gene' %in% colnames(se)) {
                 genes = as.character(unique(se[['gene']]))
@@ -267,17 +267,6 @@ server <- function(input, output, session) {
         grid.arrange(grobs = plots, ncol=1)
     })
     
-    output$genes <- renderUI({
-        g = genes()
-        if (is_empty(g) || nrow(g) == 0 || g == '') {
-            return("")
-        }
-        tableOutput("genes_show")
-    })
-    
-    output$genes_show <- renderTable({
-        GenerateGeneSummary(genes())
-    }, sanitize.text.function=identity)
     
     output$studies <- renderUI({
         s = studies()
@@ -288,8 +277,8 @@ server <- function(input, output, session) {
     })
     
     output$studies_show <- renderTable({
-            GenerateStudySummary(studies())
-        }, sanitize.text.function=identity)
+        GenerateStudySummary(studies())
+    }, sanitize.text.function=identity)
     
     output$samples <- renderUI({
         se = samples_expressions()[['data']]

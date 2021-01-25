@@ -2,7 +2,7 @@ library(httr)
 library(RJSONIO)
 
 host <- "occam.genestack.com"
-token <- "<your token here>"
+token <- "bd7ebdc3ea0ac8be98ecad5a7570589513885a81"
 
 authenticate = function() {
     sign_in = sprintf('https://%s/frontend/endpoint/application/invoke/genestack/signin', host)
@@ -24,31 +24,4 @@ GetTemplateValues <- function() {
     labels = fromJSON(rawToChar(terms$content))$result
     
     return(labels)
-}
-
-GetCellSubtypes = function(cellType) {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = "getDictionaryChildren",
-            parameters = sprintf('["GSF501948","subclass_of","%s"]', cellType)
-        )
-    )
-    
-    return(fromJSON(rawToChar(terms$content))$result)
-}
-
-GetGeneSynonyms = function(genes) {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = "getGeneSynonyms",
-            parameters = sprintf('["GSF534821", "%s"]', genes)
-        )
-    )
-    
-    result = fromJSON(rawToChar(terms$content))$result
-    return(do.call(rbind, result))
 }

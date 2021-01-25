@@ -94,7 +94,6 @@ ui <- fluidPage(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
-                        # add a new tab to disaply variant plot
                         tabPanel("Variant Plot", h1(''), uiOutput("variant")),
                         # tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),
@@ -111,7 +110,6 @@ server <- function(input, output, session) {
 
     updateSelectizeInput(session, 'gene.input', choices = genes_go_choices, server = TRUE)
 
-    # add new observeEvent corresponding to the new tab
     observeEvent(input$study.type.input, {
         if (input$study.type.input == 'Single-cell Study') {
             showTab(inputId = "tabs", target = "t-SNE Plot")
@@ -137,7 +135,7 @@ server <- function(input, output, session) {
         x
     })
     
-    # add a new way to group data
+    
     group_filter <- reactive({
         print('get group')
         input$group.input
@@ -196,7 +194,6 @@ server <- function(input, output, session) {
         se = samples_expressions()[['data']]
         se = subset(se, !is.na(expression))
         
-        # display beeswarm plot using the new grouping factors
         ggplot(se, aes_string(x=group_filter(), y="expression", color=factor("Sample Source"))) + facet_wrap(~ gene + metadata.Source, ncol=2) +
                     geom_beeswarm(cex=2, size=2, alpha=0.5) +
                     theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
@@ -228,8 +225,6 @@ server <- function(input, output, session) {
         
         plots = lapply(sample_sources, function(ss) {
             se = se[se[['Sample Source']] == ss, ]
-           
-            # display t-sne plot using the new grouping factors
             c = se[,c('Barcode', 'x', 'y', as.character(group_filter()))] %>% distinct()
             
             plots =list(ggplot(c, aes_string(x="x", y="y", color=group_filter())) +

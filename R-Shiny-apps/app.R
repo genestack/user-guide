@@ -210,6 +210,8 @@ server <- function(input, output, session) {
                     geom_beeswarm(cex=2, size=2, alpha=0.5) +
                     theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
                     theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
+
+        
         
     })
     
@@ -235,7 +237,6 @@ server <- function(input, output, session) {
         
         plots = lapply(sample_sources, function(ss) {
             se = se[se[['Sample Source']] == ss, ]
-            
             c = se[,c('Barcode', 'x', 'y', as.character(group_filter()))] %>% distinct()
             
             plots =list(ggplot(c, aes_string(x="x", y="y", color=group_filter())) +
@@ -244,6 +245,38 @@ server <- function(input, output, session) {
                                                 theme(legend.title = element_blank()) + labs(y = "", x = "") +
                                                 ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
             )
+
+            # if (group_filter()=="Sex"){
+            #     c = se[,c('Barcode', 'x', 'y', 'Sex')] %>% distinct()
+            #     
+            #     plots =list(ggplot(c, mapping=aes(x=x, y=y, color=Sex)) +
+            #                     geom_point(cex=1, alpha=0.5) +
+            #                     theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+            #                     theme(legend.title = element_blank()) + labs(y = "", x = "") +
+            #                     ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
+            #     )
+            # }else{
+            #     if (group_filter()=="Disease") {
+            #         c = se[,c('Barcode', 'x', 'y', 'Disease')] %>% distinct()
+            #         
+            #         plots =list(ggplot(c, mapping=aes(x=x, y=y, color=Disease)) +
+            #                         geom_point(cex=1, alpha=0.5) +
+            #                         theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+            #                         theme(legend.title = element_blank()) + labs(y = "", x = "") +
+            #                         ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
+            #         )
+            #     }else{
+            #         c = se[,c('Barcode', 'x', 'y', 'Cell Type')] %>% distinct()
+            #         
+            #         plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Cell Type`)) +
+            #                         geom_point(cex=1, alpha=0.5) +
+            #                         theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+            #                         theme(legend.title = element_blank()) + labs(y = "", x = "") +
+            #                         ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
+            #         )
+            #     }
+
+            # }
             
             
             

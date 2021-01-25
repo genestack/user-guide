@@ -5,7 +5,7 @@ library(gridExtra)
 suppressMessages(library(tidyverse))
 
 host <- "occam.genestack.com"
-token <- "<your token here>"
+token <- "bd7ebdc3ea0ac8be98ecad5a7570589513885a81"
 
 source("r_client_api.R")
 source("dictionaries_api.R")
@@ -204,26 +204,12 @@ server <- function(input, output, session) {
         se = samples_expressions()[['data']]
         se = subset(se, !is.na(expression))
         
-        if (group_filter()=="Cell Type"){
-            ggplot(se, mapping=aes(x=`Cell Type`, y=expression, color=`Sample Source`)) + facet_wrap(~ gene + metadata.Source, ncol=2) +
-                geom_beeswarm(cex=2, size=2, alpha=0.5) +
-                theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
-        }else{
-            if(group_filter()=="Smoking status"){
-                ggplot(se, mapping=aes(x=`Smoking status`, y=expression, color=`Sample Source`)) + facet_wrap(~ gene + metadata.Source, ncol=2) +
-                    geom_beeswarm(cex=2, size=2, alpha=0.5) +
-                    theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                    theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
-            }else{
-                ggplot(se, aes_string(x=group_filter(), y="expression", color=factor("Sample Source"))) + facet_wrap(~ gene + metadata.Source, ncol=2) +
-                    geom_beeswarm(cex=2, size=2, alpha=0.5) +
-                    theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                    theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
-            }
-            
-        }
+        group_val = as.character(group_filter())
         
+        ggplot(se, aes(x=group_val, y=expression, color=`Sample Source`)) + facet_wrap(~ gene + metadata.Source, ncol=2) +
+            geom_beeswarm(cex=2, size=2, alpha=0.5) +
+            theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+            theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
     })
     
     output$tsne <- renderUI({
@@ -245,38 +231,20 @@ server <- function(input, output, session) {
     output$tsne_show <- renderPlot({
         se = samples_expressions()[['data']]
         sample_sources = unique(se[['Sample Source']])
+        group_val = as.character(group_filter())
         
         plots = lapply(sample_sources, function(ss) {
             se = se[se[['Sample Source']] == ss, ]
-            c = se[,c('Barcode', 'x', 'y', as.character(group_filter()))] %>% distinct()
-            
-            if (group_filter()=="Cell Type"){
-                plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Cell Type`)) +
-                                geom_point(cex=1, alpha=0.5) +
-                                theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                                theme(legend.title = element_blank()) + labs(y = "", x = "") +
-                                ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-                )
-            }else{
-                if(group_filter()=="Smoking status"){
-                    plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Smoking status`)) +
-                                    geom_point(cex=1, alpha=0.5) +
-                                    theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                                    theme(legend.title = element_blank()) + labs(y = "", x = "") +
-                                    ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-                    )
+            c = se[,c('Barcode', 'x', 'y', group_val)] %>% distinct()
+            colnames(c) = gsub(" ","", colnames(c), fixed = T)
+            group_factor = gsub(" ","", group_val, fixed = T)
 
-                }else{
-                    plots =list(ggplot(c, aes_string(x="x", y="y", color=group_filter())) +
-                                    geom_point(cex=1, alpha=0.5) +
-                                    theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-                                    theme(legend.title = element_blank()) + labs(y = "", x = "") +
-                                    ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-                    )
-                }
-
-            }
-
+            plots =list(ggplot(c, aes_string(x="x", y="y", color=group_factor)) +
+                            geom_point(cex=1, alpha=0.5) +
+                            theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
+                            theme(legend.title = element_blank()) + labs(y = "", x = "") +
+                            ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
+            )
             
             if ('gene' %in% colnames(se)) {
                 genes = as.character(unique(se[['gene']]))

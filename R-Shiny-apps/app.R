@@ -245,40 +245,6 @@ server <- function(input, output, session) {
                                                 theme(legend.title = element_blank()) + labs(y = "", x = "") +
                                                 ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
             )
-
-            # if (group_filter()=="Sex"){
-            #     c = se[,c('Barcode', 'x', 'y', 'Sex')] %>% distinct()
-            #     
-            #     plots =list(ggplot(c, mapping=aes(x=x, y=y, color=Sex)) +
-            #                     geom_point(cex=1, alpha=0.5) +
-            #                     theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-            #                     theme(legend.title = element_blank()) + labs(y = "", x = "") +
-            #                     ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-            #     )
-            # }else{
-            #     if (group_filter()=="Disease") {
-            #         c = se[,c('Barcode', 'x', 'y', 'Disease')] %>% distinct()
-            #         
-            #         plots =list(ggplot(c, mapping=aes(x=x, y=y, color=Disease)) +
-            #                         geom_point(cex=1, alpha=0.5) +
-            #                         theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-            #                         theme(legend.title = element_blank()) + labs(y = "", x = "") +
-            #                         ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-            #         )
-            #     }else{
-            #         c = se[,c('Barcode', 'x', 'y', 'Cell Type')] %>% distinct()
-            #         
-            #         plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Cell Type`)) +
-            #                         geom_point(cex=1, alpha=0.5) +
-            #                         theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-            #                         theme(legend.title = element_blank()) + labs(y = "", x = "") +
-            #                         ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-            #         )
-            #     }
-
-            # }
-            
-            
             
             
             if ('gene' %in% colnames(se)) {

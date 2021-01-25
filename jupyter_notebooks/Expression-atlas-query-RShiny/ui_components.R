@@ -3,6 +3,9 @@ require(shiny)
 # TODO: autocomplete, existence
 genes.input <- selectizeInput('gene.input', 'Genes', multiple = TRUE, choices=NULL)
 
+# TODO: autocomplete
+# cell.populations.input <- selectizeInput('cell.populations.input', 'Cell types', multiple = TRUE, choices=NULL)
+
 group.input <- selectInput(
   inputId = "group.input",
   label = "Group by",
@@ -11,10 +14,11 @@ group.input <- selectInput(
   multiple = FALSE
 )
 
+
 study.type.input <- selectInput(
   inputId = "study.type.input",
   label = "Study type",
-  choices = c("Bulk Study", "Single-cell Study", "Biobank Study"),
+  choices = c("Bulk Study", "Single-cell Study"),
   selected = "Bulk Study"
 )
 

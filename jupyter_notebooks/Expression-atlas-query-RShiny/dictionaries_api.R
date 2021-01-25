@@ -25,3 +25,30 @@ GetTemplateValues <- function() {
     
     return(labels)
 }
+
+# GetCellSubtypes = function(cellType) {
+#     authenticate()
+#     terms = httr::POST(
+#         sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
+#         body = list(
+#             method = "getDictionaryChildren",
+#             parameters = sprintf('["GSF501948","subclass_of","%s"]', cellType)
+#         )
+#     )
+#     
+#     return(fromJSON(rawToChar(terms$content))$result)
+# }
+
+GetGeneSynonyms = function(genes) {
+    authenticate()
+    terms = httr::POST(
+        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
+        body = list(
+            method = "getGeneSynonyms",
+            parameters = sprintf('["GSF534821", "%s"]', genes)
+        )
+    )
+    
+    result = fromJSON(rawToChar(terms$content))$result
+    return(do.call(rbind, result))
+}

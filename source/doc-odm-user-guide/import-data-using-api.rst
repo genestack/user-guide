@@ -22,7 +22,7 @@ APIs, whilst the signal data will only queryable via APIs.
 
 You can optionally also import:
 
-- *Gene-transcript mapping*: a list of transcript and gene ids and how they map to each other.
+- *Cross-reference mapping*: a list of transcript and gene ids and how they map to each other.
 
 - *Libraries metadata*: metadata about sample library preparation for expression data.
 

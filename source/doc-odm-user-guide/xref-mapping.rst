@@ -6,7 +6,7 @@ ODM provides the capability to import and link a cross-reference (xref) mapping 
 What can I import?
 ------------------
 
-An xref mapping file can be uploaded. This needs to be a TSV file consisting of two columns. The first row must contain the headers TXNAME and GENEID, and the first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTP/FTP location accessible to ODM.
+An xref mapping file can be uploaded. This needs to be a TSV file consisting of two columns. The first row must contain the headers. The first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTP/FTP location accessible to ODM.
 
 +-------------------+--------------------+
 | TXNAME            | GENEID             |
@@ -49,7 +49,7 @@ To return the entries across all mapping files, supply gene or transcript IDs of
 To return the gene or transcript IDs for a given set of entries a particular mapping file, supply the accession of the mapping file and the transcript IDs of interest to the **GET** `/xrefsets/{id}/entries <https://occam.genestack.com/swagger/?urls.primaryName=reference-data#/Xrefset%20queries/searchEntriesWithinFile>`_ endpoint
 
 
-Retrieving a mapping for given gene in a study
+Retrieving a mapping for a given gene in a study
 --------------------------------------------------
 
 To look at the mapping for given genes in a study you need to:
@@ -66,7 +66,7 @@ Submit a **GET** request to the /links `endpoint <https://occam.genestack.com/sw
 
 Submit a **GET** request to the endpoint `/xrefsets/{id}/entries <https://occam.genestack.com/swagger/?urls.primaryName=reference-data#/Xrefset%20queries/searchEntriesWithinFile>`_ supplying **geneId=gene1&geneId=gene2** where gene1, gene2 eg are the Gene IDs of interest to the sourceID parameter.
 
-Performing OMICS queries using transcript IDs
+Performing OMICS queries using gene/transcript IDs
 ---------------------------------------------
 
 Transcript IDs can be provided to OMICS queries (**GET** `/omics​/expression/data <https://occam.genestack.com/swagger/?urls.primaryName=integrationCurator#/Omics%20queries/searchExpressionData>`_) by passing transcript IDs to the exQuery parameter using for example **"feature = ENST00000230368,ENST00000188976"**

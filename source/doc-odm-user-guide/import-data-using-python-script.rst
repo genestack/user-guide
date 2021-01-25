@@ -41,7 +41,7 @@ You can optionally also provide:
 
 - Flow cytometry metadata in TSV format, hosted at an FTP or HTTP web address
 
-- A gene-transcript mapping file, in TSV format, hosted at an FTP or HTTP web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
+- A cross-reference mapping file, in TSV format, hosted at an FTP or HTTP web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
 
 - A libraries file in TSV format, hosted at an FTP or HTTP web address, or the accession of an existing library file
 

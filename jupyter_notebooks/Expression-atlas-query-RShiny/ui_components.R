@@ -1,16 +1,24 @@
 require(shiny)
 
 # TODO: autocomplete, existence
-genes.input <- selectizeInput('gene.input', 'Genes', multiple = TRUE, choices=NULL)
+genes.input <- selectizeInput('gene.input', 'Genes', multiple = TRUE, choices = NULL)
 
 # TODO: autocomplete
-cell.populations.input <- selectizeInput('cell.populations.input', 'Cell types', multiple = TRUE, choices=NULL)
+# cell.populations.input <- selectizeInput('cell.populations.input', 'Cell types', multiple = TRUE, choices = NULL)
+
+group.input <- selectInput(
+    inputId = "group.input",
+    label = "Group by",
+    choices = c("Sex", "Disease", "Cell Type", "Smoking status", "BMI"), # "Smoking status" & "BMI" only exist in the UK Biobank data
+    selected = "Sex",
+    multiple = FALSE
+)
 
 study.type.input <- selectInput(
     inputId = "study.type.input",
     label = "Study type",
-    choices = c("Bulk Study", "Single-cell Study", "Biobank Study"),
-    selected = "Biobank Study"
+    choices = c("Bulk Study", "Single-cell Study"),
+    selected = "Bulk Study"
 )
 
 GetTherapeuticAreaInput <- function() {

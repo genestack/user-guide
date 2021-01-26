@@ -86,7 +86,9 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             genes.input,
-            cell.populations.input,
+            # UK Biobank demo
+            # cell.populations.input,
+            group.input,
             hr(),
             study.type.input,
             GetTherapeuticAreaInput(),
@@ -115,10 +117,12 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
     genes_go_choices = readLines('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/genes_go.txt')
-    cell_types_choices = readLines('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/cell_types.txt')
+    # UK Biobank demo
+    # cell_types_choices = readLines('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/cell_types.txt')
 
     updateSelectizeInput(session, 'gene.input', choices = genes_go_choices, server = TRUE)
-    updateSelectizeInput(session, 'cell.populations.input', choices = cell_types_choices, server = TRUE)
+    # UK Biobank demo
+    # updateSelectizeInput(session, 'cell.populations.input', choices = cell_types_choices, server = TRUE)
     
     observeEvent(input$study.type.input, {
         if (input$study.type.input == 'Single-cell Study') {
@@ -137,13 +141,19 @@ server <- function(input, output, session) {
         GetGeneSynonyms(x)
     })
     
-    cell_types <- reactive({
-        print('get cell types')
-        cell.subtypes = list()
-        for (cell.type in input$cell.populations.input) {
-            cell.subtypes <- c(cell.subtypes, GetCellSubtypes(cell.type))
-        }
-        cell.subtypes
+    # UK Biobank demo
+    # cell_types <- reactive({
+    #     print('get cell types')
+    #     cell.subtypes = list()
+    #     for (cell.type in input$cell.populations.input) {
+    #         cell.subtypes <- c(cell.subtypes, GetCellSubtypes(cell.type))
+    #     }
+    #     cell.subtypes
+    # })
+    
+    group_filter <- reactive({
+        print('get group')
+        input$group.input
     })
     
     studies_options <- reactive({
@@ -162,7 +172,9 @@ server <- function(input, output, session) {
     
     samples_expressions <- reactive({
         print("get samples and expressions")
-        GetSamplesAndExpressions(studies(), input$sample.filter.input, cell_types(), input$expression.filter.input, genes())
+        # UK Biobank demo
+        # GetSamplesAndExpressions(studies(), input$sample.filter.input, cell_types(), input$expression.filter.input, genes())
+        GetSamplesAndExpressions(studies(), input$sample.filter.input, group_filter(), input$expression.filter.input, genes())
     })
     
     output$studies.checkbox.input <- renderUI({
@@ -199,35 +211,55 @@ server <- function(input, output, session) {
         se = samples_expressions()[['data']]
         se = subset(se, !is.na(expression))
         
-        ggplot(se, mapping=aes(x=`Cell Type`, y=expression, color=`Sample Source`)) + facet_wrap(~ gene + metadata.Source, ncol=2) +
-            geom_beeswarm(cex=2, size=2, alpha=0.5) +
+        # UK Biobank demo
+        # ggplot(se, mapping=aes(x=`Cell Type`, y=expression, color=`Sample Source`)) + facet_wrap(~ gene + metadata.Source, ncol=2) +
+        group_val = gsub(" ", "", as.character(group_filter()), fixed = T)
+        colnames(se) = sub(group_filter(), group_val, colnames(se))
+        colnames(se) = sub("Sample Source", "Sample_Source", colnames(se))
+        ggplot(se, aes_string(x = group_val, y = "expression", color = "Sample_Source")) + facet_wrap(~ gene + metadata.Source, ncol = 2) +
+            geom_beeswarm(cex = 2, size = 2, alpha = 0.5) +
             theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-            theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y=0)
+            theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y = 0)
     })
     
     output$alleles <- renderUI({
         if (!StudiesHasVariantData(studies())) {
-            return("")
+            return('')
         }
         
         plotOutput('alleles_show')
     })
 
     output$alleles_show <- renderPlot({
-        vx_query <- 'Intervals=7:116312444-116438440 info_AF=(0.001:1)'
-        af <- ComputeAlleleFrequencies(studies(), vx_query)
-        
-        if (is.null(af)) {
-            return("")
+        g <- genes()
+        if (is_empty(g) || nrow(g) == 0 || genes() == '') {
+            vx_query <- 'info_AF=(0.001:1)'
+        } else {
+            vx_query <- sprintf('Gene=%s info_AF=(0.001:1)', paste(genes()[,'symbol'], collapse=','))
         }
         
-        ggplot(af, mapping = aes(x = Start, y = Freq)) + geom_bar(stat = 'identity')
+        af <- ComputeAlleleFrequencies(studies(), vx_query, group_filter())
+        if (is.null(af)) {
+            return('')
+        }
+        
+        if ('factor' %in% colnames(af)) {
+            ggplot(
+                af[1:10, ],
+                mapping = aes(x = Start, y = Freq, fill = factor)
+            ) + geom_bar(stat='identity', position = position_dodge())
+        } else {
+            ggplot(
+                af[1:10, ],
+                mapping = aes(x = Start, y = Freq)
+            ) + geom_bar(stat = 'identity')
+        }
     })
         
     output$tsne <- renderUI({
         se = samples_expressions()[['data']]
         if (is_empty(se) || nrow(se) == 0 ) {
-            return("")
+            return('')
         }
         
         studies_n = length(unique(se[['Sample Source']]))
@@ -239,21 +271,27 @@ server <- function(input, output, session) {
             plotOutput("tsne_show", height = 400*studies_n)
         }
     })
-    
     output$tsne_show <- renderPlot({
         se = samples_expressions()[['data']]
         sample_sources = unique(se[['Sample Source']])
+        group_val = as.character(group_filter())
         
         plots = lapply(sample_sources, function(ss) {
             se = se[se[['Sample Source']] == ss, ]
-            c = se[,c('Barcode', 'x', 'y', 'Cell Type')] %>% distinct()
             
-            plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Cell Type`)) +
-                            geom_point(cex=1, alpha=0.5) +
+            # UK Biobank demo
+            # c = se[,c('Barcode', 'x', 'y', 'Cell Type')] %>% distinct()
+            # plots =list(ggplot(c, mapping=aes(x=x, y=y, color=`Cell Type`)) +
+            c = se[,c('Barcode', 'x', 'y', group_val)] %>% distinct()
+            colnames(c) = gsub(" ","", colnames(c), fixed = T)
+            group_factor = gsub(" ","", group_val, fixed = T)
+            
+            plots = list(ggplot(c, aes_string(x = "x", y = "y", color = group_factor)) +
+                            geom_point(cex = 1, alpha = 0.5) +
                             theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
                             theme(legend.title = element_blank()) + labs(y = "", x = "") +
-                            ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size=10))
-            )
+                            ggtitle(ss) + theme(plot.title = element_text(hjust = 0.5, size = 10))
+                         )
             
             if ('gene' %in% colnames(se)) {
                 genes = as.character(unique(se[['gene']]))

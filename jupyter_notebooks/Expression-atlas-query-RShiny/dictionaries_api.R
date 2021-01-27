@@ -1,13 +1,13 @@
 library(httr)
 library(RJSONIO)
 
-host <- "occam.genestack.com"
-token <- "6139dc4be955529e0910992cc0d8cbadd1dcd421"
+host <- 'occam.genestack.com'
+token <- '6139dc4be955529e0910992cc0d8cbadd1dcd421'
 
 authenticate = function() {
     sign_in = sprintf('https://%s/frontend/endpoint/application/invoke/genestack/signin', host)
     auth = httr::POST(sign_in, body = list(
-        method = "authenticateByApiToken",
+        method = 'authenticateByApiToken',
         parameters = sprintf('["%s"]', token)
     ))
 }
@@ -17,39 +17,25 @@ GetTemplateValues <- function() {
     terms = httr::POST(
         sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
         body = list(
-            method = "dictionaryAutocomplete",
+            method = 'dictionaryAutocomplete',
             parameters = '["GSF516042",""]'
         )
     )
     labels = fromJSON(rawToChar(terms$content))$result
-    
+
     return(labels)
 }
-
-# UK Biobank demo
-# GetCellSubtypes = function(cellType) {
-#     authenticate()
-#     terms = httr::POST(
-#         sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-#         body = list(
-#             method = "getDictionaryChildren",
-#             parameters = sprintf('["GSF501948","subclass_of","%s"]', cellType)
-#         )
-#     )
-#     
-#     return(fromJSON(rawToChar(terms$content))$result)
-# }
 
 GetGeneSynonyms = function(genes) {
     authenticate()
     terms = httr::POST(
         sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
         body = list(
-            method = "getGeneSynonyms",
+            method = 'getGeneSynonyms',
             parameters = sprintf('["GSF534821", "%s"]', genes)
         )
     )
-    
+
     result = fromJSON(rawToChar(terms$content))$result
     return(do.call(rbind, result))
 }

@@ -124,7 +124,7 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
     if (is_empty(samples) || nrow(samples) == 0) {
         return(list('data'=NULL, 'logs'=logs))
     }
-    if (is_empty(genes) || nrow(genes) == 0 || genes == '') {
+    if (is_empty(genes) || genes == '') {
         return(list('data'=samples, 'logs'=logs))
     }
 
@@ -132,12 +132,12 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
     start_time <- Sys.time()
 
     expressions = NULL
-    ex_query = sprintf('Gene=%s', paste(genes[, 'symbol'],collapse=','))
+    ex_query = sprintf('Gene=%s', paste(genes, collapse=','))
     tryCatch({
         expressions <- as_tibble(do.call(cbind, OmicsQueriesApi_search_expression_data(
             study_filter=study_filter,
             sample_filter=sample_filter,
-            ex_query=sprintf('Gene=%s', paste(genes[,'symbol'],collapse=',')),
+            ex_query=sprintf('Gene=%s', paste(genes, collapse=',')),
             ex_filter=expression_filter,
             page_limit=20000
         )$content$data))
@@ -152,13 +152,16 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
     page_limit = 20000
 )', study_filter, sample_filter, ex_query, expression_filter)
         logs_expr_query_time = sprintf('# %s expression values for %s genes from %s samples from %s studies: %s seconds',
-                                         nrow(expressions), length(unique(genes[,'symbol'])), nrow(samples), nrow(studies), query_time)
+                                         nrow(expressions), length(unique(genes)), nrow(samples), nrow(studies), query_time)
         logs = paste(logs, '\n', logs_expr_query, logs_expr_query_time, sep='\n')
 
     if (is_empty(expressions) || nrow(expressions) == 0) {
         return(list('data'=samples, 'logs'=logs))
     }
 
+
+    colnames(samples)[colnames(samples) == 'groupId'] <- 'Sample Group ID'
+    colnames(expressions)[colnames(expressions) == 'groupId'] <- 'Expression Group ID'
 
     if ('Barcode' %in% colnames(samples)) {
         se = left_join(samples, expressions, by=c("Barcode"="metadata.Run Source ID"))

@@ -1,7 +1,18 @@
 require(shiny)
 
 # TODO: autocomplete, existence
-genes.input <- selectizeInput('gene.input', 'Genes', multiple = TRUE, choices = NULL)
+genes.input <- selectizeInput(
+    inputId = 'gene.input',
+    label = 'Genes',
+    multiple = TRUE,
+    choices = NULL
+)
+
+therapeutic.area.input <- selectInput(
+    inputId = "therapeutic.area.input",
+    label = "Therapeutic area",
+    choices = NULL,
+)
 
 group.input <- selectInput(
     inputId = "group.input",
@@ -17,19 +28,6 @@ study.type.input <- selectInput(
     choices = c("Bulk Study", "Single-cell Study"),
     selected = "Bulk Study"
 )
-
-GetTherapeuticAreaInput <- function() {
-  therapeutic.area.choices <- GetTemplateValues()
-
-  therapeutic.area.input <- selectInput(
-    inputId = "therapeutic.area.input",
-    label = "Therapeutic area",
-    choices = therapeutic.area.choices,
-    selected = therapeutic.area.choices[1]
-  )
-
-  return(therapeutic.area.input)
-}
 
 # TODO use choice names and values to distinguish study IDs vs names
 GetStudiesCheckboxInput <- function(studies) {

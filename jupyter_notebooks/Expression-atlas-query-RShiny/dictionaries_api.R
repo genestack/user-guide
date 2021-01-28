@@ -26,16 +26,18 @@ GetTemplateValues <- function() {
     return(labels)
 }
 
-GetGeneSynonyms = function(genes) {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = 'getGeneSynonyms',
-            parameters = sprintf('["GSF534821", "%s"]', genes)
-        )
-    )
+# `genes` is a vector of selected genes (string).
+# `genes_table` is expected to have the following columns:
+#   1. `ensembl_id`;
+#   2. `gene_symbol`;
+#   3. `uniprot_symbol`;
+#   4. `gene_synonyms`.
+GetGeneSynonyms <- function(genes, genes_table) {
+    if (is_empty(genes) || genes == '') {
+        return('')
+    }
 
-    result = fromJSON(rawToChar(terms$content))$result
-    return(do.call(rbind, result))
+    synonyms <- genes_table[genes_table$gene_symbol %in% genes, c('ensembl_id', 'gene_synonyms', 'uniprot_symbol')]
+    combined <- c(genes, synonyms$ensembl_id, synonyms$gene_synonyms, synonyms$uniprot_symbol)
+    return(unique(combined[!is.na(combined) && combined != ""]))
 }

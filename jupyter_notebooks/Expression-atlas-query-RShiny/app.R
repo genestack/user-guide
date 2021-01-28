@@ -17,13 +17,17 @@ Sys.setenv(
     PRED_SPOT_VERSION = "default-released"
 )
 
-GenerateGeneSummary <- function(genes) {
+# `genes` is a vector of selected genes (string).
+# `genes_table` is expected to have the following columns:
+#   1. `gene_symbol`;
+#   2. `description`.
+GenerateGeneSummary <- function(genes, genes_table) {
     print('generate gene summary')
-    genes = genes[,c('gene', 'description'), drop=FALSE]
-    colnames(genes) = c('Gene', 'Description')
-    genes[,'Gene'] = gsub('/', '', genes[,'Gene'])
 
-    return(genes)
+    summary <- genes_table[genes_table$gene_symbol %in% genes, c("gene_symbol", "description")]
+    summary <- summary[!duplicated(summary$gene_symbol), ]
+    colnames(summary) <- c('Gene', 'Description')
+    return(summary)
 }
 
 GenerateStudySummary <- function(studies) {
@@ -74,10 +78,19 @@ GenerateSampleSummary <- function(se) {
 
 GenerateExpressionSummary <- function(se) {
     se = subset(se, !is.na(expression))
-    x = as_tibble(se)[,c('Sample Source', 'groupId', 'metadata.Experimental Platform', 'metadata.Data Processing Method', 'metadata.Genome Version', 'metadata.Scale', 'metadata.Source')]
+
+    x = as_tibble(se)[, c(
+        'Sample Source',
+        'Expression Group ID',
+        'metadata.Experimental Platform',
+        'metadata.Data Processing Method',
+        'metadata.Genome Version',
+        'metadata.Scale',
+        'metadata.Source')]
+
     colnames(x) = gsub('metadata.', '', colnames(x))
-    x = x %>% rename(Study=`Sample Source`, `Expression ID`=groupId)
-    x %>% group_by(Study, `Expression ID`, `Experimental Platform`, `Data Processing Method`, `Genome Version`, Scale) %>% distinct()
+    x = x %>% rename(Study=`Sample Source`)
+    x %>% group_by(Study, `Expression Group ID`, `Experimental Platform`, `Data Processing Method`, `Genome Version`, Scale) %>% distinct()
 }
 
 ui <- fluidPage(
@@ -89,7 +102,7 @@ ui <- fluidPage(
             group.input,
             hr(),
             study.type.input,
-            GetTherapeuticAreaInput(),
+            therapeutic.area.input,
             uiOutput("studies.checkbox.input"),
             uiOutput("select.all"),
             hr(),
@@ -101,7 +114,7 @@ ui <- fluidPage(
         mainPanel(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
-                        tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
+                        # tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
                         tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),
@@ -114,8 +127,11 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-    genes_go_choices = readLines('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/genes_go.txt')
-    updateSelectizeInput(session, 'gene.input', choices = genes_go_choices, server = TRUE)
+    genes_table <- read.csv('~/dev/genes_homo_sapiens.csv', header = TRUE, stringsAsFactors = FALSE)
+    updateSelectizeInput(session, 'gene.input', choices = genes_table$gene_symbol, server = TRUE)
+
+    therapeutic_areas <- read.csv('~/dev/therapeutic_area.csv', header = TRUE, stringsAsFactors = FALSE)
+    updateSelectizeInput(session, 'therapeutic.area.input', choices = therapeutic_areas$Label, server = TRUE)
 
     observeEvent(input$study.type.input, {
         if (input$study.type.input == 'Single-cell Study') {
@@ -127,11 +143,13 @@ server <- function(input, output, session) {
 
     genes <- reactive({
         print('get genes')
-        x = paste(input$gene.input, collapse=',')
+
+        x <- input$gene.input
         if (is_empty(x) || x == '') {
             return('')
         }
-        GetGeneSynonyms(x)
+
+        return(GetGeneSynonyms(x, genes_table))
     })
 
     group_filter <- reactive({
@@ -201,10 +219,13 @@ server <- function(input, output, session) {
         group_val = gsub(" ", "", as.character(group_filter()), fixed = T)
         colnames(se) = sub(group_filter(), group_val, colnames(se))
         colnames(se) = sub("Sample Source", "Sample_Source", colnames(se))
-        ggplot(se, aes_string(x = group_val, y = "expression", color = "Sample_Source")) + facet_wrap(~ gene + metadata.Source, ncol = 2) +
+        ggplot(
+            se, aes_string(x = group_val, y = "expression", color = "Sample_Source")
+        ) + facet_wrap(~ gene + metadata.Source, ncol = 2) +
             geom_beeswarm(cex = 2, size = 2, alpha = 0.5) +
             theme(axis.text.x = element_text(size = 10, angle = 8, hjust = 0.5, vjust = 0.5)) +
-            theme(legend.title = element_blank()) + labs(y = "Expression", x = "") + scale_y_log10() + expand_limits(y = 0)
+            theme(legend.title = element_blank()) + labs(y = "Expression", x = "") +
+            scale_y_log10() + expand_limits(y = 0)
     })
 
     output$alleles <- renderUI({
@@ -309,14 +330,14 @@ server <- function(input, output, session) {
 
     output$genes <- renderUI({
         g = genes()
-        if (is_empty(g) || nrow(g) == 0 || g == '') {
-            return("")
+        if (is_empty(g) || length(g) == 0 || g == '') {
+            return('')
         }
-        tableOutput("genes_show")
+        tableOutput('genes_show')
     })
 
     output$genes_show <- renderTable({
-        GenerateGeneSummary(genes())
+        GenerateGeneSummary(genes(), genes_table)
     }, sanitize.text.function=identity)
 
     output$studies <- renderUI({

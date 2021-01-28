@@ -12,20 +12,6 @@ authenticate = function() {
     ))
 }
 
-GetTemplateValues <- function() {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = 'dictionaryAutocomplete',
-            parameters = '["GSF516042",""]'
-        )
-    )
-    labels = fromJSON(rawToChar(terms$content))$result
-
-    return(labels)
-}
-
 # `genes` is a vector of selected genes (string).
 # `genes_table` is expected to have the following columns:
 #   1. `ensembl_id`;

@@ -402,6 +402,8 @@ This returns similarly to the samples import - take note of the groupID value. Y
 If successful you will see a library tab appear in the Metadata Editor:
 
 .. image:: images/library-added.png
+  :scale: 40 %
+  :align: center
 
 6. **Import and link expression data to libraries**
 
@@ -423,7 +425,8 @@ If successful, in the Study Browser you should see (after refreshing the page) t
 changed from ‘no data’ to ‘Exp’.
 
 .. image:: images/expression-RM-added.png
-
+  :scale: 30 %
+  :align: center
 
 7. **Check that you can query the relationships between objects**
 

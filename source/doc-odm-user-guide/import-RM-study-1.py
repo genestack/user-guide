@@ -1,0 +1,1 @@
+curl -H "Genestack-API-Token: <your API token>" -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"link":"https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.study.tsv"}' https://occam.genestack.com/frontend/rs/genestack/studyCurator/default-released/studies

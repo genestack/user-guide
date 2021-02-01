@@ -1,0 +1,1 @@
+curl -H "Genestack-API-Token: <your API token>" -H "Content-Type: application/json" -H "Accept: application/json" -X POST https://occam.genestack.com/frontend/rs/genestack/integrationCurator/default-released/integration/link/sample/group/GSF282801/to/study/GSF282799

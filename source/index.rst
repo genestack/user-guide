@@ -19,7 +19,7 @@ data-driven science through data FAIRification.
    doc-odm-user-guide/import-data-using-api
    doc-odm-user-guide/import-data-using-python-script
    doc-odm-user-guide/exporting-data
-   doc-odm-user-guide/gene-transcript-mapping
+   doc-odm-user-guide/xref-mapping
    doc-odm-user-guide/studybrowser
    doc-odm-user-guide/metadata-editor
    doc-odm-user-guide/template-editor

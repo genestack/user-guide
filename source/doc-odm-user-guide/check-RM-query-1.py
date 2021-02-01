@@ -1,0 +1,1 @@
+curl -X GET "https://occam.genestack.com/frontend/rs/genestack/integrationCurator/default-released/integration/link/samples/by/libraries?filter=%22Library%20ID%22%3D%22LIB1%22" -H  "accept: application/json" -H  "Genestack-API-Token: <token>"

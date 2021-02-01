@@ -127,10 +127,12 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-    genes_table <- read.csv('~/dev/genes_homo_sapiens.csv', header = TRUE, stringsAsFactors = FALSE)
+    genes_table <- read.csv('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/genes_homo_sapiens.csv',
+                            header = TRUE, stringsAsFactors = FALSE)
     updateSelectizeInput(session, 'gene.input', choices = genes_table$gene_symbol, server = TRUE)
 
-    therapeutic_areas <- read.csv('~/dev/therapeutic_area.csv', header = TRUE, stringsAsFactors = FALSE)
+    therapeutic_areas <- read.csv('https://bio-test-data.s3.amazonaws.com/Demo/RShiny/therapeutic_area.csv',
+                                  header = TRUE, stringsAsFactors = FALSE)
     updateSelectizeInput(session, 'therapeutic.area.input', choices = therapeutic_areas$Label, server = TRUE)
 
     observeEvent(input$study.type.input, {

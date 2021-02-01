@@ -14,7 +14,9 @@ GetStudies <- function(therapeutic.area, study_type) {
         filter = filter)$content$data
 
     query_time <- round(Sys.time() - start_time, digits=1)
-    logs_study_query = sprintf('StudySPoTApi_search_studies(filter = \'%s\')', filter)
+    logs_study_query <- paste('StudySPoTApi_search_studies(\n',
+                              '    filter = \'', filter, '\'\n',
+                              ')', sep = '')
     logs_study_query_time = sprintf('# %s studies: %s seconds', nrow(studies), query_time)
     logs = paste(logs_study_query, logs_study_query_time, sep='\n')
 
@@ -54,9 +56,10 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
     }, error = function(e) {})
 
     query_time <- round(Sys.time() - start_time, digits=1)
-    logs_sample_query = sprintf('OmicsQueriesApi_search_samples(
-                                study_filter = \'%s\', sample_filter = \'%s\')',
-                                study_filter, sample_filter)
+    logs_sample_query <- paste('OmicsQueriesApi_search_samples(\n',
+                              '    study_filter = \'', study_filter, '\'\n',
+                              '    sample_filter = \'', sample_filter, '\'\n',
+                              ')', sep = '')
     logs_sample_query_time = sprintf('# %s samples from %s studies: %s seconds',
                                      nrow(samples), nrow(studies), query_time)
     logs = paste(logs_sample_query, logs_sample_query_time, sep='\n')
@@ -144,13 +147,13 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
     }, error = function(e) {})
 
     query_time <- round(Sys.time() - start_time, digits=1)
-    logs_expr_query = sprintf('OmicsQueriesApi_search_expression_data(
-    study_filter = \'%s\',
-    sample_filter = \'%s\',
-    ex_query = \'%s\',
-    ex_filter = \'%s\',
-    page_limit = 20000
-)', study_filter, sample_filter, ex_query, expression_filter)
+    logs_expr_query <- paste('OmicsQueriesApi_search_expression_data(\n',
+                             '    study_filter = \'', study_filter, '\'\n',
+                             '    sample_filter = \'', sample_filter, '\'\n',
+                             '    ex_query = \'', ex_query, '\'\n',
+                             '    ex_filter = \'', expression_filter, '\'\n',
+                             '    page_limit = 20000\n',
+                             ')', sep = '')
         logs_expr_query_time = sprintf('# %s expression values for %s genes from %s samples from %s studies: %s seconds',
                                          nrow(expressions), length(unique(genes)), nrow(samples), nrow(studies), query_time)
         logs = paste(logs, '\n', logs_expr_query, logs_expr_query_time, sep='\n')

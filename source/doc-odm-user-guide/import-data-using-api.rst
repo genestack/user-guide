@@ -272,7 +272,7 @@ This example is similar to the previous one, but demonstrates using library/prep
 
 - `Test_RM.samples.tsv`_, a tab-delimited file of sample attributes.
 
-.. _`Test_1000g.RM.tsv`: https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.samples.tsv
+.. _`Test_RM.saples.tsv`: https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.samples.tsv
 
 +----------------------+------------------+-----+------------+
 | Sample Source        | Sample Source ID | Sex | Population |

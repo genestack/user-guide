@@ -432,9 +432,7 @@ changed from ‘no data’ to ‘Exp’.
 
 Once you’ve created and linked the study, sample, library and expression objects you can do integration-aware queries via both the User Interface and APIs.
 
-In the User Interface, you should be able to find your imported study using the study, sample, and signal filters:
-
-.. image:: images/variant_filter.png
+In the User Interface, you should be able to find your imported study using the study, sample, and signal filters.
 
 To do this via APIs, you can use the integration/omics endpoint to filter across studies, samples, libraries and signals,and retrieve a specific object type. For example, to get metadata about the samples associated with library LIB1:
 

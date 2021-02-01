@@ -272,7 +272,7 @@ This example is similar to the previous one, but demonstrates using library/prep
 
 - `Test_RM.samples.tsv`_, a tab-delimited file of sample attributes.
 
-.. _`Test_1000g.RM.tsv`: https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.samples.tsv
+.. _`Test_RM.samples.tsv`: https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.samples.tsv
 
 +----------------------+------------------+-----+------------+
 | Sample Source        | Sample Source ID | Sex | Population |
@@ -374,7 +374,7 @@ To import samples, you should use a different endpoint, *sampleCurator*:
 Similar to the previous step, you should see the accession and metadata of the created samples in the response —
 a list of four objects this time, rather than just one object, as well as the samples group accession under the GroupID field:
 
-.. literalinclude:: import-samples-2.py
+.. literalinclude:: import-RM-samples-2.py
 
 However, you won’t see the samples in the Study Browser yet, because no samples have been linked to the study.
 

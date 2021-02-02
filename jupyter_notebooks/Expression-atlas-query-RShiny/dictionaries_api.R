@@ -1,54 +1,29 @@
 library(httr)
 library(RJSONIO)
 
-host <- "occam.genestack.com"
-token <- "<your token here>"
+host <- 'occam.genestack.com'
+token <- '6139dc4be955529e0910992cc0d8cbadd1dcd421'
 
 authenticate = function() {
     sign_in = sprintf('https://%s/frontend/endpoint/application/invoke/genestack/signin', host)
     auth = httr::POST(sign_in, body = list(
-        method = "authenticateByApiToken",
+        method = 'authenticateByApiToken',
         parameters = sprintf('["%s"]', token)
     ))
 }
 
-GetTemplateValues <- function() {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = "dictionaryAutocomplete",
-            parameters = '["GSF516042",""]'
-        )
-    )
-    labels = fromJSON(rawToChar(terms$content))$result
-    
-    return(labels)
-}
+# `genes` is a vector of selected genes (string).
+# `genes_table` is expected to have the following columns:
+#   1. `ensembl_id`;
+#   2. `gene_symbol`;
+#   3. `uniprot_symbol`;
+#   4. `gene_synonyms`.
+GetGeneSynonyms <- function(genes, genes_table) {
+    if (is_empty(genes) || genes == '') {
+        return('')
+    }
 
-GetCellSubtypes = function(cellType) {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = "getDictionaryChildren",
-            parameters = sprintf('["GSF501948","subclass_of","%s"]', cellType)
-        )
-    )
-    
-    return(fromJSON(rawToChar(terms$content))$result)
-}
-
-GetGeneSynonyms = function(genes) {
-    authenticate()
-    terms = httr::POST(
-        sprintf('https://%s/frontend/endpoint/application/invoke/genestack/shell', host),
-        body = list(
-            method = "getGeneSynonyms",
-            parameters = sprintf('["GSF534821", "%s"]', genes)
-        )
-    )
-    
-    result = fromJSON(rawToChar(terms$content))$result
-    return(do.call(rbind, result))
+    synonyms <- genes_table[genes_table$gene_symbol %in% genes, c('ensembl_id', 'gene_synonyms', 'uniprot_symbol')]
+    combined <- c(genes, synonyms$ensembl_id, synonyms$gene_synonyms, synonyms$uniprot_symbol)
+    return(unique(combined[!is.na(combined) && combined != ""]))
 }

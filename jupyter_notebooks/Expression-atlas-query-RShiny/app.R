@@ -76,21 +76,14 @@ GenerateSampleSummary <- function(se) {
     reduce(list(a,b,c,d,e), full_join, by = "Study")
 }
 
-GenerateExpressionSummary <- function(se) {
-    se = subset(se, !is.na(expression))
-
-    x = as_tibble(se)[, c(
-        'Sample Source',
-        'Expression Group ID',
-        'metadata.Experimental Platform',
-        'metadata.Data Processing Method',
-        'metadata.Genome Version',
-        'metadata.Scale',
-        'metadata.Source')]
-
-    colnames(x) = gsub('metadata.', '', colnames(x))
-    x = x %>% rename(Study=`Sample Source`)
-    x %>% group_by(Study, `Expression Group ID`, `Experimental Platform`, `Data Processing Method`, `Genome Version`, Scale) %>% distinct()
+to_table <- function(groups) {
+    if (is.null(groups)) {
+        return('')
+    }
+    output <- cbind(groups$itemId, groups$metadata) %>% select_if(~ !all(is.na(.)))
+    colnames(output)[1] <- 'Accession'
+    output <- output[, sapply(output, class) != 'list', drop = FALSE]
+    return(output)
 }
 
 ui <- fluidPage(
@@ -108,18 +101,19 @@ ui <- fluidPage(
             hr(),
             sample.filter.input,
             expression.filter.input,
+            variant.filter.input,
             width = 3
         ),
 
         mainPanel(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
-                        # tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
+                        tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
                         tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),
                         tabPanel("Sample Info", h1(''), uiOutput("samples")),
-                        tabPanel("Expression Info", h1(''), uiOutput("expression_metadata")),
+                        tabPanel("Signal Data Info", h1(''), uiOutput("signal_metadata")),
                         tabPanel("API Calls", h1(''), verbatimTextOutput("api_calls"))),
             width = 9
         )
@@ -152,6 +146,38 @@ server <- function(input, output, session) {
         }
 
         return(GetGeneSynonyms(x, genes_table))
+    })
+
+    expression_groups <- reactive({
+        print('get expression groups')
+
+        genes <- genes()
+        ex_query <- if (genes == '') '' else sprintf('Gene=%s', paste(genes, collapse=','))
+
+        groups <- GetExpressionGroups(
+            studies = studies(),
+            sample_filter = input$sample.filter.input,
+            ex_query = ex_query,
+            ex_filter = input$expression.filter.input
+        )
+
+        return(groups)
+    })
+
+    variant_groups <- reactive({
+        print('get variant groups')
+
+        genes <- genes()
+        vx_query <- if (genes == '') '' else sprintf('Gene=%s', paste(genes, collapse=','))
+
+        groups <- GetVariantGroups(
+            studies = studies(),
+            sample_filter = input$sample.filter.input,
+            vx_query = vx_query,
+            vx_filter = input$variant.filter.input
+        )
+
+        return(groups)
     })
 
     group_filter <- reactive({
@@ -231,7 +257,7 @@ server <- function(input, output, session) {
     })
 
     output$alleles <- renderUI({
-        if (!StudiesHasVariantData(studies())) {
+        if (!StudiesHaveVariantData(studies())) {
             return('')
         }
 
@@ -366,17 +392,34 @@ server <- function(input, output, session) {
         GenerateSampleSummary(samples_expressions()[['data']])
     }, sanitize.text.function=identity)
 
-    output$expression_metadata <- renderUI({
-        se = samples_expressions()[['data']]
-        if (is_empty(se) || nrow(se) == 0 || !('expression' %in% names(se))) {
-            return("")
+    output$signal_metadata <- renderUI({
+        tables <- c()
+
+        ex_groups <- expression_groups()
+        if (!is.null(ex_groups) && length(ex_groups) > 0) {
+            tables <- c(tables, 'expression_metadata_show')
         }
-        tableOutput("expression_metadata_show")
+
+        vx_groups <- variant_groups()
+        if (!is.null(vx_groups) && length(vx_groups) > 0) {
+            tables <- c(tables, 'variant_metadata_show')
+        }
+
+        return(lapply(tables, tableOutput))
     })
 
     output$expression_metadata_show <- renderTable({
-        GenerateExpressionSummary(samples_expressions()[['data']])
-    }, sanitize.text.function=identity)
+        groups <- expression_groups()
+        return(to_table(groups))
+    })
+
+    output$variant_metadata_show <- renderTable({
+        groups <- variant_groups()
+        print(groups)
+        print(to_table(groups))
+        return(to_table(groups))
+    })
+
 
     output$api_calls <- renderText({paste(studies_options()[['logs']],samples_expressions()[['logs']],sep='\n\n\n')})
 }

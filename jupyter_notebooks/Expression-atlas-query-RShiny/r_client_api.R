@@ -1,5 +1,7 @@
 library(studyCurator)
 library(integrationCurator)
+library(expressionCurator)
+library(variantCurator)
 
 GetStudies <- function(therapeutic.area, study_type) {
     start_time <- Sys.time()
@@ -23,17 +25,70 @@ GetStudies <- function(therapeutic.area, study_type) {
     return(list('data'=studies, 'logs'=logs))
 }
 
-StudiesHasVariantData <- function(studies) {
+GetExpressionGroups <- function(studies, sample_filter, ex_query, ex_filter) {
     if (is.null(studies) || nrow(studies) == 0) {
-        return(FALSE)
+        return(NULL)
+    }
+
+    study_filter <- paste(sprintf('genestack:accession=%s', studies[,'genestack:accession']), collapse=' OR ')
+    expression_groups_content <- OmicsQueriesApi_search_expression_groups(
+        study_filter = study_filter,
+        sample_filter = sample_filter,
+        ex_query = ex_query
+    )$content
+
+    if (is.null(expression_groups_content)) {
+        return(NULL)
+    }
+
+    if (ex_filter != '') {
+        filter <- paste0('(',
+                         paste(sprintf('genestack:accession=%s', expression_groups_content$data$itemId),
+                               collapse=' OR '),
+                         ')',
+                         ' AND ',
+                         ex_filter)
+        expression_groups_content <- ExpressionSPoTApi_search_groups(filter = filter)$content
+    }
+
+    tryCatch({
+        return(expression_groups_content$data)
+    }, error = function(e) {
+        return(NULL)
+    })
+}
+
+GetVariantGroups <- function(studies, sample_filter, vx_query, vx_filter) {
+    if (is.null(studies) || nrow(studies) == 0) {
+        return(NULL)
     }
 
     study_filter <- paste(sprintf('genestack:accession=%s', studies[,'genestack:accession']), collapse=' OR ')
     variant_groups_content <- OmicsQueriesApi_search_variant_groups(
-        study_filter = study_filter
+        study_filter = study_filter,
+        sample_filter = sample_filter,
+        vx_query = vx_query
     )$content
 
-    return(!is.null(variant_groups_content) && nrow(variant_groups_content$data) > 0)
+    if (is.null(variant_groups_content)) {
+        return(NULL)
+    }
+
+    if (vx_filter != '') {
+        filter <- paste0('(',
+                         paste(sprintf('genestack:accession=%s', variant_groups_content$data$itemId),
+                               collapse=' OR '),
+                         ')',
+                         ' AND ',
+                         vx_filter)
+        variant_groups_content <- VariantSPoTApi_search_groups(filter = filter)$content
+    }
+
+    tryCatch({
+        return(variant_groups_content$data)
+    }, error = function(e) {
+        return(NULL)
+    })
 }
 
 GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expression_filter, genes) {

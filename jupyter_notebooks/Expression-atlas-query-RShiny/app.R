@@ -423,8 +423,6 @@ server <- function(input, output, session) {
 
     output$variant_metadata_show <- renderTable({
         groups <- variant_groups()
-        print(groups)
-        print(to_table(groups))
         return(to_table(groups))
     })
 

@@ -230,7 +230,7 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
     return(return(list('data'=se, 'logs'=logs)))
 }
 
-ComputeAlleleFrequencies <- function(studies, vx_query, group_factor) {
+ComputeAlleleFrequencies <- function(studies, sample_filter, vx_query, vx_filter, group_factor) {
     if (is.null(studies) || nrow(studies) == 0) {
         return(NULL)
     }
@@ -250,8 +250,9 @@ ComputeAlleleFrequencies <- function(studies, vx_query, group_factor) {
 
     variants_content <- OmicsQueriesApi_search_variant_data(
         study_filter = study_filter,
-        sample_filter = '',
+        sample_filter = sample_filter,
         vx_query = vx_query,
+        vx_filter = vx_filter,
         page_limit = 20000
     )$content
 

@@ -257,7 +257,8 @@ server <- function(input, output, session) {
     })
 
     output$alleles <- renderUI({
-        if (!StudiesHaveVariantData(studies())) {
+        vx_groups <- variant_groups()
+        if (is.null(vx_groups) || length(vx_groups) == 0) {
             return('')
         }
 
@@ -266,13 +267,20 @@ server <- function(input, output, session) {
 
     output$alleles_show <- renderPlot({
         g <- genes()
-        if (is_empty(g) || nrow(g) == 0 || genes() == '') {
+        if (is_empty(g) || g == '') {
             vx_query <- 'info_AF=(0.001:1)'
         } else {
-            vx_query <- sprintf('Gene=%s info_AF=(0.001:1)', paste(genes()[,'symbol'], collapse=','))
+            vx_query <- sprintf('Gene=%s info_AF=(0.001:1)', paste(genes(), collapse=','))
         }
 
-        af <- ComputeAlleleFrequencies(studies(), vx_query, group_filter())
+        af <- ComputeAlleleFrequencies(
+            studies = studies(),
+            sample_filter = input$sample.filter.input,
+            vx_query = vx_query,
+            vx_filter = input$variant.filter.input,
+            group_factor = group_filter()
+        )
+
         if (is.null(af)) {
             return('')
         }

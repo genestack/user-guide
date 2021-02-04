@@ -35,6 +35,8 @@ GenerateStudySummary <- function(studies) {
     if (!('Gating strategy' %in% colnames(studies))) {
         studies[, 'Gating strategy'] = ''
     }
+
+    studies[all(is.null(unlist(studies[, 'Study Source ID']))), 'Study Source ID'] <- ''
     studies[is.na(studies)] <- ''
 
     studies = as_tibble(studies) %>%

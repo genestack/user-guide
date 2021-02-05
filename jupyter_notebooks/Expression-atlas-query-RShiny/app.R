@@ -78,14 +78,14 @@ ui <- fluidPage(
             hr(),
             sample.filter.input,
             expression.filter.input,
-            variant.filter.input,
+            # variant.filter.input,
             width = 3
         ),
 
         mainPanel(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
-                        tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
+                        # tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
                         tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),

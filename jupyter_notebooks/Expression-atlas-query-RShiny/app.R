@@ -32,65 +32,35 @@ GenerateGeneSummary <- function(genes, genes_table) {
 
 GenerateStudySummary <- function(studies) {
     print('generate study summary')
-    if (!('Gating strategy' %in% colnames(studies))) {
-        studies[, 'Gating strategy'] = ''
-    }
+
     studies[is.na(studies)] <- ''
-
-    studies = as_tibble(studies) %>%
-        unnest(`Study Source ID`) %>%
-        group_by(`genestack:accession`, `Study Title`, `Study Description`, `Gating strategy`) %>%
-        summarise(
-            `Study Source ID` = paste0(`Study Source ID`, collapse=' ')
-        ) %>% unite(Study, `genestack:accession`, `Study Source ID`, sep=' ') %>%
-        unite(Description, `Study Title`, `Study Description`, `Gating strategy`, sep='<br><br>')
-
+    sel <- sapply(studies, class) == 'list'
+    studies[, sel] = apply(studies[, sel], 1, function(x) sapply(x, function(v) paste(v, collapse = ' ')))
+    studies <- studies %>% select_if(~ !all(. == ''))
     return(studies)
 }
 
-GenerateSampleSummary <- function(se) {
-    x = as_tibble(se)[, c('genestack:accession', 'Organism', 'Sex', 'Disease', 'Tissue', 'Sample Source')] %>% distinct() %>% rename(Study=`Sample Source`)
-    a = x %>% group_by(Study, Organism) %>% count() %>%
-        unite(Organism, n, Organism, sep=' ') %>% group_by(Study) %>%
-        summarise(Organism=paste(Organism, collapse='<br>'))
-    b = x %>% group_by(Study, Sex) %>% count() %>%
-        unite(Sex, n, Sex, sep=' ') %>% group_by(Study) %>%
-        summarise(Sex=paste(Sex, collapse='<br>'))
-    c = x %>% group_by(Study, Disease) %>% count() %>%
-        unite(Disease, n, Disease, sep=' ') %>% group_by(Study) %>%
-        summarise(Disease=paste(Disease, collapse='<br>'))
-    d = x %>% group_by(Study, Tissue) %>% count() %>%
-        unite(Tissue, n, Tissue, sep=' ') %>% group_by(Study) %>%
-        summarise(Tissue=paste(Tissue, collapse='<br>'))
+GenerateSampleSummary <- function(samples) {
+    print('generate samples summary')
 
-    # count cell type
-    if ('Barcode' %in% colnames(se)) {
-        y = as_tibble(se)[, c('Barcode', 'Cell Type', 'Sample Source')] %>% distinct() %>% rename(Study=`Sample Source`)
-    } else {
-        y = as_tibble(se)[, c('genestack:accession', 'Cell Type', 'Sample Source')] %>% distinct() %>% rename(Study=`Sample Source`)
-    }
-    e = y %>% group_by(Study, `Cell Type`) %>% count() %>%
-        unite(`Cell Type`, n, `Cell Type`, sep=' ') %>% group_by(Study) %>%
-        summarise(`Cell Type`=paste(`Cell Type`, collapse='<br>'))
+    sel <- sapply(samples, class) == 'character' &
+        !(colnames(samples) %in% c('genestack:accession', 'Sample Source ID', 'groupId'))
+    summary <- apply(samples[, sel], 2, function(column) {
+        t <- table(column)
+        paste(paste(names(t), t, sep = ': '), collapse = '<br>')
+    })
 
-    reduce(list(a,b,c,d,e), full_join, by = "Study")
+    return(data.frame(Attribute = names(summary), Values = summary))
 }
 
-GenerateExpressionSummary <- function(se) {
-    se = subset(se, !is.na(expression))
-
-    x = as_tibble(se)[, c(
-        'Sample Source',
-        'Expression Group ID',
-        'metadata.Experimental Platform',
-        'metadata.Data Processing Method',
-        'metadata.Genome Version',
-        'metadata.Scale',
-        'metadata.Source')]
-
-    colnames(x) = gsub('metadata.', '', colnames(x))
-    x = x %>% rename(Study=`Sample Source`)
-    x %>% group_by(Study, `Expression Group ID`, `Experimental Platform`, `Data Processing Method`, `Genome Version`, Scale) %>% distinct()
+to_table <- function(groups) {
+    if (is.null(groups)) {
+        return('')
+    }
+    output <- cbind(groups$itemId, groups$metadata) %>% select_if(~ !all(is.na(.)))
+    colnames(output)[1] <- 'Accession'
+    output <- output[, sapply(output, class) != 'list', drop = FALSE]
+    return(output)
 }
 
 ui <- fluidPage(
@@ -108,18 +78,19 @@ ui <- fluidPage(
             hr(),
             sample.filter.input,
             expression.filter.input,
+            variant.filter.input,
             width = 3
         ),
 
         mainPanel(
             tabsetPanel(type = "tabs", id = "tabs",
                         tabPanel("Beeswarm Plot", h1(''), uiOutput("beeswarm")),
-                        # tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
+                        tabPanel("Allele Frequency Plot", h1(''), uiOutput("alleles")),
                         tabPanel("t-SNE Plot", h1(''), uiOutput("tsne")),
                         tabPanel("Gene Info", h1(''), uiOutput("genes")),
                         tabPanel("Study Info", h1(''), uiOutput("studies")),
                         tabPanel("Sample Info", h1(''), uiOutput("samples")),
-                        tabPanel("Expression Info", h1(''), uiOutput("expression_metadata")),
+                        tabPanel("Signal Data Info", h1(''), uiOutput("signal_metadata")),
                         tabPanel("API Calls", h1(''), verbatimTextOutput("api_calls"))),
             width = 9
         )
@@ -154,6 +125,38 @@ server <- function(input, output, session) {
         return(GetGeneSynonyms(x, genes_table))
     })
 
+    expression_groups <- reactive({
+        print('get expression groups')
+
+        genes <- genes()
+        ex_query <- if (genes == '') '' else sprintf('Gene=%s', paste(genes, collapse=','))
+
+        groups <- GetExpressionGroups(
+            studies = studies(),
+            sample_filter = input$sample.filter.input,
+            ex_query = ex_query,
+            ex_filter = input$expression.filter.input
+        )
+
+        return(groups)
+    })
+
+    variant_groups <- reactive({
+        print('get variant groups')
+
+        genes <- genes()
+        vx_query <- if (genes == '') '' else sprintf('Gene=%s', paste(genes, collapse=','))
+
+        groups <- GetVariantGroups(
+            studies = studies(),
+            sample_filter = input$sample.filter.input,
+            vx_query = vx_query,
+            vx_filter = input$variant.filter.input
+        )
+
+        return(groups)
+    })
+
     group_filter <- reactive({
         print('get group')
         input$group.input
@@ -161,7 +164,13 @@ server <- function(input, output, session) {
 
     studies_options <- reactive({
         print('get possible studies')
-        GetStudies(input$therapeutic.area.input, input$study.type.input)
+
+        response <- GetStudies(input$therapeutic.area.input, input$study.type.input)
+        output$api_calls <- renderText({
+            paste(response$logs , sep='\n\n\n')
+        })
+
+        return(response)
     })
 
     studies <- reactive({
@@ -175,13 +184,20 @@ server <- function(input, output, session) {
 
     samples_expressions <- reactive({
         print("get samples and expressions")
-        GetSamplesAndExpressions(
+
+        response <- GetSamplesAndExpressions(
             studies(),
             input$sample.filter.input,
             group_filter(),
             input$expression.filter.input,
             genes()
         )
+
+        output$api_calls <- renderText({
+            paste(response$logs , sep='\n\n\n')
+        })
+
+        return(response)
     })
 
     output$studies.checkbox.input <- renderUI({
@@ -231,7 +247,8 @@ server <- function(input, output, session) {
     })
 
     output$alleles <- renderUI({
-        if (!StudiesHasVariantData(studies())) {
+        vx_groups <- variant_groups()
+        if (is.null(vx_groups) || length(vx_groups) == 0) {
             return('')
         }
 
@@ -240,13 +257,25 @@ server <- function(input, output, session) {
 
     output$alleles_show <- renderPlot({
         g <- genes()
-        if (is_empty(g) || nrow(g) == 0 || genes() == '') {
+        if (is_empty(g) || g == '') {
             vx_query <- 'info_AF=(0.001:1)'
         } else {
-            vx_query <- sprintf('Gene=%s info_AF=(0.001:1)', paste(genes()[,'symbol'], collapse=','))
+            vx_query <- sprintf('Gene=%s info_AF=(0.001:1)', paste(genes(), collapse=','))
         }
 
-        af <- ComputeAlleleFrequencies(studies(), vx_query, group_filter())
+        response <- ComputeAlleleFrequencies(
+            studies = studies(),
+            sample_filter = input$sample.filter.input,
+            vx_query = vx_query,
+            vx_filter = input$variant.filter.input,
+            group_factor = group_filter()
+        )
+
+        output$api_calls <- renderText({
+            paste(response$logs , sep='\n\n\n')
+        })
+
+        af <- response$data
         if (is.null(af)) {
             return('')
         }
@@ -351,8 +380,13 @@ server <- function(input, output, session) {
     })
 
     output$studies_show <- renderTable({
-            GenerateStudySummary(studies())
-        }, sanitize.text.function=identity)
+        summaries <- GenerateStudySummary(studies())
+        summaries <- do.call("rbind",
+                             apply(summaries, 1,
+                                   function(x) { data.frame(Attribute=names(x), Value=as.character(x)) })
+                             )
+        return(summaries)
+    }, sanitize.text.function = identity)
 
     output$samples <- renderUI({
         se = samples_expressions()[['data']]
@@ -364,21 +398,33 @@ server <- function(input, output, session) {
 
     output$samples_show <- renderTable({
         GenerateSampleSummary(samples_expressions()[['data']])
-    }, sanitize.text.function=identity)
+    }, sanitize.text.function = identity)
 
-    output$expression_metadata <- renderUI({
-        se = samples_expressions()[['data']]
-        if (is_empty(se) || nrow(se) == 0 || !('expression' %in% names(se))) {
-            return("")
+    output$signal_metadata <- renderUI({
+        tables <- c()
+
+        ex_groups <- expression_groups()
+        if (!is.null(ex_groups) && length(ex_groups) > 0) {
+            tables <- c(tables, 'expression_metadata_show')
         }
-        tableOutput("expression_metadata_show")
+
+        vx_groups <- variant_groups()
+        if (!is.null(vx_groups) && length(vx_groups) > 0) {
+            tables <- c(tables, 'variant_metadata_show')
+        }
+
+        return(lapply(tables, tableOutput))
     })
 
     output$expression_metadata_show <- renderTable({
-        GenerateExpressionSummary(samples_expressions()[['data']])
-    }, sanitize.text.function=identity)
+        groups <- expression_groups()
+        return(to_table(groups))
+    })
 
-    output$api_calls <- renderText({paste(studies_options()[['logs']],samples_expressions()[['logs']],sep='\n\n\n')})
+    output$variant_metadata_show <- renderTable({
+        groups <- variant_groups()
+        return(to_table(groups))
+    })
 }
 
 shinyApp(ui = ui, server = server)

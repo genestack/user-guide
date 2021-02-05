@@ -62,6 +62,12 @@ expression.filter.input <- textInput(
     value = ""
 )
 
+variant.filter.input <- textInput(
+  inputId = "variant.filter.input",
+  label = "Variant filter",
+  value = ""
+)
+
 SplitTextInput <- function(text.input) {
     unlist(lapply(strsplit(text.input, split = ",")[[1]], FUN = trimws))
 }

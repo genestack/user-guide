@@ -36,40 +36,21 @@ GenerateStudySummary <- function(studies) {
     studies[is.na(studies)] <- ''
     sel <- sapply(studies, class) == 'list'
     studies[, sel] = apply(studies[, sel], 1, function(x) sapply(x, function(v) paste(v, collapse = ' ')))
-    studies <-  as_tibble(studies) %>%
-        group_by(`genestack:accession`, `Study Title`, `Study Description`) %>%
-        unite(Study, `genestack:accession`, `Study Source ID`, sep=' ') %>%
-        unite(Description, `Study Title`, `Study Description`, sep='<br><br>')
     studies <- studies %>% select_if(~ !all(. == ''))
     return(studies)
 }
 
-GenerateSampleSummary <- function(se) {
-    x = as_tibble(se)[, c('genestack:accession', 'Organism', 'Sex', 'Disease', 'Tissue', 'Sample Source')] %>% distinct() %>% rename(Study=`Sample Source`)
-    a = x %>% group_by(Study, Organism) %>% count() %>%
-        unite(Organism, n, Organism, sep=' ') %>% group_by(Study) %>%
-        summarise(Organism=paste(Organism, collapse='<br>'))
-    b = x %>% group_by(Study, Sex) %>% count() %>%
-        unite(Sex, n, Sex, sep=' ') %>% group_by(Study) %>%
-        summarise(Sex=paste(Sex, collapse='<br>'))
-    c = x %>% group_by(Study, Disease) %>% count() %>%
-        unite(Disease, n, Disease, sep=' ') %>% group_by(Study) %>%
-        summarise(Disease=paste(Disease, collapse='<br>'))
-    d = x %>% group_by(Study, Tissue) %>% count() %>%
-        unite(Tissue, n, Tissue, sep=' ') %>% group_by(Study) %>%
-        summarise(Tissue=paste(Tissue, collapse='<br>'))
+GenerateSampleSummary <- function(samples) {
+    print('generate samples summary')
 
-    # count cell type
-    if ('Barcode' %in% colnames(se)) {
-        y = as_tibble(se)[, c('Barcode', 'Cell Type', 'Sample Source')] %>% distinct() %>% rename(Study=`Sample Source`)
-    } else {
-        y = as_tibble(se)[, c('genestack:accession', 'Cell Type', 'Sample Source')] %>% distinct() %>% rename(Study=`Sample Source`)
-    }
-    e = y %>% group_by(Study, `Cell Type`) %>% count() %>%
-        unite(`Cell Type`, n, `Cell Type`, sep=' ') %>% group_by(Study) %>%
-        summarise(`Cell Type`=paste(`Cell Type`, collapse='<br>'))
+    sel <- sapply(samples, class) == 'character' &
+        !(colnames(samples) %in% c('genestack:accession', 'Sample Source ID', 'groupId'))
+    summary <- apply(samples[, sel], 2, function(column) {
+        t <- table(column)
+        paste(paste(names(t), t, sep = ': '), collapse = '<br>')
+    })
 
-    reduce(list(a,b,c,d,e), full_join, by = "Study")
+    return(data.frame(Attribute = names(summary), Values = summary))
 }
 
 to_table <- function(groups) {
@@ -399,8 +380,13 @@ server <- function(input, output, session) {
     })
 
     output$studies_show <- renderTable({
-            GenerateStudySummary(studies())
-        }, sanitize.text.function=identity)
+        summaries <- GenerateStudySummary(studies())
+        summaries <- do.call("rbind",
+                             apply(summaries, 1,
+                                   function(x) { data.frame(Attribute=names(x), Value=as.character(x)) })
+                             )
+        return(summaries)
+    }, sanitize.text.function = identity)
 
     output$samples <- renderUI({
         se = samples_expressions()[['data']]
@@ -412,7 +398,7 @@ server <- function(input, output, session) {
 
     output$samples_show <- renderTable({
         GenerateSampleSummary(samples_expressions()[['data']])
-    }, sanitize.text.function=identity)
+    }, sanitize.text.function = identity)
 
     output$signal_metadata <- renderUI({
         tables <- c()

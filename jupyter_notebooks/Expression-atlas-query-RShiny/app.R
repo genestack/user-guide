@@ -32,21 +32,15 @@ GenerateGeneSummary <- function(genes, genes_table) {
 
 GenerateStudySummary <- function(studies) {
     print('generate study summary')
-    if (!('Gating strategy' %in% colnames(studies))) {
-        studies[, 'Gating strategy'] = ''
-    }
 
-    studies[all(is.null(unlist(studies[, 'Study Source ID']))), 'Study Source ID'] <- ''
     studies[is.na(studies)] <- ''
-
-    studies = as_tibble(studies) %>%
-        unnest(`Study Source ID`) %>%
-        group_by(`genestack:accession`, `Study Title`, `Study Description`, `Gating strategy`) %>%
-        summarise(
-            `Study Source ID` = paste0(`Study Source ID`, collapse=' ')
-        ) %>% unite(Study, `genestack:accession`, `Study Source ID`, sep=' ') %>%
-        unite(Description, `Study Title`, `Study Description`, `Gating strategy`, sep='<br><br>')
-
+    sel <- sapply(studies, class) == 'list'
+    studies[, sel] = apply(studies[, sel], 1, function(x) sapply(x, function(v) paste(v, collapse = ' ')))
+    studies <-  as_tibble(studies) %>%
+        group_by(`genestack:accession`, `Study Title`, `Study Description`) %>%
+        unite(Study, `genestack:accession`, `Study Source ID`, sep=' ') %>%
+        unite(Description, `Study Title`, `Study Description`, sep='<br><br>')
+    studies <- studies %>% select_if(~ !all(. == ''))
     return(studies)
 }
 

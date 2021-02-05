@@ -31,6 +31,7 @@ GetExpressionGroups <- function(studies, sample_filter, ex_query, ex_filter) {
     }
 
     study_filter <- paste(sprintf('genestack:accession=%s', studies[,'genestack:accession']), collapse=' OR ')
+
     expression_groups_content <- OmicsQueriesApi_search_expression_groups(
         study_filter = study_filter,
         sample_filter = sample_filter,
@@ -232,22 +233,32 @@ GetSamplesAndExpressions <- function(studies, sample_filter, group_factor, expre
 
 ComputeAlleleFrequencies <- function(studies, sample_filter, vx_query, vx_filter, group_factor) {
     if (is.null(studies) || nrow(studies) == 0) {
-        return(NULL)
+        return(list(data=NULL, logs=''))
     }
 
     study_filter <- paste(sprintf('genestack:accession=%s', studies[, 'genestack:accession']), collapse=' OR ')
 
+    start_time <- Sys.time()
     samples_content <- OmicsQueriesApi_search_samples(
         study_filter = study_filter,
-        sample_filter = ''
+        sample_filter = sample_filter
     )$content
+    query_time <- round(Sys.time() - start_time, digits = 1)
+
+    logs <- paste('OmicsQueriesApi_search_samples(\n',
+                  '    study_filter = \'', study_filter, '\'\n',
+                  '    sample_filter = \'', sample_filter, '\'\n',
+                  ')', sep = '')
 
     if (is.null(samples_content)) {
-        return(NULL)
+        logs <- paste(logs, sprintf('# 0 samples: %s seconds', query_time), sep = '\n')
+        return(list(data=NULL, logs=logs))
     }
 
     samples <- samples_content$data[['metadata']]
+    logs <- paste(logs, sprintf('# %s samples: %s seconds', nrow(samples), query_time), sep = '\n')
 
+    start_time <- Sys.time()
     variants_content <- OmicsQueriesApi_search_variant_data(
         study_filter = study_filter,
         sample_filter = sample_filter,
@@ -255,12 +266,25 @@ ComputeAlleleFrequencies <- function(studies, sample_filter, vx_query, vx_filter
         vx_filter = vx_filter,
         page_limit = 20000
     )$content
+    query_time <- round(Sys.time() - start_time, digits = 1)
+
+    logs <- paste(logs,
+                  '\n\nOmicsQueriesApi_search_variant_data(\n',
+                  '    study_filter = \'', study_filter, '\'\n',
+                  '    sample_filter = \'', sample_filter, '\'\n',
+                  '    vx_query = \'', vx_query, '\'\n',
+                  '    vx_filter = \'', vx_filter, '\'\n',
+                  '    page_limit = 20000\n',
+                  ')', sep = '')
 
     if (is.null(variants_content) || length(variants_content$data) == 0) {
-        return(NULL)
+        logs <- paste(logs, sprintf('# 0 variants: %s seconds', query_time), sep = '\n')
+        return(list(data=NULL, logs=logs))
     }
 
     variants <- variants_content$data
+    logs <- paste(logs, sprintf('# %s variants: %s seconds', nrow(variants), query_time), sep = '\n')
+
     variants <- cbind(
         'SampleID' = variants$relationships$sample,
         VariantID = variants$variationId,
@@ -275,7 +299,7 @@ ComputeAlleleFrequencies <- function(studies, sample_filter, vx_query, vx_filter
     variants <- filter(variants, VT == 'SNP')
 
     if (nrow(variants) == 0) {
-        return(NULL)
+        return(list(data=NULL, logs=logs))
     }
 
     if (group_factor %in% colnames(samples)) {
@@ -284,7 +308,7 @@ ComputeAlleleFrequencies <- function(studies, sample_filter, vx_query, vx_filter
         af <- ComputeAlleleFrequenciesWithoutFactor(samples, variants)
     }
 
-    return(af)
+    return(list(data=af, logs=logs))
 }
 
 ComputeAlleleFrequenciesWithoutFactor <- function(samples, variants) {

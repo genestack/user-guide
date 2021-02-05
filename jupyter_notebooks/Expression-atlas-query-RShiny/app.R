@@ -183,7 +183,13 @@ server <- function(input, output, session) {
 
     studies_options <- reactive({
         print('get possible studies')
-        GetStudies(input$therapeutic.area.input, input$study.type.input)
+
+        response <- GetStudies(input$therapeutic.area.input, input$study.type.input)
+        output$api_calls <- renderText({
+            paste(response$logs , sep='\n\n\n')
+        })
+
+        return(response)
     })
 
     studies <- reactive({
@@ -197,13 +203,20 @@ server <- function(input, output, session) {
 
     samples_expressions <- reactive({
         print("get samples and expressions")
-        GetSamplesAndExpressions(
+
+        response <- GetSamplesAndExpressions(
             studies(),
             input$sample.filter.input,
             group_filter(),
             input$expression.filter.input,
             genes()
         )
+
+        output$api_calls <- renderText({
+            paste(response$logs , sep='\n\n\n')
+        })
+
+        return(response)
     })
 
     output$studies.checkbox.input <- renderUI({
@@ -269,7 +282,7 @@ server <- function(input, output, session) {
             vx_query <- sprintf('Gene=%s info_AF=(0.001:1)', paste(genes(), collapse=','))
         }
 
-        af <- ComputeAlleleFrequencies(
+        response <- ComputeAlleleFrequencies(
             studies = studies(),
             sample_filter = input$sample.filter.input,
             vx_query = vx_query,
@@ -277,6 +290,11 @@ server <- function(input, output, session) {
             group_factor = group_filter()
         )
 
+        output$api_calls <- renderText({
+            paste(response$logs , sep='\n\n\n')
+        })
+
+        af <- response$data
         if (is.null(af)) {
             return('')
         }
@@ -421,9 +439,6 @@ server <- function(input, output, session) {
         groups <- variant_groups()
         return(to_table(groups))
     })
-
-
-    output$api_calls <- renderText({paste(studies_options()[['logs']],samples_expressions()[['logs']],sep='\n\n\n')})
 }
 
 shinyApp(ui = ui, server = server)

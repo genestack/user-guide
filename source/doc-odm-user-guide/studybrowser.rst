@@ -67,7 +67,7 @@ Exactly which metadata fields are available as search facets can be configured b
    :align: center
 
 .. image:: images/configure-facets-screen.png
-   :scale: 85 %
+   :scale: 35 %
    :align: center
 
 You can add facets to the filter panel by clicking the **New facet** button and typing the full name of the metadata field which you want to appear. Names are case sensitive. You can also reorder the facets by dragging the icon next to the facet name, or delete them from the panel by clicking the bin icon. Once you are happy click the **Save** button to apply the changes. If your facet is empty or a duplicate it will not be allowed and the panel change won't save until this is corrected.

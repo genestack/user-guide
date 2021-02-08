@@ -57,7 +57,20 @@ Clicking on this allows you to type in terms and you can select from the present
    :scale: 35 %
    :align: center
 
-Exactly which metadata fields are available as search facets is determined by templates, which is also how you specify what metadata are expected to be seen for a given type of omics data, and which controlled vocabularies or ontologies should apply. 
+Configuring the filter panel
+****************************
+
+Exactly which metadata fields are available as search facets can be configured by users who have the permission to configure facets. To change the facets click the cog icon at the bottom of the filter panel.
+
+.. image:: images/configure-facets.png
+   :scale: 35 %
+   :align: center
+
+.. image:: images/configure-facets-screen.png
+   :scale: 85 %
+   :align: center
+
+You can add facets to the filter panel by clicking the **New facet** button and typing the full name of the metadata field which you want to appear. Names are case sensitive. You can also reorder the facets by dragging the icon next to the facet name, or delete them from the panel by clicking the bin icon. Once you are happy click the **Save** button to apply the changes. If your facet is empty or a duplicate it will not be allowed and the panel change won't save until this is corrected.
 
 Results panel
 *************
@@ -75,7 +88,7 @@ To the left of the study titles is a three dot link. Click this is open a menu t
    :align: center
 
 
-The next column shows the type of the study. If there is information about the general type of study, for example: 'expression profiling by high throughput sequencing', or 'RNA-seq of coding RNA from Single Cells' then it is displayed here. 
+The next column shows the type of the study. If there is information about the general type of study, for example: 'expression profiling by high throughput sequencing', or 'RNA-seq of coding RNA from Single Cells' then it is displayed here.
 
 The third column is a summary of the metadata that is associated with the study. This displays information such as the organism, tissue, cell-type, disease and so on and is pulled straight from the metadata fields of the samples in the study.
 
@@ -87,7 +100,7 @@ You can hover over any name in the summary column and the name of the metadata f
 
 The next column tells us how many samples are present in each study.
 
-The penultimate column shows what types of experimental signal data are present for each study. 
+The penultimate column shows what types of experimental signal data are present for each study.
 
 .. image:: images/studybrowser_signals.png
    :scale: 50 %

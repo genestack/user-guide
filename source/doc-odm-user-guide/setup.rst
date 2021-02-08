@@ -40,9 +40,9 @@ In order to open the application, you can use the shortcut menu and select **Use
    :scale: 40 %
    :align: center
 
-On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, has permission to manage the organization (add/deactivate users, manage their permissions) and whether they can edit and manage templates, including setting the default template.
+On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, has permission to manage the organization (add/deactivate users, manage their permissions), whether they can edit and manage templates, including setting the default template, and whether they can configure the facets that appear in the study browser.
 
-.. image:: images/manage_users_1_31.png
+.. image:: images/manage-users-1-33.png
    :scale: 40 %
    :align: center
 

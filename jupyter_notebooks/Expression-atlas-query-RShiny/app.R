@@ -5,7 +5,7 @@ library(gridExtra)
 suppressMessages(library(tidyverse))
 
 host <- "occam.genestack.com"
-token <- "6139dc4be955529e0910992cc0d8cbadd1dcd421"
+token <- "<your token here>"
 
 source("r_client_api.R")
 source("dictionaries_api.R")

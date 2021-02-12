@@ -1,55 +1,36 @@
-R Shiny expression atlas examples
+R Shiny Expression Atlas Example
 
-ODM APIs help you perform cross-study cross-omics analysis on-the-fly.
+Here is an example R Shiny app that demonstrates how you can easily develop a custom user interface to query (transcriptomic or proteomic) expression data using ODM's multi-omics API.
 
-Here is an example of an API-driven R Shiny application that demonstrates how to develop a user interface to explore, search and visualise bulk and single-cell RNA-Seq data from public domain. This application can be easily modified/extended to support your custom analysis.
+To run the app, you need to:
 
-You can view the R scripts directly on GitHub. To modify/run the Shiny app yourselves, you need to:
-
-- Generate your API token (see our user guide)
-- Install [R](https://www.r-project.org/) or [RStudio](https://rstudio.com/) to directly run the app. Alternatively, install [Jupyter notebooks](https://jupyter.org/install) and also the [R kernel](https://github.com/IRkernel/IRkernel). This will allow you to run the Shiny app from Jupyter notebook.
+- Generate your API token (see our user guide) and copy-paste it to the "token" variable in the app.R script
+- Install [RStudio](https://rstudio.com/)
 - Prerequisite libraries:
   - R packages: 
     `intall.packages(c("shiny", "ggbeeswarm", "plyr", "gridExtra", "tidyverse", "httr", "RJSONIO"))`
-  - Ask us for the ODM R client libraries (in this case, install "studyCurator", "integrationCurator", "variantCurator", "expressionCurator"), and then
-    `install.packages('<path to the r/integrationCurator folder>', repos = NULL, type="source")`
-
-Run the Shiny application in the R console (RStudio/Jupyter notebooks)
-- Copy and paste your API token to the "token" variable in scripts app.R and dictionaries_api.R (e.g. `token <- "<your token here>""`), and save the files
-- Set your working directory to where the Shiny app folder is located using `setwd('~/shinyappfolder')`
-- load Shiny package using `library(shiny)`
-- Run the app using `runApp()`
-
-Alternatively, run the Shiny application in a terminal or console window
-- Copy and paste your API token to the "token" variable in both app.R and dictionaries_api.R (e.g. `token <- “<your token here>""`), and save the files
-- Run the app using `R -e “shiny::runApp('~/shinyappfolder')"`
+  - Ask us for the ODM R client library and install the "studyCurator", "integrationCurator", "expressionCurator" packages, e.g. 
+    `install.packages('<path to the r/studyCurator folder>', repos = NULL, type="source")`
 
 **Example queries:**
-- Explore bulk RNA-Seq study:
-  - Once you successfully load the Shiny app, a web-page style user interface will appear.
-  On the left panel, there are multiple text boxes and drop-down lists that you can use to filter data for your analysis.
-  - Select a type of study from the "Study Type", e.g. **Bulk Study**.
-  - Select an area of interest in the "Therapeutic area" list, e.g. **Immunology**. You can either
-    - Type in the term, and an automated matched list will be returned for you to choose from, OR
-    - Directly select from the drop-down list.
-  - Select a study by ticking one or more studies appeared underneath the "Therapeutic area", e.g. ticking the study **GSF1061557 (Reyes et al.)**.
-  - Choose a gene of interest and type into the "Genes", e.g. **CD3E**.
-  - You will be able to see both transcriptomic and proteomic data shown in the main panel under the "Beeswarm Plot" tab. You can also view relevant information in other tabs.
-  - You can group the data using the "Group by", e.g. the default is to group data by **Sex** (Note: other options can be made available according to the field in the metadata from the chosen study). The Beeswarm plot displays the expression data by the selected grouping.
-  - You can filter the data using "Sample filter" (e.g. **Sex=female**) and "Expression filter" (e.g. **Source="RNA-Seq"**). All information in the "Sample Info" and "Signal Data Info" can be used to slice the data.
-  - You can also query two genes at the same time, e.g. typing in **CD28** next to CD3E. Two plots are displayed for the chosen two genes.
+
+- Explore bulk expression studies:
+  - Select a study type from the "Study Type" drop-down list, e.g. **Bulk Study**.
+  - Select a therapeutic area from the "Therapeutic area" drop-down list, e.g. **Immunology**.
+  - Select some studies to query, e.g. the study **GSF1061557 (Reyes et al.)**.
+  - Specify a gene/protein of interest, e.g. **CD3E**.
+  - You will be able to see both (transcriptomic or proteomic) expression data under the "Beeswarm Plot" tab. You can also view relevant information in other tabs.
+  - You can group the samples using the "Group by" field, e.g. the default grouping is by **Sex**
+  - You can filter the data further using "Sample filter" (e.g. **Sex=female**) and "Expression filter" (e.g. **Source="RNA-Seq"**). Any information in the "Sample Info" and "Signal Data Info" can be used to filter the data.
+  - You can also query two genes at the same time, e.g. typing in **CD28** next to CD3E.
 
 - Explore single cell RNASeq: similar to what you do with Bulk study
-  - A new tab of “t-SNE plot” is available for single-cell expression data, which allows users to visualise clusters of cells based on their expression. However, those cells are coloured by the chosen "Group by", e.g. **Cell Type**. This is useful to answer questions such as "Are single cells from the same cell type grouped together? Is there any single cell behaving differently from others of the same cell type?".
-  - Select a type of study from the "Study Type", e.g. **Single-cell Study**.
-  - Select an area of interest in the "Therapeutic area" list, e.g. **Oncology**.
-  - Select a study by ticking one or more studies appeared underneath the "Therapeutic area", e.g. ticking the study **GSF766955 (Lambrechts et al.)**.
+  - A new tab of “t-SNE plot” is available for single-cell expression data, which allows users to visualise cell clusters and overlay the expression of specific gene(s).
+  - Select a study type from the "Study Type" drop-down list, e.g. **Single-cell Study**.
+  - Select a therapeutic area from the "Therapeutic area" drop-down list, e.g. **Oncology**.
+  - Select some studies to query, e.g. ticking the study **GSF766955 (Lambrechts et al.)**.
   - There are 50K cells in this study. Let’s filter this down to look only for lung squamous cell using “Sample filter”, **Disease=“lung squamous cell"**
-  - You can also look for “Genes”, e.g. **CD79A**
-
-Note: single-cell study queries usually take a bit longer to run using a laptop/desktop due to the large number of cells included in the study.
-
-
+  - You can also look for the expression of specific “Genes”, e.g. **CD79A**
 
 
 We will add more examples. Please give us feedback and let us know if you'd like to see specific examples!

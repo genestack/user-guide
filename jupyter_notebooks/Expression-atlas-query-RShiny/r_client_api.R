@@ -1,7 +1,7 @@
 library(studyCurator)
 library(integrationCurator)
 library(expressionCurator)
-library(variantCurator)
+# library(variantCurator)
 
 GetStudies <- function(therapeutic.area, study_type) {
     start_time <- Sys.time()

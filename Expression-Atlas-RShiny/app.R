@@ -114,8 +114,16 @@ server <- function(input, output, session) {
     })
 
     genes <- reactive({
-        print('get genes')
-
+        GetGeneSynonyms <- function(genes, genes_table) {
+            if (is_empty(genes) || genes == '') {
+                return('')
+            }
+            
+            synonyms <- genes_table[genes_table$gene_symbol %in% genes, c('ensembl_id', 'gene_synonyms', 'uniprot_symbol')]
+            combined <- c(genes, synonyms$ensembl_id, synonyms$gene_synonyms, synonyms$uniprot_symbol)
+            return(unique(combined[!is.na(combined) && combined != ""]))
+        }
+        
         x <- input$gene.input
         if (is_empty(x) || x == '') {
             return('')

@@ -408,10 +408,10 @@ server <- function(input, output, session) {
             tables <- c(tables, 'expression_metadata_show')
         }
 
-        vx_groups <- variant_groups()
-        if (!is.null(vx_groups) && length(vx_groups) > 0) {
-            tables <- c(tables, 'variant_metadata_show')
-        }
+        # vx_groups <- variant_groups()
+        # if (!is.null(vx_groups) && length(vx_groups) > 0) {
+        #     tables <- c(tables, 'variant_metadata_show')
+        # }
 
         return(lapply(tables, tableOutput))
     })

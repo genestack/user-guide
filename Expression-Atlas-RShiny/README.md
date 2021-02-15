@@ -8,7 +8,7 @@ To run the app, you need to:
 - Install [RStudio](https://rstudio.com/)
 - Prerequisite libraries:
   - R packages: 
-    `intall.packages(c("shiny", "ggbeeswarm", "plyr", "gridExtra", "tidyverse", "httr", "RJSONIO"))`
+    `install.packages(c("shiny", "ggbeeswarm", "plyr", "gridExtra", "tidyverse", "httr", "RJSONIO"))`
   - Ask us for the ODM R client library and install the "studyCurator", "integrationCurator", "expressionCurator" packages, e.g. 
     `install.packages('<path to the r/studyCurator folder>', repos = NULL, type="source")`
 

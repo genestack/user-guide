@@ -256,6 +256,10 @@ A cross-reference mapping file can be imported. This is a TSV file consisting of
 Libraries file
 --------------
 
+- `Test_RM.libraries.tsv`_, a a TSV file with information about sample preparations
+
+.. _`Test_RM.libraries.tsv`: https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.libraries.tsv
+
 Libraries metadata is a TSV file with information about how samples were prepared. It contains data related to the quality of samples, barcodes and library properties (single-end vs pair-end). Each sample can have more than 1 corresponding library. Multiple samples can be pooled into the same library, e.g. pooling female and male samples to remove gender-specific signals in the sequencing output (unrelated to multiplexing of libraries with barcodes). **Sample Source ID** and **Library ID** are required headings.
 
 +-------------------+--------------------+--------------------+--------------------+
@@ -270,5 +274,10 @@ Libraries metadata is a TSV file with information about how samples were prepare
 
 Preparations file
 -----------------
+
+- `Test_RM.preparations.tsv`_, a TSV file with information about sample preparations
+
+.. _`Test_RM.preparations.tsv`: https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.preparations.tsv
+
 
 Preparations metadata follows the same format as libraries above, but containing proteomics specific metadata. **Sample Source ID** and **Preparation ID** are required headings.

@@ -30,8 +30,6 @@ To import the mapping file submit a **POST** request to the `/reference-data/xre
 
 .. literalinclude:: import-g-t-mapping.py
 
-Because uploading is asynchronous the system returns a confirmation message with a **jobExecId**. This can then be supplied as a **GET** request to the `/{jobExecId}​/output <https://occam.genestack.com/swagger/?urls.primaryName=job#/Job%20operations/output>`_ endpoint to monitor the status of the job. When complete this endpoint will return the accession of the gene-transcript mapping object that has been created.
-
 Linking the mapping file to an expression matrix file
 *********************************************************************
 

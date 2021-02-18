@@ -29,7 +29,7 @@ To run the app, you need to:
   - Select a study type from the "Study Type" drop-down list, e.g. **Single-cell Study**.
   - Select a therapeutic area from the "Therapeutic area" drop-down list, e.g. **Oncology**.
   - Select some studies to query, e.g. ticking the study **GSF766955 (Lambrechts et al.)**.
-  - There are 50K cells in this study. Let’s filter this down to look only for lung squamous cell using “Sample filter”, **Disease=“lung squamous cell"**
+  - There are 50K cells in this study. Let’s filter this down to look only for lung squamous cell using “Sample filter”, **Disease=“lung squamous cell carcinoma"**
   - You can also look for the expression of specific “Genes”, e.g. **CD79A**
 
 

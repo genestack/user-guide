@@ -140,6 +140,6 @@ The following are some example files to illustrate file formats:
 
 .. _Test_1000g.vcf.tsv: https://s3.amazonaws.com/bio-test-data/odm/Test_1000g/Test_1000g.vcf.tsv
 
-Run the script with the above by typing the following (inserting your token instead of [token]):
+Run the script with the above by typing the following (inserting your token instead of [token], note you may need to escape or quote strings depending on your specific command line interface):
 
 .. literalinclude:: import-data-script-5.py

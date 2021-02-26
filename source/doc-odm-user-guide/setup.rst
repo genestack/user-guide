@@ -11,7 +11,7 @@ in the top-right corner of the page and, then, select the menu item **Profile**.
 
 On the opening page you'll find the following sections:
 
-.. image:: images/odm_profile.png
+.. image:: images/odm_profile1.png
    :scale: 35 %
    :align: center
 

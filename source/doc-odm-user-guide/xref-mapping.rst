@@ -6,7 +6,7 @@ ODM provides the capability to import and link a cross-reference (xref) mapping 
 What can I import?
 ------------------
 
-An xref mapping file can be uploaded. This needs to be a TSV file consisting of two columns. The first row must contain the headers. The first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTP/FTP location accessible to ODM.
+An xref mapping file can be uploaded. This needs to be a TSV file consisting of two columns. The first row must contain the headers. The first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTPS location accessible to ODM.
 
 +-------------------+--------------------+
 | TXNAME            | GENEID             |

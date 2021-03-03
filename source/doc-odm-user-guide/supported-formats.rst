@@ -243,7 +243,7 @@ To learn more take a look at the VCF specification_.
 Cross-reference mapping file
 ----------------------------
 
-A cross-reference mapping file can be imported. This is a TSV file consisting of two columns. The first row must contain the headers TXNAME and GENEID, and the first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTP/FTP location accessible to ODM.
+A cross-reference mapping file can be imported. This is a TSV file consisting of two columns. The first row must contain the headers TXNAME and GENEID, and the first column must be the transcript IDs which must be unique. The file needs to be hosted at an HTTPS location accessible to ODM.
 
 +-------------------+--------------------+
 | TXNAME            | GENEID             |

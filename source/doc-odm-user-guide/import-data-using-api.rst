@@ -41,7 +41,7 @@ together: a study can be linked to multiple samples and a sample can be linked t
 Where can I import the data from?
 ---------------------------------
 
-You should provide HTTP/FTP file links (which can include authentication credentials) to a storage that’s accessible
+You should provide HTTPS file links (which can include authentication credentials) to a storage that’s accessible
 by ODM. File uploads from a local computer will be supported in a future release.
 
 Step-by-step example 1

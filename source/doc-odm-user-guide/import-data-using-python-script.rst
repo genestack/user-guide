@@ -12,9 +12,9 @@ You need to have:
 
 - A Genestack API token
 
-- Either a Study file containing metadata about the study in TSV format, hosted at an FTP or HTTP web address, OR the accession of an existing study in ODM that you will add files to.
+- Either a Study file containing metadata about the study in TSV format, hosted at an HTTPS web address, OR the accession of an existing study in ODM that you will add files to.
 
-- A Samples file containing metadata about the samples in TSV format, hosted at an FTP or HTTP web address
+- A Samples file containing metadata about the samples in TSV format, hosted at an HTTPS web address
 
 Optional experimental (signal) data files
 -----------------------------------------
@@ -25,27 +25,27 @@ You can optionally also provide:
 
 - The server address if you want to apply the script to a different ODM server.  Use **--server <ADDRESS>** to specify.
 
-- Expression data in GCT_ format, hosted at an FTP or HTTP web address
+- Expression data in GCT_ format, hosted at an HTTPS web address
 
 .. _GCT: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29
 
-- Expression metadata in TSV format, hosted at an FTP or HTTP web address
+- Expression metadata in TSV format, hosted at an HTTPS web address
 
-- Variant data in VCF_ format, hosted at an FTP or HTTP web address
+- Variant data in VCF_ format, hosted at an HTTPS web address
 
 .. _VCF: https://samtools.github.io/hts-specs/VCFv4.2.pdf
 
-- Variant metadata in TSV format, hosted at an FTP or HTTP web address
+- Variant metadata in TSV format, hosted at an HTTPS web address
 
-- Flow cytometry data in .facs format, hosted at an FTP or HTTP web address
+- Flow cytometry data in .facs format, hosted at an HTTPS web address
 
-- Flow cytometry metadata in TSV format, hosted at an FTP or HTTP web address
+- Flow cytometry metadata in TSV format, hosted at an HTTPS web address
 
-- A cross-reference mapping file, in TSV format, hosted at an FTP or HTTP web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
+- A cross-reference mapping file, in TSV format, hosted at an HTTPS web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
 
-- A libraries file in TSV format, hosted at an FTP or HTTP web address, or the accession of an existing library file
+- A libraries file in TSV format, hosted at an HTTPS web address, or the accession of an existing library file
 
-- A preparations file in TSV format, hosted at an FTP or HTTP web address, or the accession of an existing preparations file.
+- A preparations file in TSV format, hosted at an HTTPS web address, or the accession of an existing preparations file.
 
 Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and
 APIs, whilst the signal data will only queryable via APIs.

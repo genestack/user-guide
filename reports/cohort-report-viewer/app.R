@@ -8,31 +8,34 @@ library(tidyr)
 
 # Constants.
 none <- "<none>"
-allele_category_selection <- "Allele [ALT]"
-default_odm_host <- "occam.genestack.com"
+allele_axis_selection <- "Alleles Count [ALT]"
+expression_axis_selection <- "Gene Expression"
+# default_odm_host <- "occam.genestack.com"
+default_odm_host <- "inc-dev-6.genestack.com"
+# version <- "default-released"
+version <- "v0.1"
+bmi_status <- "BMI Status"
+breast_cancer_status <- "Breast Cancer Status"
 
 # -----------------------------  UI Config  -----------------------------------
 # Filters configuration (left column).
 filters_configuration <- list(
-  Disease = list(id = "disease",
-                 label = h4("Disease"),
-                 choices = c("melanoma", "lung non-small cell carcinoma")),
   Sex = list(id = "sex",
              label = h4("Sex"),
              choices = c("male", "female")),
-  `main diagnoses` = list(id = "diagnoses",
-                          label = h4("Main Diagnoses"),
-                          choices = c("R074", "R31", "R69"))
+  `Menopausal Status` = list(id = "menopausalStatus",
+                             label = h4("Menopausal Status"),
+                             choices = c("pre-menopausal", "post-menopausal"))
 )
 
 # Value axis configuration (right column).
-value_axis_configuration <- c("Age at cancer diagnosis")
+value_axis_configuration <- c("Age at Cancer Diagnosis")
 
 # Category axis configuration (right column).
-category_configuration <- c("Sex", "Disease", "Smoking status")
+category_configuration <- c("Sex", "Menopausal Status", bmi_status, breast_cancer_status)
 
 # Facet by configuration (right column).
-facet_by_configuration <- c(none, "Sex", "Disease")
+facet_by_configuration <- c(none, "Sex", "Menopausal Status", bmi_status, breast_cancer_status)
 # --------------------------------  END  --------------------------------------
 
 # ODM host should be set in the R environment variable file (/home/shiny/.Renviron).
@@ -71,27 +74,16 @@ create_sample_filter <- function(filters) {
 }
 
 # Get all samples with filters.
-get_samples <- function(token, cohort_id, filters) {
-  # Set up ODM API Client.
-  client  <- integrationCurator::ApiClient$new(
-    host    = odm_host,
-    version = "default-released",
-    token   = token
-  )
-
-  api     <- OmicsQueriesApi$new(client)
-
+get_samples <- function(api, cohort_id, filters) {
   # Result samples data.frame.
   samples <- data.frame()
   cursor  <- NULL
 
   repeat{
-    print(create_sample_filter(filters))
-
     response <- api$search_samples(
       study_filter  = sprintf('"genestack:accession"=%s', cohort_id),
       sample_filter = create_sample_filter(filters),
-      page_limit    = 1000,
+      page_limit    = 20000,
       cursor        = cursor
     )
 
@@ -111,16 +103,7 @@ count_alleles <- function(alleles) {
 }
 
 # Get alleles for samples.
-get_alleles <- function(token, cohort_id, filters, variation_id) {
-  # Set up ODM API Client.
-  client  <- integrationCurator::ApiClient$new(
-    host    = odm_host,
-    version = "default-released",
-    token   = token
-  )
-
-  api     <- OmicsQueriesApi$new(client)
-
+get_alleles <- function(api, cohort_id, filters, vx_filter, variation_id) {
   alleles <- data.frame()
   cursor  <- NULL
 
@@ -129,31 +112,65 @@ get_alleles <- function(token, cohort_id, filters, variation_id) {
       study_filter  = sprintf('"genestack:accession"=%s', cohort_id),
       sample_filter = create_sample_filter(filters),
       vx_query      = sprintf("VariationId=%s", variation_id),
+      vx_filter     = vx_filter,
       page_limit    = 20000,
       cursor        = cursor
     )
 
     more <- data.frame(sampleId = response$content$data$relationships$sample,
-                       alleles = as.character(count_alleles(response$content$data$genotype$GT)))
+                       alleles = count_alleles(response$content$data$genotype$GT))
     alleles <- rbind(alleles, more)
     cursor  <- response$content$cursor
 
-    if(is.null(cursor)){
+    if (is.null(cursor)) {
       break
     }
   }
 
   if (nrow(alleles) > 0) {
-    names(alleles) <- c("sampleId", allele_category_selection)
+    names(alleles) <- c("sampleId", allele_axis_selection)
   }
 
   alleles
+}
+
+# Get expressions for samples.
+get_expression <- function(api, cohort_id, filters, ex_filter, gene_id) {
+  expression <- data.frame()
+  cursor  <- NULL
+
+  repeat{
+    response <- api$search_expression_data(
+      study_filter  = sprintf('"genestack:accession"=%s', cohort_id),
+      sample_filter = create_sample_filter(filters),
+      ex_query      = sprintf("Gene=%s", gene_id),
+      ex_filter     = ex_filter,
+      page_limit    = 20000,
+      cursor        = cursor
+    )
+
+    more <- data.frame(sampleId = response$content$data$relationships$sample,
+                       expression = response$content$data$expression)
+    expression <- rbind(expression, more)
+    cursor  <- response$content$cursor
+
+    if (is.null(cursor)) {
+      break
+    }
+  }
+
+  if (nrow(expression) > 0) {
+    names(expression) <- c("sampleId", expression_axis_selection)
+  }
+
+  expression
 }
 
 ui <- fluidPage(title = "Cohort Report Viewer",
   useShinyjs(),
   titlePanel(
     tags$span("Cohort Report Viewer",
+              actionButton("go", "Render Boxplots"),
               actionButton("reset", "Reset Tokens"))
   ),
   # Local storage must be initiated within the `ui` definition.
@@ -176,24 +193,29 @@ ui <- fluidPage(title = "Cohort Report Viewer",
            lapply(filters_configuration, function(config) {
              checkboxGroupInput(config$id, label = config$label, choices = config$choices)
            }),
+           shinyjs::disabled(
+             textInput("signalFilter",
+                       h4("Signal Filter"))
+           ),
            style = "background: #ebedef"),
     column(8, htmlOutput("main")),
     column(2,
            h3("Configuration"),
            radioButtons("value",
                         label = h4("Value Axis"),
-                        choices = value_axis_configuration,
+                        choices = c(value_axis_configuration, allele_axis_selection, expression_axis_selection),
                         selected = value_axis_configuration[1]),
-           checkboxGroupInput("category",
-                              label = h4("Category Axis"),
-                              choices = c(category_configuration, allele_category_selection)),
            shinyjs::disabled(
-             textInput("variationId",
-                       label = h5("Variation Id"))),
+             textInput("featureId",
+                       label = h5("Feature Id"))
+           ),
            radioButtons("facetBy",
                         label = h4("Facet by"),
                         choices = facet_by_configuration,
                         selected = none),
+           checkboxGroupInput("category",
+                              label = h4("Category Axis"),
+                              choices = category_configuration),
            style = "background: #ebedef")
   )
 )
@@ -229,20 +251,30 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$category, {
-    if (allele_category_selection %in% input$category) {
-      shinyjs::enable(selector = "#variationId")
-    } else {
-      shinyjs::disable(selector = "#variationId")
-    }
-
     # Only two options are availble at the same time.
     if (length(input$category) == 2){
-      to_disable <- setdiff(c(category_configuration, allele_category_selection), input$category)
+      to_disable <- setdiff(c(category_configuration,
+                              allele_axis_selection,
+                              expression_axis_selection),
+                            input$category)
       for (choice in to_disable) {
         shinyjs::disable(selector = sprintf("#category input[value='%s']", choice))
       }
     } else {
       shinyjs::enable(selector = "#category")
+      if (input$facetBy != none) {
+        shinyjs::disable(selector = sprintf("#category input[value='%s']", input$facetBy))
+      }
+    }
+  })
+
+  observeEvent(input$value, {
+    if (any(c(allele_axis_selection, expression_axis_selection) %in% input$value)) {
+      shinyjs::enable(selector = "#featureId")
+      shinyjs::enable(selector = "#signalFilter")
+    } else {
+      shinyjs::disable(selector = "#featureId")
+      shinyjs::disable(selector = "#signalFilter")
     }
   })
 
@@ -251,13 +283,24 @@ server <- function(input, output, session) {
     query$cohortId
   })
 
+  api <- reactive({
+    # Set up ODM API Client.
+    client  <- integrationCurator::ApiClient$new(
+      host    = odm_host,
+      version = version,
+      token   = isolate(input$store$token)
+    )
+
+    OmicsQueriesApi$new(client)
+  })
+
   all_samples <- reactive({
     if (is.null(cohort_id())) {
       # Return an empty data frame.
       return(data.frame())
     }
 
-    get_samples(isolate(input$store$token), cohort_id(), filters = c())
+    get_samples(api(), cohort_id(), filters = c())
   })
 
   # Metadata keys for pie cahrts.
@@ -296,20 +339,49 @@ server <- function(input, output, session) {
   })
 
   # Main panel that shows box plots.
+  observeEvent(input$go, {
   output$main <- renderUI({
     if (is.null(cohort_id())) {
       return(no_cohort_id_text)
     }
 
     filters <- lapply(filters_configuration, function(config) { input[[config$id]] })
-    samples <- get_samples(isolate(input$store$token), cohort_id(), filters)
+    samples <- get_samples(api(), cohort_id(), filters)
+
+    # TODO: move additional features computation into another functions.
 
     # Add alleles count if needed.
-    if (allele_category_selection %in% input$category && input$variationId != "") {
-      alleles <- get_alleles(isolate(input$store$token), cohort_id(), filters, input$variationId)
+    if (input$value == allele_axis_selection && input$featureId != "") {
+      alleles <- get_alleles(api(), cohort_id(), filters, input$signalFilter, input$featureId)
       if (nrow(alleles) > 0) {
         samples <- merge(x = samples, y = alleles, by.x = "genestack:accession", by.y = "sampleId")
       }
+    }
+
+    # Add expression values if needed.
+    if (input$value == expression_axis_selection && input$featureId != "") {
+      expressions <- get_expression(api(), cohort_id(), filters, input$signalFilter, input$featureId)
+      if (nrow(expressions) > 0) {
+        samples <- merge(x = samples, y = expressions, by.x = "genestack:accession", by.y = "sampleId")
+      }
+    }
+
+    # Add BMI Status in needed.
+    if (bmi_status %in% c(input$category, input$facetBy)) {
+      # Assume that `BMI` column is present.
+      samples <- samples[!is.na(samples$BMI), ]
+      status <- sapply(samples$BMI, FUN = function(bmi) if (bmi >= 25) "High (≥ 25)" else "Low (< 25)")
+      samples[bmi_status] <- status
+    }
+
+    # Add Breast Cancer Status if needed.
+    if (breast_cancer_status %in% c(input$category, input$facetBy)) {
+      # Assume that `Type of Cancer` column is present.
+      status <- sapply(samples$`Type of Cancer`, FUN = function(type) {
+        if (is.na(type)) "No" else
+          if (type == "C509") "Yes" else "No"
+      })
+      samples[breast_cancer_status] <- status
     }
 
     # Create a plot list
@@ -318,6 +390,11 @@ server <- function(input, output, session) {
       features <- c(none)
     } else {
       features <- unique(samples[, facet_by])
+    }
+
+    # Fail-safe conditions.
+    if (!(input$value %in% names(samples))) {
+      return(NULL)
     }
 
     boxplots <- lapply(features, plotlyOutput)
@@ -332,16 +409,18 @@ server <- function(input, output, session) {
                 y = subset[, input$value],
                 type = "box",
                 color = if (length(category) == 2) subset[, category[2]] else category[1],
-                boxpoints = "all",
-                pointpos = 0,
+                boxmean = "sd",
+                boxpoints = FALSE,
+                # boxpoints = "all", # show all boxpoints
+                # pointpos = 0,      # show boxpoints on top of the boxes
                 name = if (length(category) == 0) input$value else NULL) %>%
           layout(title = if (feature == none) input$value else feature,
                  boxmode = "group",
                  legend = list(title = list(text = tail(category, 1))))
       })
     })
-
     tagList(boxplots)
+  })
   })
 }
 

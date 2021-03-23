@@ -338,13 +338,7 @@ server <- function(input, output, session) {
                     yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
   })
 
-  # Main panel that shows box plots.
-  observeEvent(input$go, {
-  output$main <- renderUI({
-    if (is.null(cohort_id())) {
-      return(no_cohort_id_text)
-    }
-
+  plots <- eventReactive(input$go, {
     filters <- lapply(filters_configuration, function(config) { input[[config$id]] })
     samples <- get_samples(api(), cohort_id(), filters)
 
@@ -421,6 +415,14 @@ server <- function(input, output, session) {
     })
     tagList(boxplots)
   })
+
+  # Main panel that shows box plots.
+  output$main <- renderUI({
+    if (is.null(cohort_id())) {
+      return(no_cohort_id_text)
+    }
+
+    plots()
   })
 }
 

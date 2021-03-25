@@ -36,8 +36,4 @@ After downloading ... one should do the following steps.
    docker run --rm -p 3838:3838 -v $PWD/reports/:/srv/shiny-server/ shiny-server
    ```
 
-If the run is successful you should see a list of the applications from the reports directory at [localhost:3838](localhost:3838):
-
-<img src="/Users/joseph/Library/Application Support/typora-user-images/Screenshot 2021-03-25 at 10.38.29.png" alt="Screenshot 2021-03-25 at 10.38.29" style="zoom:40%;" />
-
-Each app is available under the link `localhost:3838/application-name/`, where `application-name` is a name of the corresponding directory.
+If the run is successful you should see a list of the applications from the `reports` directory at [localhost:3838](localhost:3838). Each app is available under the link `localhost:3838/application-name/`, where `application-name` is a name of the corresponding directory.

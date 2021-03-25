@@ -36,4 +36,4 @@ After downloading ... one should do the following steps.
    docker run --rm -p 3838:3838 -v $PWD/reports/:/srv/shiny-server/ shiny-server
    ```
 
-If the run is successful you should see a list of the applications from the `reports` directory at [localhost:3838](localhost:3838). Each app is available under the link `localhost:3838/application-name/`, where `application-name` is a name of the corresponding directory.
+If the run is successful you should see a list of the applications from the `reports` directory at [http://localhost:3838](localhost). Each app is available under the link `localhost:3838/application-name/`, where `application-name` is a name of the corresponding directory.

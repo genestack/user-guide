@@ -8,7 +8,7 @@ library(tidyr)
 
 # -----------------------------  Constants  -----------------------------------
 none <- "<none>"
-allele_axis_selection <- "Alleles Count [ALT]"
+allele_count <- "Alleles Count [ALT]"
 expression_axis_selection <- "Gene Expression"
 # default_odm_host <- "occam.genestack.com"
 default_odm_host <- "inc-dev-6.genestack.com"
@@ -128,7 +128,7 @@ get_alleles <- function(api, cohort_id, filters, vx_filter, variation_id) {
   }
 
   if (nrow(alleles) > 0) {
-    names(alleles) <- c("sampleId", allele_axis_selection)
+    names(alleles) <- c("sampleId", allele_count)
   }
 
   alleles
@@ -164,6 +164,14 @@ get_expression <- function(api, cohort_id, filters, ex_filter, gene_id) {
   }
 
   expression
+}
+
+merge_with_samples <- function(samples, to_merge) {
+  if (nrow(to_merge) > 0) {
+    samples <- merge(x = samples, y = to_merge, by.x = "genestack:accession", by.y = "sampleId")
+  }
+
+  samples
 }
 
 ui <- fluidPage(title = "Cohort Report Viewer",
@@ -203,10 +211,10 @@ ui <- fluidPage(title = "Cohort Report Viewer",
            h3("Configuration"),
            radioButtons("value",
                         label = h4("Value Axis"),
-                        choices = c(value_axis_configuration, allele_axis_selection, expression_axis_selection),
+                        choices = c(value_axis_configuration, allele_count, expression_axis_selection),
                         selected = value_axis_configuration[1]),
            shinyjs::disabled(
-             textInput("featureId",
+             textInput("valueFeatureId",
                        label = h5("Feature Id"))
            ),
            radioButtons("facetBy",
@@ -215,7 +223,11 @@ ui <- fluidPage(title = "Cohort Report Viewer",
                         selected = none),
            checkboxGroupInput("category",
                               label = h4("Category Axis"),
-                              choices = category_configuration),
+                              choices = c(category_configuration, allele_count)),
+           shinyjs::disabled(
+             textInput("categoryFeatureId",
+                       label = h5("Feature Id"))
+           ),
            style = "background: #ebedef")
   )
 )
@@ -254,7 +266,7 @@ server <- function(input, output, session) {
     # Only two options are availble at the same time.
     if (length(input$category) == 2){
       to_disable <- setdiff(c(category_configuration,
-                              allele_axis_selection,
+                              allele_count,
                               expression_axis_selection),
                             input$category)
       for (choice in to_disable) {
@@ -269,12 +281,20 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$value, {
-    if (any(c(allele_axis_selection, expression_axis_selection) %in% input$value)) {
-      shinyjs::enable(selector = "#featureId")
+    if (any(c(allele_count, expression_axis_selection) %in% input$value)) {
+      shinyjs::enable(selector = "#valueFeatureId")
       shinyjs::enable(selector = "#signalFilter")
     } else {
-      shinyjs::disable(selector = "#featureId")
+      shinyjs::disable(selector = "#valueFeatureId")
       shinyjs::disable(selector = "#signalFilter")
+    }
+  })
+
+  observeEvent(input$category, {
+    if (allele_count %in% input$category) {
+      shinyjs::enable(selector = "#categoryFeatureId")
+    } else {
+      shinyjs::disable(selector = "#categoryFeatureId")
     }
   })
 
@@ -345,19 +365,20 @@ server <- function(input, output, session) {
     # TODO: move additional features computation into another functions.
 
     # Add alleles count if needed.
-    if (input$value == allele_axis_selection && input$featureId != "") {
-      alleles <- get_alleles(api(), cohort_id(), filters, input$signalFilter, input$featureId)
-      if (nrow(alleles) > 0) {
-        samples <- merge(x = samples, y = alleles, by.x = "genestack:accession", by.y = "sampleId")
-      }
+    if (input$value == allele_count && input$valueFeatureId != "") {
+      alleles <- get_alleles(api(), cohort_id(), filters, input$signalFilter, input$valueFeatureId)
+      samples <- merge_with_samples(samples, alleles)
+    } else if (allele_count %in% input$category && input$categoryFeatureId != "") {
+      alleles <- get_alleles(api(), cohort_id(), filters, input$signalFilter, input$categoryFeatureId)
+      alleles[allele_count] <-  sapply(alleles[[allele_count]],
+                                       function(count) if (count >= 1) ">= 1" else "0")
+      samples <- merge_with_samples(samples, alleles)
     }
 
     # Add expression values if needed.
-    if (input$value == expression_axis_selection && input$featureId != "") {
-      expressions <- get_expression(api(), cohort_id(), filters, input$signalFilter, input$featureId)
-      if (nrow(expressions) > 0) {
-        samples <- merge(x = samples, y = expressions, by.x = "genestack:accession", by.y = "sampleId")
-      }
+    if (input$value == expression_axis_selection && input$valueFeatureId != "") {
+      expressions <- get_expression(api(), cohort_id(), filters, input$signalFilter, input$valueFeatureId)
+      samples <- merge_with_samples(samples, expressions)
     }
 
     # Add BMI Status in needed.
@@ -372,8 +393,8 @@ server <- function(input, output, session) {
     if (breast_cancer_status %in% c(input$category, input$facetBy)) {
       # Assume that `Type of Cancer` column is present.
       status <- sapply(samples$`Type of Cancer`, FUN = function(type) {
-        if (is.na(type)) "No" else
-          if (type == "C509") "Yes" else "No"
+        if (is.na(type)) "Breast Cancer [No]" else
+          if (type == "C509") "Breast Cancer [Yes]" else "Breast Cancer [No]"
       })
       samples[breast_cancer_status] <- status
     }

@@ -1,5 +1,9 @@
 FROM rocker/shiny
 
+# Reuirements for `tidyverse`.
+# Why do we user `tidyverse`? Expression Atlas app uses...
+RUN apt-get update && apt-get install -y libxml2-dev
+
 # Install required R libraries.
 ADD requirements.R /tmp/
 RUN Rscript /tmp/requirements.R

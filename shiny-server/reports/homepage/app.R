@@ -6,7 +6,7 @@ library(shinyStore)
 default_odm_host <- "inc-dev-6.genestack.com"
 # version <- "default-released"
 version <- "v0.1"
-available_reports <- c("cohort-report-viewer", "table-viewer")
+available_reports <- c("cohort-report-viewer", "table-viewer", "expression-atlas")
 # --------------------------------  END  --------------------------------------
 
 # ODM host should be set in the R environment variable file (/home/shiny/.Renviron).

@@ -5,7 +5,7 @@ library(RCurl)
 #odm_host <- Sys.getenv("ODM_HOST")
 
 odm_host <- "occam.genestack.com"
-token <- "<token>"
+token <- "c7eb6c07150e851141e19b8bf07a2ceaee9cfef2"
 study_acc <- "GSF1235133"
 res_key <- "assoc_result_link"
 res_cmd_key <- "assoc_command_line"

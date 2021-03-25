@@ -6,7 +6,7 @@ library(plotly)
 library(dplyr)
 library(tidyr)
 
-# Constants.
+# -----------------------------  Constants  -----------------------------------
 none <- "<none>"
 allele_axis_selection <- "Alleles Count [ALT]"
 expression_axis_selection <- "Gene Expression"

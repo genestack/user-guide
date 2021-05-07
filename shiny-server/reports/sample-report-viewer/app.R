@@ -149,6 +149,8 @@ ui <- fluidPage(title = "Sample Report Viewer",
     tags$span("Sample Report Viewer",
               actionButton("resetTokens", "Reset Tokens"))
   ),
+  h3("Metadata"),
+  tableOutput("metadata"),
   h3("Cell Type Composition [CyTOF]"),
   uiOutput("cellComposition"),
   h3("Protein Expression per Cell over Dimension Reduction [CyTOF]"),
@@ -230,6 +232,21 @@ server <-  function(input, output, session) {
     query$sample
   })
 
+  # Sample minimal metadata.
+  sample_metadata <- reactive({
+    api <- odm_sample_api()
+    response <- api$get_sample(sample_id())
+    metadata_list <- Filter(function(value) !is.null(value), response$content)
+
+    # Join multivalued.
+    values <- sapply(metadata_list, function(value) {
+      if (length(value) > 1) paste(value, collapse = " | ")
+      else as.character(value)
+    })
+
+    data.frame(key = names(values), value = values)
+  })
+
   sample_ssid <- reactive({
     api <- odm_sample_api()
     response <- api$get_sample(sample_id(), returned_metadata_fields = "all")
@@ -249,6 +266,12 @@ server <-  function(input, output, session) {
   arvados_api_host <- reactive({
     get_arvados_api_host(odm_host, odm_token(), arvados_project_url())
   })
+
+  output$metadata <- renderTable({
+    req(odm_token())
+    req(sample_id())
+    sample_metadata()
+  }, striped = TRUE, colnames = FALSE)
 
   output$cellComposition <- renderUI({
     req(odm_token())

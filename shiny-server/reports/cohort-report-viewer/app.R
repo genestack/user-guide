@@ -260,7 +260,6 @@ barchart <- function(data, xaxis, yaxis, title = NULL) {
                         automargin = TRUE),
            yaxis = list(title = "Count",
                         zeroline = FALSE))
-           # legend = boxplot_legend(xaxis))
 
   fig
 }
@@ -413,30 +412,61 @@ server <- function(input, output, session) {
     get_samples_metadata(odm_sample_api(), sample_ids)
   })
 
-  # Filters selectize input update, all metadata keys are available for filtering.
+  axis_numeric_choices <- reactive({
+    metadata <- samples_metadata()
+    keys <- names(metadata)
+
+    Filter(function(key) {
+      !anyNA(suppressWarnings(as.numeric(metadata[metadata[, key] != "<NA>", key])))
+    }, keys)
+  })
+
+  axis_categorical_choices <- reactive({
+    metadata <- samples_metadata()
+    keys <- names(metadata)
+
+    Filter(function(key) {
+      to_check <- unique(metadata[, c(id_column, key)])
+      length(unique(to_check[, key])) < nrow(to_check)
+    }, keys)
+  })
+
+  facet_by_choices <- reactive({
+    metadata <- samples_metadata()
+    keys <- names(metadata)
+
+    Filter(function(key) {
+      length(unique(metadata[, key])) <= max_unique_values_for_faceting
+    }, keys)
+  })
+
   observe({
     req(cohort_id(), odm_token())
 
     metadata <- samples_metadata()
     keys <- names(metadata)
     updatePickerInput(session, "filtersInput", choices = keys)
-    updateSelectizeInput(session, "xaxis", choices = keys)
-    updateSelectizeInput(session, "yaxis", choices = keys, selected = NULL)
-
-    facet_by_keys <- Filter(function(key) length(unique(metadata[, key])) <= max_unique_values_for_faceting, keys)
-    updateSelectizeInput(session, "facetBy", choices = c(none, facet_by_keys), selected = none)
   })
 
-  observeEvent(input$visualizationType, {
-    if (input$visualizationType == vtype_scatterplot) {
-      updateSelectizeInput(session, "xaxis",
-                           selected = head(input$xaxis, 1),
-                           options = list(maxItems = 1))
-    } else {
-      updateSelectizeInput(session, "xaxis",
-                           selected = input$xaxis,
+  # Filters selectize input update, all metadata keys are available for filtering.
+  observe({
+    req(cohort_id(), odm_token())
+
+    if (input$visualizationType == vtype_boxplot) {
+      updateSelectizeInput(session, "xaxis", choices = axis_categorical_choices(), selected = NULL,
                            options = list(maxItems = 2))
+      updateSelectizeInput(session, "yaxis", choices = axis_numeric_choices(), selected = NULL)
+    } else if (input$visualizationType == vtype_scatterplot) {
+      updateSelectizeInput(session, "xaxis", choices = axis_numeric_choices(), selected = NULL,
+                           options = list(maxItems = 1))
+      updateSelectizeInput(session, "yaxis", choices = axis_numeric_choices(), selected = NULL)
+    } else if (input$visualizationType == vtype_barchart) {
+      updateSelectizeInput(session, "xaxis", choices = axis_categorical_choices(), selected = NULL,
+                           options = list(maxItems = 1))
+      updateSelectizeInput(session, "yaxis", choices = axis_categorical_choices(), selected = NULL)
     }
+
+    updateSelectizeInput(session, "facetBy", choices = c(none, facet_by_choices()), selected = none)
   })
 
   output$filters <- renderUI({
@@ -492,7 +522,7 @@ server <- function(input, output, session) {
         subset <- if (feature == none) samples else samples[samples[, facet_by] == feature, ]
         subset <- subset[, c(id_column, unique(c(input$xaxis, input$yaxis))), drop = FALSE]
 
-        visualize(type = input$visualizationType,
+        visualize(type = isolate(input$visualizationType),
                   data = subset,
                   xaxis = input$xaxis,
                   yaxis = input$yaxis,

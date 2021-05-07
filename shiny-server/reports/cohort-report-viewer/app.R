@@ -434,6 +434,7 @@ server <- function(input, output, session) {
                  legend = list(title = list(text = tail(category, 1))))
       })
     })
+
     tagList(boxplots)
   })
 

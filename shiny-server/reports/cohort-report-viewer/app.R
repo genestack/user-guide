@@ -143,7 +143,7 @@ from_fid <- function(key) { RCurl::base64Decode(key) }
 # Apply filters to samples metadata data.frame. Filters is a list of the format key: [values].
 # Values for one key are joined with OR, resulted key filters are joined with AND.
 apply_filters <- function(filters, metadata) {
-  if (is.null(filters)) { return(metadata) }
+  if (is.null(filters) || length(filters) == 0) { return(metadata) }
   selector <- Reduce("&", lapply(names(filters), function(key) {
     Reduce("|", lapply(filters[[key]], function(value) metadata[, key] == value))
   }))
@@ -337,13 +337,13 @@ ui <- fluidPage(title = "Cohort Report Viewer",
   ),
   fluidRow(
     column(2,
-           pickerInput("filtersInput",
-                       label = h3("Filters"),
-                       multiple = TRUE,
-                       choices = NULL,
-                       options = list(title = "Filters",
-                                      `actions-box` = TRUE,
-                                      `live-search` = TRUE)),
+           # pickerInput("filtersInput",
+           #             label = h3("Filters"),
+           #             multiple = TRUE,
+           #             choices = NULL,
+           #             options = list(title = "Filters",
+           #                            `actions-box` = TRUE,
+           #                            `live-search` = TRUE)),
            htmlOutput("filters"),
            style = "background: #f5f5f5"),
     column(8, htmlOutput("main")),
@@ -478,7 +478,7 @@ server <- function(input, output, session) {
 
     metadata <- samples_metadata()
     keys <- names(metadata)
-    updatePickerInput(session, "filtersInput", choices = keys)
+    # updatePickerInput(session, "filtersInput", choices = keys)
   })
 
   # Filters selectize input update, all metadata keys are available for filtering.
@@ -503,28 +503,72 @@ server <- function(input, output, session) {
   })
 
   output$filters <- renderUI({
-    req(input$filtersInput)
+    # req(input$filtersInput)
+    # metadata <- samples_metadata()
+    # keys <- input$filtersInput
+      
+      samples = samples_metadata()
+      filters <- selected_filters()
+      keys = names(samples)
 
-    metadata <- samples_metadata()
-    keys <- input$filtersInput
+      checkboxGroups = lapply(keys, function(key){
+          if (length(filters[[key]]) > 0) {
+              samples_filtered = apply_filters(within(filters, rm(list=key)), samples)
+          } else {
+              samples_filtered = apply_filters(filters, samples)
+          }
+
+          choices <- unique(samples_filtered[, key])
+          counts = sapply(choices, function(choice) {
+              length(unique(samples_filtered[samples_filtered[,key] == choice, sample_source_id_key]))
+          })
+          choiceNames = paste(choices, counts)
+
+          print(key)
+          print(filters[[key]])
+          checkboxGroupInput(to_fid(key), key, choiceValues = choices, choiceNames = choiceNames, selected = filters[[key]])
+      })
+
+    # checkboxGroups = lapply(keys, function(key) {
+    #     samples <- apply_filters(filters, samples)
+    #     choices <- unique(samples[, key])
+    #     checkboxGroupInput(to_fid(key), key, choices = choices, selected = filters[[key]])
+    # })
+
+    do.call(tagList, checkboxGroups)
     
-    filters <- lapply(keys, function(key) {
-      choices <- unique(metadata[, key])
-      pickerInput(inputId = to_fid(key),
-                  label = key,
-                  choices = choices,
-                  multiple = TRUE,
-                  options = list(size = 8, title = key, `actions-box` = TRUE,
-                                 `selected-text-format` = "count > 3"))
-    })
 
-    wellPanel(do.call(tagList, filters))
+    # filters <- lapply(keys, function(key) {
+    #   choices <- unique(metadata[, key])
+    #   pickerInput(inputId = to_fid(key),
+    #               label = key,
+    #               choices = choices,
+    #               multiple = TRUE,
+    #               options = list(size = 8, title = key, `actions-box` = TRUE,
+    #                              `selected-text-format` = "count > 3"))
+    # })
+    # 
+    # wellPanel(do.call(tagList, filters))
   })
+  
+  # observeEvent(input$filters, {
+  #     print('bla')
+  #     # updateCheckboxGroupInput(
+  #     #     session = session,
+  #     #     inputId = "studies.checkbox.input",
+  #     #     selected = studies_options()[['data']][,'genestack:accession']
+  #     # )
+  # })
 
   selected_filters <- reactive({
-    keys <- input$filtersInput
-    if (is.null(keys)) { return(NULL) }
-
+    # keys <- input$filtersInput
+    # if (is.null(keys)) { return(NULL) }
+    
+    # print(input[["Indicationcheckbox"]])
+    #   
+    samples = samples_metadata()
+    keys = names(samples)
+      
     values <- lapply(keys, function(key) input[[to_fid(key)]])
     names(values) <- keys
     values <- values[sapply(values, function(x) !is.null(x))]

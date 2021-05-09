@@ -1,3 +1,18 @@
+# client <- integrationUser::ApiClient$new(
+#     host    = "inc-dev-5.s-int.gs.team",
+#     version = "v0.1",
+#     scheme  = "http",
+#     token   = 'tknRoot'
+# )
+# 
+# integrationUser::LinkageApi$new(client)$get_links_by_params(
+#     first_id = 'GSF017059',
+#     first_type = "study",
+#     second_type = "sample",
+#     offset = 0,
+#     limit = 10
+# )$content$data
+
 library(httr)
 library(rjson)
 library(RCurl)
@@ -11,18 +26,22 @@ library(data.table)
 library(plyr)
 library(dplyr)
 library(tidyr)
+library(viridis)
 library(sampleUser)
 library(integrationUser)
 
+
 # -------------------------------  Constants  ----------------------------------
 # Target ODM url.
+
+Sys.setenv(ODM_URL = "inc-dev-5.s-int.gs.team")
 odm_host <- Sys.getenv("ODM_URL")
 
 # ODM API version.
 version <- "v0.1"
 
 # ODM scheme.
-scheme <- "https"
+scheme <- "http"
 
 # Metadata keys.
 arvados_url_key <- "Arvados URL"
@@ -36,7 +55,7 @@ plot_height <- 380
 colours <- RColorBrewer::brewer.pal(n = 11, name = "Spectral")
 
 none <- "<none>"
-id_column <- "Unique Sample ID"
+id_column <- "Sample Source ID" # TODO why introduce artificial ID
 
 # Visualization types.
 vtype_boxplot <- "Box Plot"
@@ -147,30 +166,33 @@ get_unique_count_column_name <- function(xaxis, yaxis) {
 # ----------------------------------  END  -------------------------------------
 
 # --------------------------------  BOX PLOT  ----------------------------------
-boxplot_setup <- function(data, xaxis_colors, xaxis_title, yaxis_title, title) {
-  categories <- unique(data[, xaxis_colors])
-  colors <- rev(viridis(length(categories)))
-  plot_ly(data = data, colors = colors,
-          type = "box", boxmean = "sd",
+boxplot_setup <- function(data, xaxis_title, yaxis_title, title) {
+  # categories <- unique(data[, xaxis_colors])
+  # colors <- rev(viridis(length(categories)))
+  plot_ly(data = data, 
+          type = "box", 
           boxpoints = "all", pointpos = 0, jitter = 0.2,
-          marker = list(color = "black"),
-          line = list(color = "black", width = 1.4)) %>%
+          # marker = list(color = "black"),
+          line = list(width = 1.4)) %>%
     layout(title = list(text = title, xanchor = "left", x = 0.025),
            xaxis = list(type = "category",
-                        title = list(text = xaxis_title, standoff = 5),
+                        title = "",
                         automargin = TRUE),
            yaxis = list(title = yaxis_title,
-                        zeroline = FALSE))
+                        zeroline = FALSE, 
+                        automargin = TRUE, 
+                        hoverformat = ".2f"))
 }
 
-boxplot_legend <- function(sub_xaxis) {
-  list(orientation = "h",
-       xanchor = "left", x = 0,
-       yanchor = "top", y = -0.25,
-       title = list(text = sprintf("%s:", sub_xaxis),
-                    side = "top",
-                    font = list(size = 14)))
-}
+# boxplot_legend <- function(sub_xaxis) {
+#   list(
+#       # orientation = "h",
+#        # xanchor = "left", x = 0,
+#        # yanchor = "top", y = -0.25,
+#        title = list(text = sub_xaxis,
+#                     # side = "top",
+#                     font = list(size = 14)))
+# }
 
 # Creates a boxplot.
 boxplot <- function(data, xaxis, yaxis, title = NULL) {
@@ -185,16 +207,18 @@ boxplot <- function(data, xaxis, yaxis, title = NULL) {
     stop(sprintf("Unsupported length of xaxis: %g. Only 1 (ordinary boxplots)
                and 2 (group boxplots) are supported", length(xaxis)))
   }
-
-  fig <- boxplot_setup(data, tail(xaxis, 1), xaxis[1], yaxis, title)
+    
+  fig <- boxplot_setup(data, xaxis[1], yaxis, title)
+  
   if (length(xaxis) == 1) {
     fig <- fig %>%
-      add_boxplot(y = ~get(yaxis), color = ~get(xaxis)) %>%
+      add_boxplot(y = ~get(yaxis), x = ~get(xaxis), hoverinfo='y') %>%
       layout(showlegend = FALSE)
   } else {
+
     fig <- fig %>%
-      add_boxplot(x = ~get(xaxis[1]), y = ~get(yaxis), color = ~get(xaxis[2])) %>%
-      layout(boxmode = "group", legend = boxplot_legend(xaxis[2]))
+      add_boxplot(x = ~get(xaxis[1]), y = ~get(yaxis), color = ~get(xaxis[2]), hoverinfo='y') %>%
+      layout(boxmode = "group")
   }
 
   fig
@@ -203,15 +227,17 @@ boxplot <- function(data, xaxis, yaxis, title = NULL) {
 
 # ------------------------------  SCATTER PLOT  --------------------------------
 scatterplot_setup <- function(data, xaxis_title, yaxis_title, title) {
-  plot_ly(data = data, type = "scatter", mode = "markers",
-          marker = list(color = "black"), hoverinfo = "x+y") %>%
+  plot_ly(data = data, type = "scatter", mode = "markers"
+          , hoverinfo = "x+y") %>%
     layout(title = list(text = title, xanchor = "left", x = 0.025),
            xaxis = list(type = "linear",
-                        title = list(text = xaxis_title, standoff = 5),
+                        title = list(text = xaxis_title, standoff = 20),
                         automargin = TRUE,
-                        zeroline = FALSE),
+                        zeroline = FALSE,
+                        hoverformat = ".2f"),
            yaxis = list(title = yaxis_title,
-                        zeroline = FALSE))
+                        zeroline = FALSE,
+                        hoverformat = ".2f"))
 }
 
 # Creates a scatterplot.
@@ -270,7 +296,7 @@ visualize <- function(type, data, xaxis, yaxis, title = NULL) {
   if (type == vtype_boxplot) {
     data[, yaxis] <- suppressWarnings(as.numeric(data[, yaxis]))
     data <- data[!is.na(data[, yaxis]), ]
-    return(boxplot(unique(data), xaxis = xaxis, yaxis = yaxis, title = title))
+    return(boxplot(unique(data), xaxis = xaxis, yaxis = yaxis, title = title)) # TODO why unique(data)?
   }
 
   if (type == vtype_scatterplot) {
@@ -301,7 +327,8 @@ odm_token_dialog <- modalDialog(
 ui <- fluidPage(title = "Cohort Report Viewer",
   tags$head(
     tags$script(type="text/javascript", src = "js.cookie.min.js"),
-    tags$script(type="text/javascript", src = "tokens.cookie.js")
+    tags$script(type="text/javascript", src = "tokens.cookie.js"),
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
   ),
 
   titlePanel(
@@ -321,19 +348,19 @@ ui <- fluidPage(title = "Cohort Report Viewer",
            style = "background: #f5f5f5"),
     column(8, htmlOutput("main")),
     column(2,
-           h3("Configuration"),
+           # h3("Configuration"),
            prettyRadioButtons("visualizationType",
-                              label = h4("Visualization Type"),
+                              label = h4("Visualization type"),
                               choices = visualization_types,
                               selected = visualization_types[1]),
            hr(),
            selectizeInput("xaxis",
-                          label = h4("X Axis"),
+                          label = h4("X-axis"),
                           choices = NULL,
                           multiple = TRUE,
                           options = list(maxItems = 2)),
            selectizeInput("yaxis",
-                          label = h4("Y Axis"),
+                          label = h4("Y-axis"),
                           choices = NULL,
                           multiple = TRUE,
                           options = list(maxItems = 1)),
@@ -341,18 +368,18 @@ ui <- fluidPage(title = "Cohort Report Viewer",
            selectizeInput("facetBy",
                           label = h4("Facet by ",
                              tags$style(type = "text/css", "#q1 {vertical-align: top;}"),
-                             bsButton("qFacetBy", label = "", icon = icon("question"),
-                                      style = "info", size = "extra-small")
+                             # bsButton("qFacetBy", label = "", icon = icon("question"),
+                             #          style = "info", size = "extra-small")
                           ),
                           choices = c(none),
                           selected = none,
                           multiple = FALSE),
-           bsPopover(id = "qFacetBy", title = "Faceting plots",
-                     content = paste("Only keys with a number of unique values ≤",
-                                     max_unique_values_for_faceting, "are available for a faceting"),
-                     placement = "bottom", trigger = "focus",
-                     options = list(container = "body")
-           ),
+           # bsPopover(id = "qFacetBy", title = "Faceting plots",
+           #           content = paste("Only keys with a number of unique values ≤",
+           #                           max_unique_values_for_faceting, "are available for a faceting"),
+           #           placement = "bottom", trigger = "focus",
+           #           options = list(container = "body")
+           # ),
            style = "background: #f5f5f5")
   )
 )
@@ -404,12 +431,18 @@ server <- function(input, output, session) {
 
   cohort_id <- reactive({
     query <- getQueryString()
-    query$study
+    # query$study
+    "GSF017059"
   })
 
   samples_metadata <- reactive({
-    sample_ids <- get_cohort_sample_ids(odm_linkage_api(), cohort_id())
-    get_samples_metadata(odm_sample_api(), sample_ids)
+    # sample_ids <- get_cohort_sample_ids(odm_linkage_api(), cohort_id())
+    # samples = get_samples_metadata(odm_sample_api(), sample_ids)
+    # write.csv(samples, 'samples.csv', row.names=FALSE)
+      
+    samples = read.csv('Avengers Cohort_Sample Report Concept - Samples.csv', check.names=FALSE, stringsAsFactors=FALSE)
+    samples[samples==""] = none
+    samples
   })
 
   axis_numeric_choices <- reactive({
@@ -453,9 +486,9 @@ server <- function(input, output, session) {
     req(cohort_id(), odm_token())
 
     if (input$visualizationType == vtype_boxplot) {
-      updateSelectizeInput(session, "xaxis", choices = axis_categorical_choices(), selected = NULL,
+      updateSelectizeInput(session, "xaxis", choices = axis_categorical_choices(), selected = c("Cell Type", "CPI Status"),
                            options = list(maxItems = 2))
-      updateSelectizeInput(session, "yaxis", choices = axis_numeric_choices(), selected = NULL)
+      updateSelectizeInput(session, "yaxis", choices = axis_numeric_choices(), selected = "Cell Frequency (CyTOF)")
     } else if (input$visualizationType == vtype_scatterplot) {
       updateSelectizeInput(session, "xaxis", choices = axis_numeric_choices(), selected = NULL,
                            options = list(maxItems = 1))
@@ -474,7 +507,7 @@ server <- function(input, output, session) {
 
     metadata <- samples_metadata()
     keys <- input$filtersInput
-
+    
     filters <- lapply(keys, function(key) {
       choices <- unique(metadata[, key])
       pickerInput(inputId = to_fid(key),
@@ -518,7 +551,7 @@ server <- function(input, output, session) {
       output[[feature]] <- renderPlotly({
         req(cohort_id(), odm_token(), input$xaxis, input$yaxis)
 
-        title  <- if (feature == none) NULL    else sprintf("%s: %s", facet_by, feature)
+        title  <- if (feature == none) NULL    else feature
         subset <- if (feature == none) samples else samples[samples[, facet_by] == feature, ]
         subset <- subset[, c(id_column, unique(c(input$xaxis, input$yaxis))), drop = FALSE]
 

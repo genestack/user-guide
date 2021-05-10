@@ -212,12 +212,14 @@ boxplot <- function(data, xaxis, yaxis, title = NULL) {
   
   if (length(xaxis) == 1) {
     fig <- fig %>%
-      add_boxplot(y = ~get(yaxis), x = ~get(xaxis), hoverinfo='y') %>%
+      add_boxplot(y = ~get(yaxis), x = ~get(xaxis), 
+                  text = ~paste0(`Sample Source ID`,": ", round(get(yaxis),2)), hoverinfo = 'text') %>%
       layout(showlegend = FALSE)
   } else {
 
     fig <- fig %>%
-      add_boxplot(x = ~get(xaxis[1]), y = ~get(yaxis), color = ~get(xaxis[2]), hoverinfo='y') %>%
+      add_boxplot(x = ~get(xaxis[1]), y = ~get(yaxis), color = ~get(xaxis[2]), 
+                  text = ~paste0(`Sample Source ID`,": ", round(get(yaxis),2)), hoverinfo = 'text') %>%
       layout(boxmode = "group")
   }
 
@@ -250,7 +252,8 @@ scatterplot <- function(data, xaxis, yaxis, title = NULL) {
   }
 
   fig <- scatterplot_setup(data, xaxis, yaxis, title) %>%
-    add_trace(x = ~get(xaxis), y = ~get(yaxis), name = "") %>%
+    add_trace(x = ~get(xaxis), y = ~get(yaxis), name = "", 
+              text = ~paste0(`Sample Source ID`,": (", round(get(xaxis),2), ", ", round(get(yaxis),2), ")"), hoverinfo = 'text') %>%
     layout(showlegend = FALSE)
 
   fig
@@ -273,11 +276,17 @@ barchart <- function(data, xaxis, yaxis, title = NULL) {
 
   categories <- unique(data[, yaxis])
   colors <- viridis(length(categories))
+  
+  print(count)
+  print(yaxis)
+  print(count[,yaxis])
+  print(count[,count_column])
 
   fig <- plot_ly(data = count, type = "bar", colors = colors,
                  x = ~get(xaxis), y = ~get(count_column),
-                 color = ~get(yaxis), text = count[, yaxis],
-                 hovertemplate = "%{text}: %{y}<extra></extra>") %>%
+                 color = ~get(yaxis), 
+                 
+                 text = ~paste0(get(yaxis), ": ", get(count_column)), hoverinfo = 'text') %>%
     layout(barmode = "stack",
            hoverlabel = list(bgcolor = "black", font = list(color = "white")),
            title = list(text = title, xanchor = "left", x = 0.025),

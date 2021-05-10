@@ -444,34 +444,66 @@ server <- function(input, output, session) {
     samples[samples==""] = none
     samples
   })
-
-  axis_numeric_choices <- reactive({
-    metadata <- samples_metadata()
-    keys <- names(metadata)
-
-    Filter(function(key) {
-      !anyNA(suppressWarnings(as.numeric(metadata[metadata[, key] != "<NA>", key])))
-    }, keys)
+  
+  get_keys_classification <- reactive({
+      keys = names(samples_metadata())
+      keys_blacklist = c('genestack:accession', 'Sample Source ID', 'Arvados URL')
+      keys_filters = c()
+      keys_groups = c()
+      keys_numeric = c()
+      
+      for (key in keys) {
+          print(key)
+          if (key %in% keys_blacklist) { next }
+          
+          if (is.numeric(samples[, key])) {
+              keys_numeric = c(keys_numeric, key)
+              next
+          }
+          
+          if (length(unique(samples[, key])) > 1) {
+              keys_groups = c(keys_groups, key)
+          }
+          
+          keys_filters = c(keys_filters, key)
+      }
+      
+      keys_classification = list(
+          'filters' = keys_filters,
+          'groups' = keys_groups,
+          'numeric' = keys_numeric
+      )
+      
+      return(keys_classification)
   })
 
-  axis_categorical_choices <- reactive({
-    metadata <- samples_metadata()
-    keys <- names(metadata)
+  # axis_numeric_choices <- reactive({
+  #   metadata <- samples_metadata()
+  #   keys <- names(metadata)
+  # 
+  #   Filter(function(key) {
+  #     !anyNA(suppressWarnings(as.numeric(metadata[metadata[, key] != "<NA>", key])))
+  #   }, keys)
+  # })
+  # 
+  # axis_categorical_choices <- reactive({
+  #   metadata <- samples_metadata()
+  #   keys <- names(metadata)
+  # 
+  #   Filter(function(key) {
+  #     to_check <- unique(metadata[, c(id_column, key)])
+  #     length(unique(to_check[, key])) < nrow(to_check)
+  #   }, keys)
+  # })
 
-    Filter(function(key) {
-      to_check <- unique(metadata[, c(id_column, key)])
-      length(unique(to_check[, key])) < nrow(to_check)
-    }, keys)
-  })
-
-  facet_by_choices <- reactive({
-    metadata <- samples_metadata()
-    keys <- names(metadata)
-
-    Filter(function(key) {
-      length(unique(metadata[, key])) <= max_unique_values_for_faceting
-    }, keys)
-  })
+  # facet_by_choices <- reactive({
+  #   metadata <- samples_metadata()
+  #   keys <- names(metadata)
+  # 
+  #   Filter(function(key) {
+  #     length(unique(metadata[, key])) <= max_unique_values_for_faceting
+  #   }, keys)
+  # })
 
   observe({
     req(cohort_id(), odm_token())
@@ -485,21 +517,23 @@ server <- function(input, output, session) {
   observe({
     req(cohort_id(), odm_token())
 
+    keys_classification = get_keys_classification()
+    
     if (input$visualizationType == vtype_boxplot) {
-      updateSelectizeInput(session, "xaxis", choices = axis_categorical_choices(), selected = c("Cell Type", "CPI Status"),
+      updateSelectizeInput(session, "xaxis", choices = keys_classification[['groups']], selected = c("Cell Type", "CPI Status"),
                            options = list(maxItems = 2))
-      updateSelectizeInput(session, "yaxis", choices = axis_numeric_choices(), selected = "Cell Frequency (CyTOF)")
+      updateSelectizeInput(session, "yaxis", choices = keys_classification[['numeric']], selected = "Cell Frequency (CyTOF)")
     } else if (input$visualizationType == vtype_scatterplot) {
-      updateSelectizeInput(session, "xaxis", choices = axis_numeric_choices(), selected = NULL,
+      updateSelectizeInput(session, "xaxis", choices = keys_classification[['numeric']], selected = NULL,
                            options = list(maxItems = 1))
-      updateSelectizeInput(session, "yaxis", choices = axis_numeric_choices(), selected = NULL)
+      updateSelectizeInput(session, "yaxis", choices = keys_classification[['numeric']], selected = NULL)
     } else if (input$visualizationType == vtype_barchart) {
-      updateSelectizeInput(session, "xaxis", choices = axis_categorical_choices(), selected = NULL,
+      updateSelectizeInput(session, "xaxis", choices = keys_classification[['groups']], selected = NULL,
                            options = list(maxItems = 1))
-      updateSelectizeInput(session, "yaxis", choices = axis_categorical_choices(), selected = NULL)
+      updateSelectizeInput(session, "yaxis", choices = keys_classification[['groups']], selected = NULL)
     }
 
-    updateSelectizeInput(session, "facetBy", choices = c(none, facet_by_choices()), selected = none)
+    updateSelectizeInput(session, "facetBy", choices = c(none, keys_classification[['groups']]), selected = none)
   })
 
   output$filters <- renderUI({
@@ -509,7 +543,9 @@ server <- function(input, output, session) {
       
       samples = samples_metadata()
       filters <- selected_filters()
-      keys = names(samples)
+      keys = get_keys_classification()[['filters']]
+      print('here')
+      print(keys)
 
       checkboxGroups = lapply(keys, function(key){
           if (length(filters[[key]]) > 0) {

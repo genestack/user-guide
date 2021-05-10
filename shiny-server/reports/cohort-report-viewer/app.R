@@ -181,7 +181,7 @@ boxplot_setup <- function(data, xaxis_title, yaxis_title, title) {
            yaxis = list(title = yaxis_title,
                         zeroline = FALSE, 
                         automargin = TRUE, 
-                        hoverformat = ".2f"))
+                        hoverformat = ".2f")) %>% config(displayModeBar = F)
 }
 
 # boxplot_legend <- function(sub_xaxis) {
@@ -239,7 +239,7 @@ scatterplot_setup <- function(data, xaxis_title, yaxis_title, title) {
                         hoverformat = ".2f"),
            yaxis = list(title = yaxis_title,
                         zeroline = FALSE,
-                        hoverformat = ".2f"))
+                        hoverformat = ".2f")) %>% config(displayModeBar = F)
 }
 
 # Creates a scatterplot.
@@ -266,7 +266,7 @@ barchart <- function(data, xaxis, yaxis, title = NULL) {
   if (nrow(data) == 0) {
     fig <- plotly_empty(type = "bar") %>%
       layout(title = list(text = get_empty_plot_text(xaxis, yaxis, title), yref = "paper", y = 0.5),
-             xaxis = list(visible = FALSE), yaxis = list(visible = FALSE))
+             xaxis = list(visible = FALSE), yaxis = list(visible = FALSE)) %>% config(displayModeBar = F)
     return(fig)
   }
 
@@ -294,7 +294,7 @@ barchart <- function(data, xaxis, yaxis, title = NULL) {
                         title = list(text = xaxis, standoff = 5),
                         automargin = TRUE),
            yaxis = list(title = "Count",
-                        zeroline = FALSE))
+                        zeroline = FALSE)) %>% config(displayModeBar = F)
 
   fig
 }

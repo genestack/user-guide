@@ -120,6 +120,22 @@ get_arvados_project_uuid <- function(arvados_project_url) {
   path <- parse_url(arvados_project_url)$path
   strsplit(path, split = "/")[[1]][2]
 }
+
+get_report_file <- function(arv, project_uuid, report_name, sample_ssid) {
+  subprojects <- arv$projects.list(list(list("owner_uuid", "=", project_uuid)))$items
+  reports_project <- Find(function(sub) sub$name == reports_subproject_name, subprojects)
+
+  if (is.null(reports_project)) return(NULL)
+
+  collections <- arv$collections.list(list(list("owner_uuid", "=", reports_project$uuid)))$items
+  report_collection <- Find(function(collection) collection$name == report_name, collections)
+
+  if (is.null(report_collection)) return(NULL)
+
+  collection <- Collection$new(arv, report_collection$uuid)
+  filename <- paste0(sample_ssid, report_file_extension)
+  collection$get(filename)
+}
 # ----------------------------------  END  -------------------------------------
 
 # ---------------------------  Token Pop-Up Dialogs  ---------------------------
@@ -129,9 +145,11 @@ odm_token_dialog <- modalDialog(
   size = "s"
 )
 
-arvados_token_dialog <- function(api_host) {
+arvados_token_dialog <- function(api_host, failed = FALSE) {
   modalDialog(
     textInput("arvadosToken", paste("Arvados Token for", api_host), placeholder = "<token>"),
+    if (failed)
+      div("Invalid arvados token", style = "color: red; text-align:center;"),
     footer = tagList(modalButton("Cancel"), actionButton("arvadosTokenDialogOk", "OK")),
     size = "s"
   )
@@ -149,12 +167,13 @@ ui <- fluidPage(title = "Sample Report Viewer",
     tags$span("Sample Report Viewer",
               actionButton("resetTokens", "Reset Tokens"))
   ),
-  h3("Metadata"),
-  tableOutput("metadata"),
-  h3("Cell Type Composition [CyTOF]"),
-  uiOutput("cellComposition"),
-  h3("Protein Expression per Cell over Dimension Reduction [CyTOF]"),
-  uiOutput("proteinExpression")
+
+  tabsetPanel(
+    id = "reportTabs",
+    type = "tabs",
+    tabPanel(title = "Metadata",
+             tableOutput("metadata"))
+  )
 )
 # ----------------------------------  END  -------------------------------------
 
@@ -179,14 +198,29 @@ server <-  function(input, output, session) {
       if (is.null(json)) current <- list()
       else current <- rjson::fromJSON(json)
 
-      current[arvados_api_host()] <- input$arvadosToken
-      msg <- list(name = "arvadosTokens", value = rjson::toJSON(current))
-      session$sendCustomMessage("cookie-set", msg)
-      removeModal()
+      # Check token.
+      tryCatch({
+        arv <- Arvados$new(authToken = input$arvadosToken, hostName = arvados_api_host())
+        arv$api_client_authorizations.current() # Throws an error if token is wrong.
+        current[arvados_api_host()] <- input$arvadosToken
+        msg <- list(name = "arvadosTokens", value = rjson::toJSON(current))
+        session$sendCustomMessage("cookie-set", msg)
+        removeModal()
+      },
+        error = function(error) {
+          removeModal()
+          showModal(arvados_token_dialog(arvados_api_host(), failed = TRUE))
+        }
+      )
     }
   })
 
   observeEvent(input$resetTokens, {
+    removeTab(inputId = "reportTabs",
+              target = "Cell Type Composition [CyTOF]")
+    removeTab(inputId = "reportTabs",
+              target = "Protein Expression per Cell Over Dimension Reduction [CyTOF]")
+
     session$sendCustomMessage("cookie-remove", list(name = "odmToken"))
     session$sendCustomMessage("cookie-remove", list(name = "arvadosTokens"))
   })
@@ -236,6 +270,7 @@ server <-  function(input, output, session) {
   sample_metadata <- reactive({
     api <- odm_sample_api()
     response <- api$get_sample(sample_id())
+    if (response$response$status_code != 200) return(NULL)
     metadata_list <- Filter(function(value) !is.null(value), response$content)
 
     # Join multivalued.
@@ -248,8 +283,10 @@ server <-  function(input, output, session) {
   })
 
   sample_ssid <- reactive({
+    req(sample_id(), odm_token())
     api <- odm_sample_api()
     response <- api$get_sample(sample_id(), returned_metadata_fields = "all")
+    if (response$response$status_code != 200) return(NULL)
     response$content[[sample_source_id_key]]
   })
 
@@ -260,42 +297,56 @@ server <-  function(input, output, session) {
   })
 
   arvados_project_uuid <- reactive({
+    req(arvados_project_url())
     get_arvados_project_uuid(arvados_project_url())
   })
 
   arvados_api_host <- reactive({
+    req(arvados_project_url())
     get_arvados_api_host(odm_host, odm_token(), arvados_project_url())
   })
 
+  arvados <- reactive({
+    req(arvados_api_host(), arvados_token())
+    arv <- Arvados$new(authToken = arvados_token(), hostName = arvados_api_host())
+  })
+
+  # Report files.
+  cell_composition_file <- reactive({
+    req(sample_ssid(), arvados(), arvados_project_uuid())
+    get_report_file(arvados(), arvados_project_uuid(),
+                    cell_composition_report_name, sample_ssid())
+  })
+
+  protein_expression_file <- reactive({
+    req(sample_ssid(), arvados(), arvados_project_uuid())
+    get_report_file(arvados(), arvados_project_uuid(),
+                    protein_expression_report_name, sample_ssid())
+  })
+
+  observe({
+    if (!is.null(cell_composition_file())) {
+      appendTab(inputId = "reportTabs",
+                tab = tabPanel(title = "Cell Type Composition [CyTOF]",
+                               uiOutput("cellComposition")))
+    }
+
+    if (!is.null(protein_expression_file())) {
+      appendTab(inputId = "reportTabs",
+                tab = tabPanel(title = "Protein Expression per Cell Over Dimension Reduction [CyTOF]",
+                               uiOutput("proteinExpression")))
+    }
+  })
+
   output$metadata <- renderTable({
-    req(odm_token())
-    req(sample_id())
+    req(odm_token(), sample_id())
     sample_metadata()
   }, striped = TRUE, colnames = FALSE)
 
   output$cellComposition <- renderUI({
-    req(odm_token())
-    req(sample_id())
-    req(sample_ssid())
-    req(arvados_project_url())
+    req(cell_composition_file())
 
-    api_host <- arvados_api_host()
-    token <- arvados_token()
-
-    req(token)
-    arv <- Arvados$new(authToken = token, hostName = api_host)
-    subprojects <- arv$projects.list(list(list("owner_uuid", "=", arvados_project_uuid())))$items
-    reports_project <- Find(function(sub) sub$name == reports_subproject_name, subprojects)
-
-    req(reports_project)
-    collections <- arv$collections.list(list(list("owner_uuid", "=", reports_project$uuid)))$items
-    report_collection <- Find(function(collection) collection$name == cell_composition_report_name, collections)
-
-    collection <- Collection$new(arv, report_collection$uuid)
-    filename <- paste0(sample_ssid(), report_file_extension)
-    file <- collection$get(filename)
-    content <- file$read("text")
-
+    content <- cell_composition_file()$read("text")
     data <- read.table(text = content, sep = ",", header = TRUE, stringsAsFactors = FALSE)
 
     output$cellCompositionPlot <- renderPlot({
@@ -306,28 +357,9 @@ server <-  function(input, output, session) {
   })
 
   output$proteinExpression <- renderUI({
-    req(odm_token())
-    req(sample_id())
-    req(sample_ssid())
-    req(arvados_project_url())
+    req(protein_expression_file())
 
-    api_host <- arvados_api_host()
-    token <- arvados_token()
-
-    req(token)
-    arv <- Arvados$new(authToken = token, hostName = api_host)
-    subprojects <- arv$projects.list(list(list("owner_uuid", "=", arvados_project_uuid())))$items
-    reports_project <- Find(function(sub) sub$name == reports_subproject_name, subprojects)
-
-    req(reports_project)
-    collections <- arv$collections.list(list(list("owner_uuid", "=", reports_project$uuid)))$items
-    report_collection <- Find(function(collection) collection$name == protein_expression_report_name, collections)
-
-    collection <- Collection$new(arv, report_collection$uuid)
-    filename <- paste0(sample_ssid(), report_file_extension)
-    file <- collection$get(filename)
-    content <- file$read("text")
-
+    content <- protein_expression_file()$read("text")
     data <- read.table(text = content, sep = ",", header = TRUE, stringsAsFactors = FALSE)
     markers <- setdiff(names(data), predefined_columns)
 

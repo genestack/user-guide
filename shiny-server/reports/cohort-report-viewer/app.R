@@ -518,19 +518,21 @@ server <- function(input, output, session) {
     req(cohort_id(), odm_token())
 
     keys_classification = get_keys_classification()
+    keys_groups = keys_classification[['groups']]
+    keys_numeric = keys_classification[['numeric']]
     
     if (input$visualizationType == vtype_boxplot) {
-      updateSelectizeInput(session, "xaxis", choices = keys_classification[['groups']], selected = c("Cell Type", "CPI Status"),
+      updateSelectizeInput(session, "xaxis", choices = keys_groups, selected = keys_groups[1],
                            options = list(maxItems = 2))
-      updateSelectizeInput(session, "yaxis", choices = keys_classification[['numeric']], selected = "Cell Frequency (CyTOF)")
+      updateSelectizeInput(session, "yaxis", choices = keys_numeric, selected = keys_numeric[1])
     } else if (input$visualizationType == vtype_scatterplot) {
-      updateSelectizeInput(session, "xaxis", choices = keys_classification[['numeric']], selected = NULL,
+      updateSelectizeInput(session, "xaxis", choices = keys_numeric, selected = keys_numeric[1],
                            options = list(maxItems = 1))
-      updateSelectizeInput(session, "yaxis", choices = keys_classification[['numeric']], selected = NULL)
+      updateSelectizeInput(session, "yaxis", choices = keys_numeric, selected = keys_numeric[1])
     } else if (input$visualizationType == vtype_barchart) {
-      updateSelectizeInput(session, "xaxis", choices = keys_classification[['groups']], selected = NULL,
+      updateSelectizeInput(session, "xaxis", choices = keys_groups, selected = keys_groups[1],
                            options = list(maxItems = 1))
-      updateSelectizeInput(session, "yaxis", choices = keys_classification[['groups']], selected = NULL)
+      updateSelectizeInput(session, "yaxis", choices = keys_groups, selected = keys_groups[1])
     }
 
     updateSelectizeInput(session, "facetBy", choices = c(none, keys_classification[['groups']]), selected = none)

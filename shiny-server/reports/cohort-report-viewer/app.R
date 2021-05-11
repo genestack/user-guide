@@ -550,21 +550,23 @@ server <- function(input, output, session) {
 
   cohort_id <- reactive({
     query <- getQueryString()
-    # query$study
-    "GSF017059"
+    query$study
+    # "GSF017059"
   })
 
   samples_metadata <- reactive({
-    # sample_ids <- get_cohort_sample_ids(odm_linkage_api(), cohort_id())
-    # samples = get_samples_metadata(odm_sample_api(), sample_ids)
-    # write.csv(samples, 'samples.csv', row.names=FALSE)
+    sample_ids <- get_cohort_sample_ids(odm_linkage_api(), cohort_id())
+    samples = get_samples_metadata(odm_sample_api(), sample_ids)
       
-    samples = read.csv('Avengers Cohort_Sample Report Concept - Samples.csv', check.names=FALSE, stringsAsFactors=FALSE)
+    # write.csv(samples, 'samples.csv', row.names=FALSE)
+    # samples = read.csv('Avengers Cohort_Sample Report Concept - Samples.csv', check.names=FALSE, stringsAsFactors=FALSE)
+    
     samples[samples==""] = none
     samples
   })
   
   get_keys_classification <- reactive({
+      samples = samples_metadata()
       keys = names(samples_metadata())
       keys_blacklist = c('genestack:accession', 'Sample Source ID', 'Arvados URL')
       keys_filters = c()

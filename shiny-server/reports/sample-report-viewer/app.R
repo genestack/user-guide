@@ -216,7 +216,7 @@ ui <- fluidPage(title = "Sample Report Viewer",
   withTags({
     div(class="root",
         h2(HTML(app_logo),
-           div(class="report-title", HTML(sample_icon), div("Example Sample")),
+           div(class="report-title", htmlOutput("reportTitle")),
            actionButton("resetTokens", "Reset Tokens")),
 
         div(class="content",
@@ -392,6 +392,11 @@ server <-  function(input, output, session) {
                 tab = tabPanel(title = "Protein Expression per Cell Over Dimension Reduction [CyTOF]",
                                uiOutput("proteinExpression")))
     }
+  })
+
+  output$reportTitle <- renderUI({
+    req(sample_ssid())
+    div(class="report-title", HTML(sample_icon), sample_ssid())
   })
 
   output$metadata <- renderTable({

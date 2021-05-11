@@ -156,24 +156,80 @@ arvados_token_dialog <- function(api_host, failed = FALSE) {
 }
 # ----------------------------------  END  -------------------------------------
 
+app_logo <- '
+<div class="app-title">
+<svg
+class="gs-icon"
+width="20"
+height="20"
+viewBox="0 0 20 20"
+fill="none"
+xmlns="http://www.w3.org/2000/svg"
+>
+<path
+fill-rule="evenodd"
+clip-rule="evenodd"
+d="M19.8014 10.0745C19.8014 9.23114 18.9802 8.46161 18.1452 8.46161H9.82893C8.99367 8.46161 8.37756 9.23114 8.37756 10.0745C8.37756 10.9179 8.99367 11.5385 9.82893 11.5385H16.4575C15.767 14.5939 13.0599 16.9457 9.82893 16.9457C7.98638 16.9457 6.31509 16.1992 5.08844 14.9932L2.9769 17.1802C4.74873 18.9236 7.16604 20.0002 9.82893 20.0002C15.2475 20.0002 19.8004 15.5448 19.8014 10.0721L19.8014 10.0745Z"
+fill="#34AF7C"
+/>
+<path
+fill-rule="evenodd"
+clip-rule="evenodd"
+d="M3.02472 9.92929V9.92721C3.02472 6.13786 6.07695 3.05474 9.82892 3.05474C11.6751 3.05474 13.3497 3.80383 14.5771 5.01396L16.6881 2.82669C14.9158 1.07968 12.4954 -6.10352e-05 9.82892 -6.10352e-05C4.4103 -6.10352e-05 0.00205728 4.45163 0.00051432 9.92435L0 9.92877C0 10.7721 0.677102 11.456 1.5121 11.456C2.34684 11.456 3.02395 10.7727 3.0242 9.92929H3.02472Z"
+fill="#34AF7C"
+/>
+<path
+fill-rule="evenodd"
+clip-rule="evenodd"
+d="M17.2174 3.98875C17.2174 4.83368 16.539 5.51862 15.7024 5.51862C14.8659 5.51862 14.1878 4.83368 14.1878 3.98875C14.1878 3.14381 14.8659 2.45862 15.7024 2.45862C16.539 2.45862 17.2174 3.14381 17.2174 3.98875Z"
+fill="#024DA1"
+/>
+<path
+fill-rule="evenodd"
+clip-rule="evenodd"
+d="M5.46595 16.0062C5.46595 16.8527 4.78653 17.5386 3.94844 17.5386C3.11087 17.5386 2.43146 16.8527 2.43146 16.0062C2.43146 15.1599 3.11087 14.4737 3.94844 14.4737C4.78653 14.4737 5.46595 15.1599 5.46595 16.0062Z"
+fill="#024DA1"
+/>
+</svg>
+<div>Sample Report Viewer</div>
+</div>
+'
+
+sample_icon <- '
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 4H7V15C7 17 8 18 10 18C12 18 13 17 13 15V4Z" fill="#D2DFEF"/>
+<path d="M13 15V7C13 7 12 8.5 10 8C8 7.5 7 9 7 9V15C7 17 8 18 10 18C12 18 13 17 13 15Z" fill="#6290C8"/>
+<circle cx="9" cy="10" r="1" fill="#D2DFEF"/>
+<rect x="7" y="3" width="6" height="2" fill="#6290C8"/>
+<rect x="10" y="12" width="1" height="1" fill="#D2DFEF"/>
+</svg>
+'
+
 # ----------------------------------  UI  --------------------------------------
 ui <- fluidPage(title = "Sample Report Viewer",
   tags$head(
     tags$script(type="text/javascript", src = "js.cookie.min.js"),
-    tags$script(type="text/javascript", src = "tokens.cookie.js")
+    tags$script(type="text/javascript", src = "tokens.cookie.js"),
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
   ),
 
-  titlePanel(
-    tags$span("Sample Report Viewer",
-              actionButton("resetTokens", "Reset Tokens"))
-  ),
+  withTags({
+    div(class="root",
+        h2(HTML(app_logo),
+           div(class="report-title", HTML(sample_icon), div("Example Sample")),
+           actionButton("resetTokens", "Reset Tokens")),
 
-  tabsetPanel(
-    id = "reportTabs",
-    type = "tabs",
-    tabPanel(title = "Metadata",
-             tableOutput("metadata"))
-  )
+        div(class="content",
+        tabsetPanel(id = "reportTabs",
+                    type = "tabs",
+                    tabPanel(title = "Metadata", tableOutput("metadata"))))
+    )
+  })
+
+  # titlePanel(
+  #   tags$span("Sample Report Viewer",
+  #             actionButton("resetTokens", "Reset Tokens"))
+  # ),
 )
 # ----------------------------------  END  -------------------------------------
 

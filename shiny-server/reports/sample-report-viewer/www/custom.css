@@ -59,7 +59,11 @@ h2 button {
   display: flex;
   flex-basis: 100%;
   min-height: 0;
-  overflow: hidden;
+
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 8px;
+  padding-bottom: 64px;
 }
 
 .left, .right {

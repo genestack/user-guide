@@ -402,7 +402,7 @@ server <-  function(input, output, session) {
   output$metadata <- renderTable({
     req(odm_token(), sample_id())
     sample_metadata()
-  }, striped = TRUE, colnames = FALSE)
+  }, colnames = FALSE)
 
   output$cellComposition <- renderUI({
     req(cell_composition_file())

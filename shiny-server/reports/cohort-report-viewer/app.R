@@ -100,9 +100,9 @@ unwrap_compound_keys <- function(metadata) {
     to_bind <- lapply(1:nrow(unwrapped_metadata), function(i) {
       row <- unwrapped_metadata[i, ]
 
-      row_unwrap <- row[, keys_unwrap]
+      row_unwrap <- row[, keys_unwrap, drop = FALSE]
       keys_duplicate <- setdiff(names(unwrapped_metadata), keys_unwrap)
-      row_duplicate <- row[, keys_duplicate]
+      row_duplicate <- row[, keys_duplicate, drop = FALSE]
 
       unlisted <- lapply(keys_unwrap, function(key) {
         unlist(row_unwrap[, key])
@@ -117,7 +117,7 @@ unwrap_compound_keys <- function(metadata) {
       unwrapped <- as.data.frame(unwrapped, stringsAsFactors = FALSE)
       names(unwrapped) <- keys_unwrap
 
-      result <- cbind(row_duplicate[c(rep(1, n)), ], unwrapped)
+      result <- suppressWarnings(cbind(row_duplicate[c(rep(1, n)), drop = FALSE], unwrapped))
       result[, names_order]
     })
 

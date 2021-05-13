@@ -15,13 +15,14 @@ protein_expression_report_name <- "CyTOF_ProteinExpressionPerCellOverDimensionRe
 report_file_extension <- ".csv"
 
 # Target ODM url.
+Sys.setenv(ODM_URL = "inc-dev-5.s-int.gs.team")
 odm_host <- Sys.getenv("ODM_URL")
 
 # ODM API version.
 version <- "v0.1"
 
 # ODM scheme.
-scheme <- "https"
+scheme <- "http"
 
 # Metadata keys.
 arvados_url_key <- "Arvados URL"
@@ -210,7 +211,7 @@ ui <- fluidPage(title = "Sample Report Viewer",
   tags$head(
     tags$script(type="text/javascript", src = "js.cookie.min.js"),
     tags$script(type="text/javascript", src = "tokens.cookie.js"),
-    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+    tags$link(rel = "stylesheet", type = "text/css", href = "sample-report-viewer-custom.css")
   ),
 
   withTags({
@@ -225,11 +226,6 @@ ui <- fluidPage(title = "Sample Report Viewer",
                     tabPanel(title = "Metadata", tableOutput("metadata"))))
     )
   })
-
-  # titlePanel(
-  #   tags$span("Sample Report Viewer",
-  #             actionButton("resetTokens", "Reset Tokens"))
-  # ),
 )
 # ----------------------------------  END  -------------------------------------
 

@@ -117,7 +117,7 @@ unwrap_compound_keys <- function(metadata) {
       unwrapped <- as.data.frame(unwrapped, stringsAsFactors = FALSE)
       names(unwrapped) <- keys_unwrap
 
-      result <- suppressWarnings(cbind(row_duplicate[c(rep(1, n)), drop = FALSE], unwrapped))
+      result <- suppressWarnings(cbind(row_duplicate[c(rep(1, n)), , drop = FALSE], unwrapped))
       result[, names_order]
     })
 
@@ -139,6 +139,9 @@ get_samples_metadata <- function(odm_sample_api, sample_ids) {
 
   # Bind all data.frames together.
   metadata <- rbindlist(data_frames, fill = TRUE)
+
+  # Remove NA column (for missed template keys).
+  metadata <- metadata[, which(unlist(lapply(metadata, function(x) !all(is.na(x))))), with = F]
 
   # Unwrap compound keys.
   metadata <- unwrap_compound_keys(metadata)
@@ -508,14 +511,14 @@ server <- function(input, output, session) {
       keys <- setdiff(names(metadata), keys_blacklist)
 
       keys_numeric <- Filter(function(key) {
-        !anyNA(suppressWarnings(as.numeric(metadata[metadata[, key] != "<NA>", key])))
+        notna <- metadata[metadata[, key] != "<NA>", key]
+        length(notna) > 0 & !anyNA(suppressWarnings(as.numeric(notna)))
       }, keys)
 
       keys_categorical <- setdiff(keys, keys_numeric)
 
       keys_groups <- Filter(function(key) {
-        to_check <- unique(metadata[, c(id_column, key)])
-        length(unique(to_check[, key])) > 1
+        length(unique(metadata[, key])) > 1
       }, keys_categorical)
 
       keys_classification <- list(

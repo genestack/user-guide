@@ -12,7 +12,7 @@ body, html {
   display: flex;
   min-width: 1024px;
   flex-direction: column;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 h2 {
@@ -51,10 +51,11 @@ h2 button {
   flex-grow: 1;
 }
 
-.gs-icon, .report-icon {
-  margin-right: 4px;
+.gs-icon,
+.report-icon {
+  margin-right: 8px;
+  flex-shrink: 0;
 }
-
 .content {
   display: flex;
   flex-basis: 100%;
@@ -65,7 +66,7 @@ h2 button {
 }
 
 .tab-content {
-  height: calc(100% - 40px);
+  height: calc(100% - 42px);
   overflow-y: scroll;
   padding-bottom: 60px;
 }

@@ -3,7 +3,6 @@ library(rjson)
 library(RCurl)
 library(shiny)
 library(shinyWidgets)
-library(shinyBS)
 library(ArvadosR)
 library(plotly)
 library(splitstackshape)
@@ -507,7 +506,7 @@ server <- function(input, output, session) {
 
   get_keys_classification <- reactive({
       metadata <- samples_metadata()
-      keys_blacklist <- c('genestack:accession', 'Sample Source ID', 'Arvados URL')
+      keys_blacklist <- c("genestack:accession", "Sample Source ID", "Arvados URL", "groupId")
       keys <- setdiff(names(metadata), keys_blacklist)
 
       keys_numeric <- Filter(function(key) {
@@ -522,9 +521,9 @@ server <- function(input, output, session) {
       }, keys_categorical)
 
       keys_classification <- list(
-          'filters' = keys_categorical,
-          'groups'  = keys_groups,
-          'numeric' = keys_numeric
+          "filters" = keys_categorical,
+          "groups"  = keys_groups,
+          "numeric" = keys_numeric
       )
 
       return(keys_classification)
@@ -535,8 +534,8 @@ server <- function(input, output, session) {
     req(cohort_id(), odm_token())
 
     keys_classification = get_keys_classification()
-    keys_groups = keys_classification[['groups']]
-    keys_numeric = keys_classification[['numeric']]
+    keys_groups = keys_classification[["groups"]]
+    keys_numeric = keys_classification[["numeric"]]
 
     if (input$visualizationType == vtype_boxplot) {
       updateSelectizeInput(session, "xaxis", choices = keys_groups, selected = keys_groups[1],
@@ -552,7 +551,7 @@ server <- function(input, output, session) {
       updateSelectizeInput(session, "yaxis", choices = keys_groups, selected = keys_groups[1])
     }
 
-    updateSelectizeInput(session, "facetBy", choices = c(none, keys_classification[['groups']]), selected = none)
+    updateSelectizeInput(session, "facetBy", choices = c(none, keys_classification[["groups"]]), selected = none)
   })
 
   output$reportTitle <- renderUI({

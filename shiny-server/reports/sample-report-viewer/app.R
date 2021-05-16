@@ -32,6 +32,10 @@ sample_source_id_key <- "Sample Source ID"
 pie_chart_width  <- 620
 pie_chart_height <- 380
 
+# Cell Types plot size [px].
+cell_types_plot_width  <- 620
+cell_types_plot_height <- 380
+
 # Individual scatter plot size settings [px].
 scatter_plot_width  <- 320
 scatter_plot_height <- 240
@@ -91,9 +95,20 @@ cell_composition_plot <- function(data, randomize_colours = FALSE) {
 # ----------------------------------  END  -------------------------------------
 
 # ------------------------  PROTEIN EXPRESSION PLOT  ---------------------------
+cell_types_plot <- function(data) {
+  ggplot(data = data, aes_string(x = x_dimension, y = y_dimension)) +
+    geom_scattermore(aes_string(color = cell_labels), pointsize = 3, interpolate = TRUE) +
+    # scale_color_jco() +
+    scale_colour_manual(values = pal_igv("default")(length(unique(data[[cell_labels]])))) +
+    guides(colour = guide_legend(override.aes = list(size = 10), title = "Cell Label")) +
+    labs(x = NULL, y = NULL) +
+    theme(legend.title = element_text(size = 20),
+          legend.text = element_text(size = 12))
+}
+
 protein_expression_plot <- function(data, marker) {
   ggplot(data = data, aes_string(x = x_dimension, y = y_dimension)) +
-    geom_scattermore(aes_string(color = marker), pointsize = 4, interpolate = TRUE) +
+    geom_scattermore(aes_string(color = marker), pointsize = 3, interpolate = TRUE) +
     scale_color_gradientn(colours = rev(colours), name = NULL) +
     ggtitle(marker) + xlab(NULL) + ylab(NULL) +
     theme(plot.title = element_text(size = 16, face = "bold"))
@@ -418,6 +433,11 @@ server <-  function(input, output, session) {
 
     content <- protein_expression_file()$read("text")
     data <- read.table(text = content, sep = ",", header = TRUE, stringsAsFactors = FALSE)
+
+    output$proteinExpressionCellTypesPlot <- renderPlot({
+      cell_types_plot(data)
+    })
+
     markers <- setdiff(names(data), predefined_columns)
 
     output$proteinExpressionPlots <- renderPlot({
@@ -426,7 +446,17 @@ server <-  function(input, output, session) {
     })
 
     n_rows <- length(markers) %/% n_columns + (length(markers) %% n_columns > 0)
-    plotOutput("proteinExpressionPlots", width = scatter_plot_width * n_columns, height = scatter_plot_height * n_rows)
+
+    out <- list(
+      plotOutput("proteinExpressionCellTypesPlot",
+                 width = cell_types_plot_width,
+                 height = cell_types_plot_height),
+      plotOutput("proteinExpressionPlots",
+                 width = scatter_plot_width * n_columns,
+                 height = scatter_plot_height * n_rows)
+    )
+
+    tagList(out)
   })
 }
 

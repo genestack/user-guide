@@ -408,7 +408,7 @@ ui <- fluidPage(title = "Cohort Report Viewer",
     div(class="root",
         h2(HTML(app_logo),
            div(class = "report-title", htmlOutput("reportTitle")),
-           actionButton("resetTokens", "Reset Tokens")),
+           actionButton("resetTokens", "Reset Token")),
 
         div(class = "content",
             div(class="left", htmlOutput("filters")),

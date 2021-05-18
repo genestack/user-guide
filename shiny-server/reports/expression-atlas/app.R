@@ -4,8 +4,8 @@ library(plyr)
 library(gridExtra)
 suppressMessages(library(tidyverse))
 
-host <- "occam.genestack.com"
-token <- "<your API token>"
+host <- "inc-dev-6.genestack.com"
+token <- "tknRoot"
 
 source("r_client_api.R")
 source("ui_components.R")
@@ -118,12 +118,12 @@ server <- function(input, output, session) {
             if (is_empty(genes) || genes == '') {
                 return('')
             }
-            
+
             synonyms <- genes_table[genes_table$gene_symbol %in% genes, c('ensembl_id', 'gene_synonyms', 'uniprot_symbol')]
             combined <- c(genes, synonyms$ensembl_id, synonyms$gene_synonyms, synonyms$uniprot_symbol)
             return(unique(combined[!is.na(combined) && combined != ""]))
         }
-        
+
         x <- input$gene.input
         if (is_empty(x) || x == '') {
             return('')

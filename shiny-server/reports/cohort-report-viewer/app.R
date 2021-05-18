@@ -38,6 +38,8 @@ plot_height <- 380
 colours <- RColorBrewer::brewer.pal(n = 11, name = "Spectral")
 
 none <- "<none>"
+no_value <- "No value"
+
 id_column <- "genestack:accession" # Must be unique accross all the samples.
 
 # Visualization types.
@@ -157,9 +159,9 @@ get_samples_metadata <- function(odm_sample_api, sample_ids) {
   setnames(metadata, sprintf("%s_ul", columns_to_unwrap), columns_to_unwrap)
   metadata <- as.data.frame(metadata)
 
-  # Replace <NA> values with strings "<NA>". That allows to simplify keys classification and filtering logic.
-  metadata[is.na(metadata)] <- "<NA>"
-  metadata[metadata == ""]  <- "<NA>"
+  # Replace <NA> values with strings "No value". That allows to simplify keys classification and filtering logic.
+  metadata[is.na(metadata)] <- no_value
+  metadata[metadata == ""]  <- no_value
 
   # Remove columns where all values are the same.
   selector <- apply(metadata, 2, function(column) length(unique(column)) > 1)
@@ -513,7 +515,7 @@ server <- function(input, output, session) {
       keys <- setdiff(names(metadata), keys_blacklist)
 
       keys_numeric <- Filter(function(key) {
-        notna <- metadata[metadata[, key] != "<NA>", key]
+        notna <- metadata[metadata[, key] != no_value, key]
         length(notna) > 0 & !anyNA(suppressWarnings(as.numeric(notna)))
       }, keys)
 

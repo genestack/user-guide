@@ -503,6 +503,7 @@ server <- function(input, output, session) {
 
   samples_metadata <- reactive({
     sample_ids <- get_cohort_sample_ids(odm_linkage_api(), cohort_id())
+    req(sample_ids)
     get_samples_metadata(odm_sample_api(), sample_ids)
   })
 

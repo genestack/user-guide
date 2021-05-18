@@ -15,14 +15,16 @@ protein_expression_report_name <- "CyTOF_ProteinExpressionPerCellOverDimensionRe
 report_file_extension <- ".csv"
 
 # Target ODM url.
-Sys.setenv(ODM_URL = "inc-dev-5.s-int.gs.team")
-odm_host <- Sys.getenv("ODM_URL")
+odm_url <- parse_url(Sys.getenv("ODM_URL"))
+
+# Target ODM host.
+odm_host <- odm_url$hostname
 
 # ODM API version.
 version <- "v0.1"
 
 # ODM scheme.
-scheme <- "http"
+scheme <- odm_url$scheme
 
 # Metadata keys.
 arvados_url_key <- "Arvados URL"
@@ -299,7 +301,7 @@ server <-  function(input, output, session) {
   arvados_token <- reactive({
     api_host <- arvados_api_host()
     token <- if (is.null(input$cookies$arvadosTokens)) NULL
-             else rjson::fromJSON(input$cookies$arvadosTokens)[api_host]
+             else rjson::fromJSON(input$cookies$arvadosTokens)[[api_host]]
     if (is.null(token))
       showModal(arvados_token_dialog(api_host))
     else

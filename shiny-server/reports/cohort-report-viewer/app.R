@@ -3,7 +3,6 @@ library(rjson)
 library(RCurl)
 library(shiny)
 library(shinyWidgets)
-library(ArvadosR)
 library(plotly)
 library(splitstackshape)
 library(data.table)
@@ -14,17 +13,18 @@ library(viridis)
 library(sampleUser)
 library(integrationUser)
 
-
 # -------------------------------  Constants  ----------------------------------
 # Target ODM url.
-Sys.setenv(ODM_URL = "inc-dev-5.s-int.gs.team")
-odm_host <- Sys.getenv("ODM_URL")
+odm_url <- parse_url(Sys.getenv("ODM_URL"))
+
+# Target ODM host.
+odm_host <-odm_url$hostname
 
 # ODM API version.
 version <- "v0.1"
 
 # ODM scheme.
-scheme <- "http"
+scheme <- odm_url$scheme
 
 # Metadata keys.
 arvados_url_key <- "Arvados URL"
@@ -440,6 +440,8 @@ ui <- fluidPage(
 # ----------------------------------  END  -------------------------------------
 
 server <- function(input, output, session) {
+  previous_filters <- reactiveVal(NULL)
+
   observeEvent(input$cookies, {
     if (is.null(input$cookies$odmToken))
       showModal(odm_token_dialog)
@@ -560,36 +562,10 @@ server <- function(input, output, session) {
     div(class = "report-title", HTML(study_icon), cohort_name)
   })
 
-
-  output$filters <- renderUI({
-    req(cohort_id(), odm_token())
-
-    samples <- samples_metadata()
-    filters <- selected_filters()
-    keys    <- get_keys_classification()[["filters"]]
-
-    checkbox_groups = lapply(keys, function(key){
-      if (length(filters[[key]]) > 0) {
-          samples_filtered <- apply_filters(within(filters, rm(list=key)), samples)
-      } else {
-          samples_filtered <- apply_filters(filters, samples)
-      }
-
-      choices <- unique(samples_filtered[, key])
-      counts <- sapply(choices, function(choice) {
-          length(unique(samples_filtered[samples_filtered[, key] == choice, id_column]))
-      })
-      choiceNames = paste(choices, counts)
-
-      checkboxGroupInput(to_fid(key), key, choiceValues = choices, choiceNames = choiceNames, selected = filters[[key]])
-    })
-
-    do.call(tagList, checkbox_groups)
-  })
-
   selected_filters <- reactive({
-    samples = samples_metadata()
-    keys = names(samples)
+    # samples <- samples_metadata()
+    keys <- get_keys_classification()[["filters"]]
+    # keys = names(samples)
 
     values <- lapply(keys, function(key) input[[to_fid(key)]])
     names(values) <- keys
@@ -597,6 +573,59 @@ server <- function(input, output, session) {
     if (length(values) == 0) { return(NULL) }
 
     values
+  })
+
+  output$filters <- renderUI({
+    req(cohort_id(), odm_token())
+
+    samples <- samples_metadata()
+    keys    <- get_keys_classification()[["filters"]]
+
+    checkbox_groups = lapply(keys, function(key){
+      choices <- unique(samples[, key])
+      counts <- sapply(choices, function(choice) {
+        length(unique(samples[samples[, key] == choice, id_column]))
+      })
+      choice_names <- paste(choices, counts)
+
+      checkboxGroupInput(to_fid(key), key, choiceValues = choices, choiceNames = choice_names)
+    })
+
+    do.call(tagList, checkbox_groups)
+  })
+
+  observe({
+    req(cohort_id(), odm_token())
+
+    samples <- samples_metadata()
+    filters <- selected_filters()
+    keys <- get_keys_classification()[["filters"]]
+
+    if (length(isolate(previous_filters)) > 0) {
+      keys <- setdiff(keys, names(filters[!(filters %in% isolate(previous_filters()))]))
+    }
+
+    for (key in keys) {
+      if (length(filters[[key]]) > 0) {
+        samples_filtered <- apply_filters(within(filters, rm(list = key)), samples)
+      } else {
+        samples_filtered <- apply_filters(filters, samples)
+      }
+
+      choices <- unique(samples_filtered[, key])
+      counts <- sapply(choices, function(choice) {
+        length(unique(samples_filtered[samples_filtered[, key] == choice, id_column]))
+      })
+      choice_names <- paste(choices, counts)
+
+      updateCheckboxGroupInput(inputId = to_fid(key),
+                               choiceValues = choices,
+                               choiceNames = choice_names,
+                               selected = filters[[key]])
+
+    }
+
+    previous_filters(filters)
   })
 
   plots <- reactive({

@@ -397,7 +397,7 @@ study_icon <- '
 '
 
 # ----------------------------------  UI  --------------------------------------
-ui <- fluidPage(
+ui <- fluidPage(title = "Cohort Report Viewer",
   tags$head(
     tags$script(type="text/javascript", src = "js.cookie.min.js"),
     tags$script(type="text/javascript", src = "tokens.cookie.js"),

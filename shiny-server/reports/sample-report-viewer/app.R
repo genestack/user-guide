@@ -101,9 +101,9 @@ cell_types_plot <- function(data) {
   ggplot(data = data, aes_string(x = x_dimension, y = y_dimension)) +
     geom_scattermore(aes_string(color = cell_labels), pointsize = 3, interpolate = TRUE) +
     scale_colour_manual(values = colorRampPalette(brewer.pal(n = 12, name = "Paired"))(length(unique(data[[cell_labels]])))) +
-    guides(colour = guide_legend(override.aes = list(size = 10), title = "Cell Label")) +
+    guides(colour = guide_legend(override.aes = list(size = 10))) +
     labs(x = NULL, y = NULL) +
-    theme(legend.title = element_text(size = 20),
+    theme(legend.title = element_blank(),
           legend.text = element_text(size = 12))
 }
 

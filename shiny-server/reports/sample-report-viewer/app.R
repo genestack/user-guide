@@ -100,8 +100,7 @@ cell_composition_plot <- function(data, randomize_colours = FALSE) {
 cell_types_plot <- function(data) {
   ggplot(data = data, aes_string(x = x_dimension, y = y_dimension)) +
     geom_scattermore(aes_string(color = cell_labels), pointsize = 3, interpolate = TRUE) +
-    # scale_color_jco() +
-    scale_colour_manual(values = pal_igv("default")(length(unique(data[[cell_labels]])))) +
+    scale_colour_manual(values = colorRampPalette(brewer.pal(n = 12, name = "Paired"))(length(unique(data[[cell_labels]])))) +
     guides(colour = guide_legend(override.aes = list(size = 10), title = "Cell Label")) +
     labs(x = NULL, y = NULL) +
     theme(legend.title = element_text(size = 20),

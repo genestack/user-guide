@@ -18,7 +18,7 @@ report_file_extension <- ".csv"
 odm_url <- parse_url(Sys.getenv("ODM_URL"))
 
 # Target ODM host.
-odm_host <- odm_url$hostname
+odm_host <- if (is.null(odm_url$port)) odm_url$hostname else paste0(odm_url$hostname, ":", odm_url$port)
 
 # ODM API version.
 version <- "v0.1"
@@ -99,9 +99,9 @@ cell_composition_plot <- function(data, randomize_colours = FALSE) {
 # ------------------------  PROTEIN EXPRESSION PLOT  ---------------------------
 cell_types_plot <- function(data) {
   ggplot(data = data, aes_string(x = x_dimension, y = y_dimension)) +
-    geom_scattermore(aes_string(color = cell_labels), pointsize = 3, interpolate = TRUE) +
+    geom_scattermore(aes_string(color = cell_labels), pointsize = 3, interpolate = TRUE, alpha = 0.5) +
     scale_colour_manual(values = colorRampPalette(brewer.pal(n = 12, name = "Paired"))(length(unique(data[[cell_labels]])))) +
-    guides(colour = guide_legend(override.aes = list(size = 10))) +
+    guides(colour = guide_legend(override.aes = list(size = 10, alpha = 1))) +
     labs(x = NULL, y = NULL) +
     theme(legend.title = element_blank(),
           legend.text = element_text(size = 12))
@@ -213,7 +213,7 @@ fill="#024DA1"
 '
 
 sample_icon <- '
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="sample-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13 4H7V15C7 17 8 18 10 18C12 18 13 17 13 15V4Z" fill="#D2DFEF"/>
 <path d="M13 15V7C13 7 12 8.5 10 8C8 7.5 7 9 7 9V15C7 17 8 18 10 18C12 18 13 17 13 15Z" fill="#6290C8"/>
 <circle cx="9" cy="10" r="1" fill="#D2DFEF"/>

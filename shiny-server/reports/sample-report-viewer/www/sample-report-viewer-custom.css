@@ -69,6 +69,7 @@ h2 button {
   height: calc(100% - 42px);
   overflow-y: scroll;
   padding-bottom: 60px;
+  padding-top: 40px;
 }
 
 .left, .right {
@@ -80,4 +81,16 @@ h2 button {
 
 .shiny-input-container h4 {
   font-size: 14px;
+}
+
+.table > tbody > tr > td:first-child {
+  border: none !important;
+}
+
+.table > tbody > tr > td {
+  border: 1px solid rgba(222, 222, 222, 1);
+}
+
+.sample-icon {
+  margin-right: 4px;
 }

@@ -18,7 +18,7 @@ library(integrationUser)
 odm_url <- parse_url(Sys.getenv("ODM_URL"))
 
 # Target ODM host.
-odm_host <-odm_url$hostname
+odm_host <- if (is.null(odm_url$port)) odm_url$hostname else paste0(odm_url$hostname, ":", odm_url$port)
 
 # ODM API version.
 version <- "v0.1"
@@ -391,7 +391,7 @@ fill="#024DA1"
 '
 
 study_icon <- '
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="gs-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M3 12C2.44772 12 2 11.5523 2 11L2 5C2 3.34315 3.34315 2 5 2L9.38197 2C9.76074 2 10.107 2.214 10.2764 2.55279L10.7236 3.44721C10.893 3.786 11.2393 4 11.618 4L16 4C17.1046 4 18 4.89543 18 6L18 11C18 11.5523 17.5523 12 17 12L3 12Z" fill="#B6D477"/>
 <path d="M2 11C2 8.23858 4.23858 6 7 6H16C17.1046 6 18 6.89543 18 8V15C18 16.1046 17.1046 17 16 17H4C2.89543 17 2 16.1046 2 15V11Z" fill="#6C990F"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0028 15.4648C16.916 14.3602 17.5715 11.9138 16.4669 10.0007C15.3623 8.0875 12.916 7.432 11.0028 8.53657C9.08962 9.64114 7.56809 12.5875 8.67266 14.5007C9.67814 16.2422 13.5 16.3324 15.0028 15.4648ZM12.8274 12C13.6558 12 15 11.5791 15 10.7507C15 9.92224 14.1558 9 13.3274 9C12.499 9 11.3125 9.92224 11.3125 10.7507C11.3125 11.5791 11.999 12 12.8274 12ZM13.7656 12.7902C13.2298 12.9238 12.9037 13.4665 13.0373 14.0024C13.1709 14.5383 13.7136 14.8644 14.2495 14.7308C14.7854 14.5971 15.4757 13.4483 15.342 12.9124C15.2187 12.4176 14.4358 12.6185 13.8947 12.7573L13.8946 12.7574L13.8944 12.7574C13.8497 12.7689 13.8066 12.78 13.7656 12.7902ZM11.7374 13.4353C12.0085 13.8554 11.8594 14.5466 11.4392 14.8177C11.019 15.0888 10.3279 14.9396 10.0568 14.5195C9.78574 14.0993 9.36022 13.1838 10.0839 12.7169C10.8077 12.25 11.4663 13.0151 11.7374 13.4353Z" fill="#B6D477"/>
@@ -434,14 +434,19 @@ ui <- fluidPage(title = "Cohort Report Viewer",
                 hr(),
                 selectizeInput("facetBy",
                                label = h4("Facet by ", tags$style(type = "text/css", "#q1 {vertical-align: top;}")),
-                               choices = c(none),
-                               selected = none,
+                               choices = c(),
                                multiple = FALSE))))
     }),
 )
 # ----------------------------------  END  -------------------------------------
 
 server <- function(input, output, session) {
+  xaxis_update <- reactiveVal(TRUE)
+  yaxis_update <- reactiveVal(TRUE)
+  facet_by_update <- reactiveVal(TRUE)
+
+  axes_state <- reactiveVal(list(x = NULL, y = NULL, facetBy = none))
+
   previous_filters <- reactiveVal(NULL)
 
   observeEvent(input$cookies, {
@@ -534,6 +539,24 @@ server <- function(input, output, session) {
       return(keys_classification)
   })
 
+  observeEvent(input$xaxis, {
+    state <- isolate(axes_state())
+    if (xaxis_update()) axes_state(list(x = input$xaxis, y = state$y, facetBy = state$facetBy))
+    else xaxis_update(TRUE)
+  }, ignoreNULL = FALSE)
+
+  observeEvent(input$yaxis, {
+    state <- isolate(axes_state())
+    if (yaxis_update()) axes_state(list(x = state$x, y = input$yaxis, facetBy = state$facetBy))
+    else yaxis_update(TRUE)
+  }, ignoreNULL = FALSE)
+
+  observeEvent(input$facetBy, {
+    state <- isolate(axes_state())
+    if (facet_by_update()) axes_state(list(x = state$x, y = state$y, facetBy = input$facetBy))
+    else facet_by_update(TRUE)
+  }, ignoreNULL = FALSE)
+
   # Filters selectize input update, all metadata keys are available for filtering.
   observe({
     req(cohort_id(), odm_token())
@@ -542,21 +565,30 @@ server <- function(input, output, session) {
     keys_groups = keys_classification[["groups"]]
     keys_numeric = keys_classification[["numeric"]]
 
+    xaxis_update(FALSE)
+    yaxis_update(FALSE)
+    facet_by_update(FALSE)
+
     if (input$visualizationType == vtype_boxplot) {
       updateSelectizeInput(session, "xaxis", choices = keys_groups, selected = keys_groups[1],
                            options = list(maxItems = 2))
       updateSelectizeInput(session, "yaxis", choices = keys_numeric, selected = keys_numeric[1])
+      axes_state(list(x = keys_groups[1], y = keys_numeric[1], facetBy = none))
     } else if (input$visualizationType == vtype_scatterplot) {
       updateSelectizeInput(session, "xaxis", choices = keys_numeric, selected = keys_numeric[1],
                            options = list(maxItems = 1))
       updateSelectizeInput(session, "yaxis", choices = keys_numeric, selected = keys_numeric[1])
+      axes_state(list(x = keys_numeric[1], y = keys_numeric[1], facetBy = none))
     } else if (input$visualizationType == vtype_barchart) {
       updateSelectizeInput(session, "xaxis", choices = keys_groups, selected = keys_groups[1],
                            options = list(maxItems = 1))
       updateSelectizeInput(session, "yaxis", choices = keys_groups, selected = keys_groups[1])
+      axes_state(list(x = keys_groups[1], y = keys_groups[1], facetBy = none))
+    } else {
+      stop("Unknown visualization type")
     }
 
-    updateSelectizeInput(session, "facetBy", choices = c(none, keys_classification[["groups"]]), selected = none)
+    updateSelectizeInput(session, "facetBy", choices = c(none, keys_groups), selected = none)
   })
 
   output$reportTitle <- renderUI({
@@ -566,9 +598,7 @@ server <- function(input, output, session) {
   })
 
   selected_filters <- reactive({
-    # samples <- samples_metadata()
     keys <- get_keys_classification()[["filters"]]
-    # keys = names(samples)
 
     values <- lapply(keys, function(key) input[[to_fid(key)]])
     names(values) <- keys
@@ -635,28 +665,35 @@ server <- function(input, output, session) {
     filters <- selected_filters()
     samples <- apply_filters(filters, samples_metadata())
 
-    facet_by <- input$facetBy
+    xaxis <- axes_state()$x
+    yaxis <- axes_state()$y
+    facet_by <- axes_state()$facetBy
+
     if (facet_by == none) {
       features <- c(none)
     } else {
       features <- unique(samples[, facet_by])
     }
 
-    # Create box plots list.
-    boxplots <- lapply(features, plotlyOutput)
+    indices <- seq(from = 1, to = length(features))
+    plot_ids <- paste0("plot_", indices)
 
-    lapply(features, function(feature) {
-      output[[feature]] <- renderPlotly({
-        req(cohort_id(), odm_token(), input$xaxis, input$yaxis)
+    # Create box plots list.
+    boxplots <- lapply(plot_ids, plotlyOutput)
+
+    lapply(indices, function(index) {
+      feature <- features[index]
+      output[[plot_ids[index]]] <- renderPlotly({
+        req(cohort_id(), odm_token(), xaxis, yaxis)
 
         title  <- if (feature == none) NULL    else feature
         subset <- if (feature == none) samples else samples[samples[, facet_by] == feature, ]
-        subset <- subset[, c(id_column, sample_source_id_key, unique(c(input$xaxis, input$yaxis))), drop = FALSE]
+        subset <- subset[, c(id_column, sample_source_id_key, unique(c(xaxis, yaxis))), drop = FALSE]
 
         visualize(type = isolate(input$visualizationType),
                   data = subset,
-                  xaxis = input$xaxis,
-                  yaxis = input$yaxis,
+                  xaxis = xaxis,
+                  yaxis = yaxis,
                   title = title)
       })
     })

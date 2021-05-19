@@ -269,7 +269,7 @@ scatterplot <- function(data, xaxis, yaxis, title = NULL) {
   if (nrow(data) == 0) {
     fig <- plotly_empty(type = "scatter", mode = "markers") %>%
       layout(title = list(text = get_empty_plot_text(xaxis, yaxis, title), yref = "paper", y = 0.5),
-             xaxis = list(visible = FALSE), yaxis = list(visible = FALSE))
+             xaxis = list(visible = FALSE), yaxis = list(visible = FALSE)) %>% config(displayModeBar = F)
     return(fig)
   }
 

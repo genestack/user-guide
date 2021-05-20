@@ -31,7 +31,7 @@ the accession of a study, sample or signal object, or by any text that is in any
 all of the data you have visibility of. As you begin typing you will be offered auto-complete suggestions
 based on dictionaries of terms that are present in ODM.
 
-The search is synonym-aware, so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans.
+The search is synonym-aware, so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans. You can use asterisks (*) to allow any positive number of wildcard characters: *ale will find "male" and "female" for example.
 
 The main panel displays the results of your search and filter options, if you have any,
 otherwise all studies are displayed that your user account has visibility of,

@@ -89,3 +89,7 @@ h2 button {
 .shiny-input-container h4 {
   font-size: 14px;
 }
+
+.tab-content {
+  overflow-y: auto
+}

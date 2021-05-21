@@ -117,19 +117,15 @@ protein_expression_plot <- function(data, marker) {
 # ----------------------------------  END  -------------------------------------
 
 # ---------------------------------  UTILS  ------------------------------------
-get_arvados_api_host <- function(odm_host, odm_token, arvados_project_url) {
-  arvados_workbench_hostname <- parse_url(arvados_project_url)$hostname
+get_arvados_api_host <- function(odm_host, odm_token, arvados_project_uuid) {
+  arvados_uuid_prefix <- strsplit(arvados_project_uuid, split = "-")[[1]][1]
   if (is.null(parse_url(odm_host)$scheme))
     odm_host <- paste0(scheme, "://", odm_host)
   arvados_settings_endpoint_path <- "/frontend/rs/genestack/arvadosadmin/default-released/arvados/settings"
   arvados_setting_endpoint <- paste0(odm_host, arvados_settings_endpoint_path)
   response <- GET(arvados_setting_endpoint, add_headers(`Genestack-API-Token` = odm_token))
   settings <- rjson::fromJSON(content(response, "text"))
-  arvados_instance <- Find(
-    function(instance)
-      parse_url(instance$workbenchHost)$hostname == arvados_workbench_hostname,
-    settings
-  )
+  arvados_instance <- Find(function(instance) instance$uuidPrefix == arvados_uuid_prefix, settings)
   paste0(parse_url(arvados_instance$apiHost)[c("hostname", "port")], collapse = ":")
 }
 
@@ -370,8 +366,8 @@ server <-  function(input, output, session) {
   })
 
   arvados_api_host <- reactive({
-    req(arvados_project_url())
-    get_arvados_api_host(odm_host, odm_token(), arvados_project_url())
+    req(arvados_project_uuid())
+    get_arvados_api_host(odm_host, odm_token(), arvados_project_uuid())
   })
 
   arvados <- reactive({

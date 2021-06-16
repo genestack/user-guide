@@ -26,22 +26,22 @@ follow the link specified in the email. You can rename or delete previously gene
 
 
 
-Users and organization
-**********************
+Users and permissions
+*********************
 
-The **Users and organization** page allows you to get an overview of the existing users in your organisation,
-to create new users and assign permissions to manage the organization and templates. This page is accessible only if you have permission to manage the organization.
+The **Users and permissions** page allows you to get an overview of the existing users in your organisation,
+to create new users and assign permissions to manage the organization, templates and facet configuration. This page is accessible only if you have permission to manage the organization.
 
-In order to open the application, you can use the shortcut menu and select **Users and organization**.
+In order to open the application, you can use the shortcut menu and select **Users and permissions**.
 
-.. image:: images/shortcut_1_23.png
+.. image:: images/shortcut_1_37.png
    :scale: 40 %
    :align: center
 
 On the page you can change passwords of the users by clicking the three dots icon, control if the account is active, has permission to manage the organization (add/deactivate users, manage their permissions), whether they can edit and manage templates, including setting the default template, and whether they can configure the facets that appear in the study browser.
 
 .. image:: images/manage-users-1-33.png
-   :scale: 40 %
+   :scale: 30 %
    :align: center
 
 To create a new user, click on the **+ New user** button. In the pop-up window specify their name, email and starting password.

@@ -3,8 +3,8 @@ Template Editor
 
 The Template Editor application allows you to create, customize, and update templates for data import/validation.
 
-How to access the Template Editor?
-----------------------------------
+Accessing the Template Editor
+-----------------------------
 
 To get started, click **Set up templates** on the Dashboard:
 
@@ -12,7 +12,7 @@ To get started, click **Set up templates** on the Dashboard:
    :scale: 30 %
    :align: center
 
-Or use the short-cut dock and select **Template Editor**:
+Or use the shortcut dock and select **Template Editor**:
 
 .. image:: images/shortcuts-template-editor.png
    :scale: 75 %
@@ -54,7 +54,7 @@ Templates include the following metadata options:
 Create and edit template
 ------------------------
 
-If you have permission to edit/manage templates you can click on the template name and select **Duplicate** to create your own editable copy of a template and modify it if needed.
+If you have the permission to edit/manage templates you can click on the template name and select **Duplicate** to create your own editable copy of a template and modify it if needed.
 
 .. image:: images/Template_dropdown.png
    :scale: 50 %

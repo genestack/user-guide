@@ -57,7 +57,7 @@ The specific template that applies for a dataset can be changed by clicking the 
    :scale: 35 %
    :align: center
 
-
+Note that the special values "Not applicable" and "Not recorded" will always pass validation.
 
 
 Correcting metadata
@@ -147,3 +147,8 @@ As a result, values for only the filtered samples will be changed.
    .. image:: images/only-filtered2.png
       :scale: 40 %
       :align: center
+
+Special Values
+==============
+
+When typing or selecting replacement values it is possible for the curator to use the special values "Not applicable" or "Not recorded". When these values are used they are ignored by the validation rules (they always pass validation), and will be represented using italics to show this.

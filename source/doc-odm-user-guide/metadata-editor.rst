@@ -247,7 +247,9 @@ Clicking on the Invalid metadata link opens the **Validation Summary** pop-up wi
 invalid metadata terms will be shown. Click on a term you would like to update, immediately, **Replace values**
 window will open, allowing you to type in the correct value.
 
-Apart from editing metadata manually, you can also import and validate the metadata. Click on the "Import" icon in
+There are special terms "Not applicable" and "Not recorded" that can be entered if you wish the value to always pass validation.
+
+As well as editing metadata manually you can also import and validate the metadata. Click on the "Import" icon in
 the upper-right corner and select a local CSV or Excel file containing metadata you would like
 to associate with the imported files.
 

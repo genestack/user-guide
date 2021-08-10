@@ -4,7 +4,7 @@ library(plyr)
 library(gridExtra)
 suppressMessages(library(tidyverse))
 
-host <- "inc-dev-6.genestack.com"
+host <- "odm-demos.genestack.com"
 token <- "tknRoot"
 
 source("r_client_api.R")

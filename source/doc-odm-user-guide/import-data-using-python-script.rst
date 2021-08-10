@@ -69,7 +69,7 @@ To obtain a token, sign in to ODM via a web browser, click on your email address
 
 Then click the "Create new token" button under API tokens:
 
-.. image:: images/odm_profile.png
+.. image:: images/odm_profile1.png
    :scale: 40 %
    :align: center
 

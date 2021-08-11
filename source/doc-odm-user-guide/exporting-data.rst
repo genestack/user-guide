@@ -7,7 +7,13 @@ To export data from a study either click the three buttons icon next to the stud
    :scale: 35 %
    :align: center
 
-You will be taken to a page which generates an export link - this will download a compressed copy of all of the metadata and data associated with a study (including all versions of data files if more than one version has been imported). The link is pre-authenticated so anyone with the link will be able to download the study and associated data.
+You can also click the Export button near the top right of any Metadata editor tab.
+
+.. image:: images/export_button.png
+   :scale: 35 %
+   :align: center
+
+You will be taken to a page which generates an export link - this will download a compressed copy of all of the metadata and data associated with a study (including samples and omics metadata, and all versions of data files if more than one version has been imported). The link is pre-authenticated so anyone with the link will be able to download the study and associated data.
 
 .. image:: images/export-data-link.png
    :align: center

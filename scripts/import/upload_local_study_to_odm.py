@@ -107,11 +107,14 @@ def get_samples_parent(study_accession, host, token):
 
 
 def create_studies_and_samples(study_filename, samples_filename, template_accession, host, token):
-    new_samples = read_samples_metadata(samples_filename)
-    study_accession = create_study(study_filename, template_accession, 1, host, token)
-    time.sleep(3)
-    samples_parent = get_samples_parent(study_accession, host, token)
-    replace_samples(study_accession, samples_parent, new_samples, host, token)
+    if samples_filename is None:
+        study_accession = create_study(study_filename, template_accession, 0, host, token)
+    else:
+        new_samples = read_samples_metadata(samples_filename)
+        study_accession = create_study(study_filename, template_accession, 1, host, token)
+        time.sleep(3)
+        samples_parent = get_samples_parent(study_accession, host, token)
+        replace_samples(study_accession, samples_parent, new_samples, host, token)
     return study_accession
 
 
@@ -136,7 +139,7 @@ def main():
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--srv', type=str, help='url of the server', required=True)
     parser.add_argument('--study', type=str, help='Path to the study TSV-file', required=True)
-    parser.add_argument('--samples', type=str, help='Path to the samples TSV-file', required=True)
+    parser.add_argument('--samples', type=str, help='Path to the samples TSV-file', required=False)
     parser.add_argument('--template', type=str, help='template accession (or default template will be selected)', required=False)
     parser.add_argument('--token', type=str, help='token', required=True)
     args = parser.parse_args()

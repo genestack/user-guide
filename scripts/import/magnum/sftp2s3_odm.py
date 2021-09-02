@@ -6,11 +6,14 @@ import io
 import json
 import logging
 import math
+import os
 import paramiko
 import requests
 import sys
+import tempfile
 import time
 
+from botocore.exceptions import NoCredentialsError
 from urllib.parse import urlparse
 
 
@@ -169,6 +172,35 @@ def check_file_exist_on_sftp(sftp_url, ftp_cred, ftp_conn=None):
         # print("File does not exists on FTP Server! {}".format(e))
         return False, None, None
 
+def upload_to_aws(local_file, aws_cred, s3_file, callback=None, force_rewrite=True):
+    s3 = boto3.client('s3', aws_access_key_id=aws_cred.server_public_key,
+                      aws_secret_access_key=aws_cred.server_secret_key)
+
+    try:
+        s3_file_obj = s3.head_object(Bucket=aws_cred.s3_bucket_name, Key=s3_file)
+        local_size = os.path.getsize(local_file)
+        if int(s3_file_obj["ContentLength"]) == int(local_size):
+            if force_rewrite:
+                logging.warning("Rewriting existing file {} in S3 bucket with the same length".format(local_file))
+            else:
+                logging.warning("Skipping existing file {} in S3 bucket".format(local_file))
+                return
+        else:
+            logging.warning("Rewriting existing file {} in S3 bucket".format(local_file))
+    except Exception as e:
+        # File doesn't exist on S3
+        pass
+
+    try:
+        s3.upload_file(local_file, aws_cred.s3_bucket_name, s3_file, Callback=callback)
+        # print("Upload Successful")
+        return True
+    except FileNotFoundError:
+        print("The file was not found: {}".format(local_file), file=sys.stderr)
+        return False
+    except NoCredentialsError:
+        print("Credentials not available", file=sys.stderr)
+        return False
 
 def transfer_chunk_from_ftp_to_s3(
         ftp_file,
@@ -329,19 +361,39 @@ def get_s3_key_from_s3_url(s3_url):
     return s3_key
 
 
-def copy_one_file_sftp2s3(sftp_url, s3_url, aws_cred, ftp_connection, progress_information):
+def copy_one_file_sftp2s3(sftp_url, s3_url, aws_cred, ftp_connection, in_memory, progress_information):
     ftp_file_path = get_file_path_from_sftp_link(sftp_url)
     s3_key = get_s3_key_from_s3_url(s3_url)
-    transfer_file_from_ftp_to_s3(
-        aws_cred.s3_bucket_name,
-        ftp_file_path,
-        s3_key,
-        aws_cred,
-        CHUNK_SIZE,
-        ftp_connection,
-        True,
-        progress_information
-    )
+    if in_memory:
+        transfer_file_from_ftp_to_s3(
+            aws_cred.s3_bucket_name,
+            ftp_file_path,
+            s3_key,
+            aws_cred,
+            CHUNK_SIZE,
+            ftp_connection,
+            True,
+            progress_information
+        )
+    else:
+        start_time = time.perf_counter()
+        total = 0
+        def callback(bytes, total):
+            end_time = time.perf_counter()
+            progress_information.speed = bytes / 1024 / (end_time - start_time)
+            progress_information.report_download_from_sftp(bytes, total, ftp_file_path)
+
+        def aws_callback(bytes):
+            end_time = time.perf_counter()
+            progress_information.speed = bytes / 1024 / (end_time - start_time)
+            progress_information.report_upload_to_s3(bytes, total, ftp_file_path)
+
+        with tempfile.NamedTemporaryFile(dir='./', delete=True) as tmpfile:
+            temp_file_name = tmpfile.name
+            ftp_connection.get(ftp_file_path, temp_file_name, callback)
+            total = os.path.getsize(temp_file_name)
+            upload_to_aws(temp_file_name, aws_cred, s3_key, aws_callback)
+
 
 
 def collect_sftp_links_for_one_sample(sample_record, fields):
@@ -357,7 +409,7 @@ def collect_sftp_links_for_one_sample(sample_record, fields):
     return sftp_links
 
 
-def copy_sftp_links(sftp_links, all_s3_links, study_accession, ftp_cred, aws_cred, progress_information):
+def copy_sftp_links(sftp_links, all_s3_links, study_accession, ftp_cred, aws_cred, in_memory, progress_information):
     ftp_conn = None
     s3_client = None
     for sftp_link in sftp_links:
@@ -375,7 +427,7 @@ def copy_sftp_links(sftp_links, all_s3_links, study_accession, ftp_cred, aws_cre
             # File is already there
             all_s3_links.add(s3_link)
         else:
-            copy_one_file_sftp2s3(sftp_link, s3_link, aws_cred, ftp_conn, progress_information)
+            copy_one_file_sftp2s3(sftp_link, s3_link, aws_cred, ftp_conn, in_memory, progress_information)
             all_s3_links.add(s3_link)
 
 
@@ -406,10 +458,11 @@ def update_sample_metainfo(sample_record, fields, study_accession, aws_cred, hos
 
 def check_and_copy_sftp_for_one_sample(sample_record, fields, all_s3_links, study_accession, ftp_cred, aws_cred,
                                        host, token,
+                                       in_memory,
                                        progress_information):
     sftp_urls = collect_sftp_links_for_one_sample(sample_record, fields)
     if len(sftp_urls) > 0:
-        copy_sftp_links(sftp_urls, all_s3_links, study_accession, ftp_cred, aws_cred, progress_information)
+        copy_sftp_links(sftp_urls, all_s3_links, study_accession, ftp_cred, aws_cred, in_memory, progress_information)
         # Update sample metainfo
         update_sample_metainfo(sample_record, fields, study_accession, aws_cred, host, token)
     return len(sftp_urls)
@@ -426,6 +479,7 @@ def main():
     parser.add_argument('--s3', type=str, help='Path to the AWS credentials file', required=True)
     parser.add_argument('--sftp', type=str, help='Path to the SFTP credentials file, if needed', required=True)
     parser.add_argument('--token', type=str, help='token', required=True)
+    parser.add_argument('--in_memory', default=False, action='store_true', help='token', required=False)
     parser.add_argument('--field', type=str, action='append', help='Name of the column with sftp-links to check', required=False)
     args = parser.parse_args()
     # logging.basicConfig(stream=sys.stderr, format='%(asctime)s %(levelname)s: %(message)s', level=logging.WARNING)
@@ -449,7 +503,7 @@ def main():
         progress_information = ProgressInformation(index, total, start_time)
         changed_sftp_links_count = check_and_copy_sftp_for_one_sample(sample_record, fields, all_s3_links,
                                                                       study_accession, ftp_cred, aws_cred,
-                                                                      host, token, progress_information)
+                                                                      host, token, args.in_memory, progress_information)
         total_changed_sftp_links += changed_sftp_links_count
         count = index + 1
         end = '\n' if count == total else '\r'
@@ -476,6 +530,22 @@ class ProgressInformation(object):
                  f" chunk {chunk_number} of {chunk_total}: {ftp_file_path}"
         if self.speed is not None:
             header += f" speed {self.speed} kb/s"
+        print(header, end=end, file=sys.stderr)
+
+    def report_download_from_sftp(self, bytes, total, ftp_file_path, end='\r'):
+        time_spent = time.perf_counter() - self.start_time
+        header = f" processed: {self.sample_index+1} of {self.total_number_of_samples} samples, time={time_spent:.2f}" + \
+                 f" receive bytes {bytes} of {total}: {ftp_file_path}"
+        if self.speed is not None:
+            header += f" speed {self.speed:.2f} kb/s"
+        print(header, end=end, file=sys.stderr)
+
+    def report_upload_to_s3(self, bytes, total, ftp_file_path, end='\r'):
+        time_spent = time.perf_counter() - self.start_time
+        header = f" processed: {self.sample_index+1} of {self.total_number_of_samples} samples, time={time_spent:.2f}" + \
+                 f" send bytes {bytes} of {total}: {ftp_file_path}"
+        if self.speed is not None:
+            header += f" speed {self.speed:.2f} kb/s"
         print(header, end=end, file=sys.stderr)
 
 if __name__ == "__main__":

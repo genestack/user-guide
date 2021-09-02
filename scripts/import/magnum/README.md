@@ -80,6 +80,10 @@ cat aws_cred.json
 
 The script `sftp2s3_odm.py` will select column with the given name and for each sftp-links in that column copies the corresponding file
 to S3 storage and replace the link with a new link to S3 storage.
+The S3 key is constructed using the accession of the study and the file path on the sftp server.
+For example, for the sftp url `sftp://host.com:1234/dirA/dirB/fileC` and for the study `GSF013296`
+the corresponding s3 url will be `s3://<bucket>/GSF013296/dirA/dirB/fileC`.
+
 This script can take a long time to finish the execution and in case of network problems, for example,
 it is safe to restart the script with the same arguments several times until there will be no sftp urls to process.
 

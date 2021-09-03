@@ -101,3 +101,17 @@ There are 5 s3 urls in 5 samples to process
  processed: 5 of 5 samples, time=1.89 samples/sec=2.64 done=1.00
 There are 5 s3 urls with total size 241273
 ```
+
+```
+>python check_s3_urls.py --srv  https://prod.magnum.genestack.com/ --study_accession GSF000652 --s3 aws_cred.prod.json  --token <token>
+There are 2055 s3 urls in 2055 samples to process
+ processed: 2055 of 2055 samples, time=743.78 samples/sec=2.76 done=1.00
+There are 2055 s3 urls with total size 498217096548 (475136.85Mb/464.00Gb)
+```
+
+## Some notes on the implementation
+By default, script will download one file a time to a temporary file in the working directory and then immediately upload it to S3.
+It means that you need to be sure that the working directory has a free space (at least about 0.5Gb).
+The other options to use fully in-memory solution (see `--in_memory` flag for `sftp2s3_odm`), but it is slower by a factor of 5.
+
+For 40 files with total size 16.82Gb it takes approximately 1 hour 40 minutes to copy files from sftp to s3.

@@ -63,7 +63,7 @@ def get_samples_parent(study_accession, host, token):
     res = json.loads(s.post(url=url_get_study_container_descriptor, data=json.dumps([study_accession])).text)
     if 'result' not in res:
         print(res)
-        raise Exception('There is a problem while invoking replaceSamples')
+        raise Exception('There is a problem while invoking getStudyContainerDescriptor')
     check_samples = res['result']['metadataDescriptors']
     return [item['id'] for item in check_samples if item[u'typeId'] == 'sampleGroup'][0]
 
@@ -193,7 +193,8 @@ def main():
         end = '\n' if count == total else '\r'
         print(f" processed: {count} of {total} samples, time={time_spent:.2f}"
               f" samples/sec={count/time_spent:.2f} done={done:.2f}", end=end, file=sys.stderr)
-    print('There are {} s3 urls with total size {}'.format(len(all_s3_links), total_size))
+    print('There are {} s3 urls with total size {} ({:.2f}Mb/{:.2f}Gb)'.format(
+        len(all_s3_links), total_size, total_size / 1024**2, total_size / 1024**3))
 
 
 if __name__ == "__main__":

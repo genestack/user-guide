@@ -157,7 +157,8 @@ def check_sftp_links(metadata_filename, fields, ftp_cred):
                     non_sftp_values.append(value)
 
     total_files_count = len({ value for value in sftp_values_status.keys() if sftp_values_status[value][0] })
-    print('There are {} files on sftp with total size {}'.format(total_files_count, total_size))
+    print('There are {} files on sftp with total size {} ({:.2f}Mb/{:.2f}Gb)'.format(
+        total_files_count, total_size, total_size / 1024**2, total_size / 1024**3))
     if len(non_sftp_values) > 0:
         print('There are {} non sftp-links in the given columns: {}'.format(len(non_sftp_values), non_sftp_values[0:5]))
     bad_sftp_count = len({ value for value in sftp_values_status.keys() if not sftp_values_status[value][0] })

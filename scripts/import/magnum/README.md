@@ -12,7 +12,7 @@ It is expected that study metadata contains `Study Source ID`, `Study Source`, `
 
 Example:
 ```
->cat 300460_Mark_Fowler.study.tsv 
+>cat 300460.study.tsv 
 Study Source	Study Source ID	Study Description	Study Type
 Source	Study ID 1	Just an example	Unknown
 ```
@@ -22,18 +22,18 @@ using `|` as a delimiter. By default we assume that sftp links for the raw data 
 
 Example:
 ```
->cat 300460_Mark_Fowler.samples.10.tsv 
+>cat 300460.samples.10.tsv 
 Sample Source ID	Sample Source	Data Files / Raw
-A1	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A1/R1.fastq.gz
-A2	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A2/R1.fastq.gz
-A3	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A3/R1.fastq.gz
-A4	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A4/R1.fastq.gz
-B1	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B1/R1.fastq.gz
-B2	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B2/R1.fastq.gz
-B3	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B3/R1.fastq.gz
-B4	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B4/R1.fastq.gz
-C1	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/C1/R1.fastq.gz
-C2	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/C2/R1.fastq.gz
+A1	300460	sftp://185.106.248.149:2222/300460/trimming/A1/R1.fastq.gz
+A2	300460	sftp://185.106.248.149:2222/300460/trimming/A2/R1.fastq.gz
+A3	300460	sftp://185.106.248.149:2222/300460/trimming/A3/R1.fastq.gz
+A4	300460	sftp://185.106.248.149:2222/300460/trimming/A4/R1.fastq.gz
+B1	300460	sftp://185.106.248.149:2222/300460/trimming/B1/R1.fastq.gz
+B2	300460	sftp://185.106.248.149:2222/300460/trimming/B2/R1.fastq.gz
+B3	300460	sftp://185.106.248.149:2222/300460/trimming/B3/R1.fastq.gz
+B4	300460	sftp://185.106.248.149:2222/300460/trimming/B4/R1.fastq.gz
+C1	300460	sftp://185.106.248.149:2222/300460/trimming/C1/R1.fastq.gz
+C2	300460	sftp://185.106.248.149:2222/300460/trimming/C2/R1.fastq.gz
 ```
 
 You can use another name for the column with your links, if you want, but in that case you need explicitly specify the name
@@ -65,7 +65,7 @@ The script reads sftp urls from the specified columns (by default it takes 'Data
 checks that the corresponding files exist on the sftp-server.
 
 ```
->python check_sftp_links.py --metadata 300460_Mark_Fowler.samples.10.tsv --sftp ftp_cred.json
+>python check_sftp_links.py --metadata 300460.samples.10.tsv --sftp ftp_cred.json
 There are no columns with the following names: ['Data Files / Processed']
 The following columns will be checked: ['Data Files / Raw']
  sftp-links=10 all sftp-links=10 time=1.60 sftp-links processed/sec=6.25 done=1.00

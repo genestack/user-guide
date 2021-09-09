@@ -12,17 +12,35 @@ It is expected that study metadata contains `Study Source ID`, `Study Source`, `
 
 Example:
 ```
->cat study_example_sftp.tsv 
-Study Source	Study Source ID	Study Description	Study Type	Study Title
-Source	Study ID 1	Just an example	Unknown	Example of a simple study
+>cat 300460_Mark_Fowler.study.tsv 
+Study Source	Study Source ID	Study Description	Study Type
+Source	Study ID 1	Just an example	Unknown
 ```
 Samples metadata should contain `Sample Source ID` column.
 Sftp urls should use the prefix `sftp://`. You can put several values in one cell,
-using `|` as a delimiter.
+using `|` as a delimiter. By default we assume that sftp links for the raw data are in the column `Data Files / Raw`.
 
 Example:
 ```
->cat samples_example_sftp.tsv 
+>cat 300460_Mark_Fowler.samples.10.tsv 
+Sample Source ID	Sample Source	Data Files / Raw
+A1	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A1/R1.fastq.gz
+A2	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A2/R1.fastq.gz
+A3	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A3/R1.fastq.gz
+A4	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/A4/R1.fastq.gz
+B1	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B1/R1.fastq.gz
+B2	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B2/R1.fastq.gz
+B3	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B3/R1.fastq.gz
+B4	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/B4/R1.fastq.gz
+C1	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/C1/R1.fastq.gz
+C2	300460_Mark_Fowler	sftp://185.106.248.149:2222/300460_Mark_Fowler/trimming/C2/R1.fastq.gz
+```
+
+You can use another name for the column with your links, if you want, but in that case you need explicitly specify the name
+when you are invoking the script (see examples later).
+
+```
+>cat sftp_example.samples.tsv
 Sample Source ID	genestack.bio:hasPairedReads	url
 Example Source ID 1	False	sftp://test.rebex.net:22/pub/example/KeyGenerator.png|sftp://test.rebex.net:22/pub/example/mail-editor.png
 Example Source ID 2	False	sftp://test.rebex.net:22/pub/example/mail-editor.png
@@ -47,6 +65,15 @@ The script reads sftp urls from the specified columns (by default it takes 'Data
 checks that the corresponding files exist on the sftp-server.
 
 ```
+>python check_sftp_links.py --metadata 300460_Mark_Fowler.samples.10.tsv --sftp ftp_cred.json
+There are no columns with the following names: ['Data Files / Processed']
+The following columns will be checked: ['Data Files / Raw']
+ sftp-links=10 all sftp-links=10 time=1.60 sftp-links processed/sec=6.25 done=1.00
+There are 10 files on sftp with total size 4449709431 (4243.57Mb/4.14Gb)
+```
+
+If you use a custom name for you column with sftp links, you need to provide the name as an argument.
+```
 >python check_sftp_links.py --metadata samples_example_sftp.tsv --sftp ftp_cred.json --field 'url'
 The following columns will be checked: ['url']
  sftp-links=5 all sftp-links=5 time=1.56 sftp-links processed/sec=3.21 done=1.00
@@ -67,11 +94,23 @@ NB: The samples metadata still contains sftp urls at this point.
 ## Move files from sftp-server to S3 storage and replace the urls in the metadata
 
 You need to specify AWS credentials in a JSON-file, let's name it `aws_cred.json`
+There are two S3 buckets: `gs-saas-magnum-qa` and `gs-saas-magnum-qa`. It make sense to have
+two separated files.
 
 ```bash
-cat aws_cred.json 
+cat aws_cred.qa.json 
 {
 	"s3_bucket_name": "gs-saas-magnum-qa",
+	"aws_server_public_key": "<Public Key>",
+	"aws_server_secret_key": "<Secret Key>",
+	"region_name": "eu-central-1"
+}
+```
+
+```bash
+cat aws_cred.prod.json 
+{
+	"s3_bucket_name": "gs-saas-magnum-prod",
 	"aws_server_public_key": "<Public Key>",
 	"aws_server_secret_key": "<Secret Key>",
 	"region_name": "eu-central-1"
@@ -88,7 +127,7 @@ This script can take a long time to finish the execution and in case of network 
 it is safe to restart the script with the same arguments several times until there will be no sftp urls to process.
 
 ```
->python sftp2s3_odm.py --srv  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.private.json --sftp ftp_cred.json --token <token> --field 'url'
+>python sftp2s3_odm.py --srv  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.qa.json --sftp ftp_cred.json --token <token> --field 'url'
 There are 5 sftp urls in 5 samples to process
  processed: 5 of 5 samples, time=20.60 samples/sec=0.24 done=1.00 /pub/example/pocketftpSmall.png speed 4.21 kb/sb
 The number of changed sftp urls: 7
@@ -96,7 +135,7 @@ The number of changed sftp urls: 7
 ## Check s3 urls in the samples metadata in ODM
 The script `check_s3_urls.py` will inspect all the s3 urls in the specified columns and will check the existence of the corresponding files.
 ```
->python check_s3_urls.py --srv  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.private.json  --token tknPublic123 --field 'url'
+>python check_s3_urls.py --srv  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.qa.json  --token tknPublic123 --field 'url'
 There are 5 s3 urls in 5 samples to process
  processed: 5 of 5 samples, time=1.89 samples/sec=2.64 done=1.00
 There are 5 s3 urls with total size 241273

@@ -11,11 +11,14 @@ library(plyr)
 library(dplyr)
 library(tidyr)
 library(viridis)
-library(integrationUser)
+library(integrationCurator)
 
 # -------------------------------  Constants  ----------------------------------
 # Target ODM url.
 Sys.setenv("ODM_URL" = "https://odm-demos.genestack.com/")
+Sys.setenv(PRED_SPOT_HOST = 'odm-demos.genestack.com',
+           PRED_SPOT_TOKEN = 'tknRoot',
+           PRED_SPOT_VERSION = 'default-released')
 odm_url <- parse_url(Sys.getenv("ODM_URL"))
 
 # Target ODM host.
@@ -96,28 +99,43 @@ unwrap_compound_keys <- function(metadata) {
 get_samples_metadata <- function(odm_sample_api, study_id) {
   data_frames <- list()
   offset <- 0
-  limit <- 2000
+  limit <- 20000
 
-  repeat{
-    response <- odm_sample_api$get_samples_by_study(
-      id = study_id,
-      page_offset = offset,
+  # repeat{
+  #   response <- odm_sample_api$get_samples_by_study(
+  #     id = study_id,
+  #     page_offset = offset,
+  #     page_limit = limit
+  #   )
+  # 
+  #   data_frames <- c(data_frames, list(response$content$data))
+  #   offset <- offset + limit
+  # 
+  #   if (offset >= response$content$meta$pagination$total) {
+  #     break
+  #   }
+  # }
+  # 
+  # # Bind all data.frames together.
+  # metadata <- rbindlist(data_frames, fill = TRUE)
+  
+  # response <- integrationCurator::OmicsQueriesApi_search_samples(
+  #     id = study_id,
+  #     page_offset = offset,
+  #     page_limit = limit
+  # )
+  # metadata = response$content$data
+  # print(metadata)
+  
+  response <- integrationCurator::OmicsQueriesApi_search_samples(
+      study_filter = paste0('genestack:accession=',study_id),
       page_limit = limit
-    )
-
-    data_frames <- c(data_frames, list(response$content$data))
-    offset <- offset + limit
-
-    if (offset >= response$content$meta$pagination$total) {
-      break
-    }
-  }
-
-  # Bind all data.frames together.
-  metadata <- rbindlist(data_frames, fill = TRUE)
+  )
+  metadata = response$content$data[['metadata']]
+  print(metadata[1:10, ])
 
   # Remove NA column (for missed template keys).
-  metadata <- metadata[, which(unlist(lapply(metadata, function(x) !all(is.na(x))))), with = F]
+  # metadata <- metadata[, which(unlist(lapply(metadata, function(x) !all(is.na(x))))), with = F]
 
   # Unwrap compound keys.
   metadata <- unwrap_compound_keys(metadata)
@@ -134,14 +152,23 @@ get_samples_metadata <- function(odm_sample_api, study_id) {
   setnames(metadata, sprintf("%s_ul", columns_to_unwrap), columns_to_unwrap)
   metadata <- as.data.frame(metadata)
 
+  # Remove empty/NA columns
+  metadata <- metadata[,colSums(is.na(metadata))<nrow(metadata)]
+  metadata <- metadata[,colSums(metadata != "", na.rm=TRUE) != 0]
+  
   # Replace <NA> values with strings "No value". That allows to simplify keys classification and filtering logic.
   metadata[is.na(metadata)] <- no_value
   metadata[metadata == ""]  <- no_value
-
+  
   # Remove columns where all values are the same.
   selector <- apply(metadata, 2, function(column) length(unique(column)) > 1)
   metadata[, selector]
+  
+  print(nrow(metadata))
+  
   metadata
+  
+  
 }
 
 # Transform metadata key into shiny selectize input id (filter).
@@ -555,35 +582,32 @@ server <- function(input, output, session) {
   })
 
   get_keys_classification <- reactive({
+      
       metadata <- samples_metadata()
+      print("get_keys_classification")
       keys_blacklist <- c("genestack:accession", "Sample Source ID", "Arvados URL", "groupId", "genestack:name", "Name")
       keys <- setdiff(names(metadata), keys_blacklist)
-
+    
       keys_numeric <- Filter(function(key) {
         notna <- metadata[metadata[, key] != no_value, key]
         length(notna) > 0 & !anyNA(suppressWarnings(as.numeric(notna)))
       }, keys)
-      print("keys_numeric")
-      print(keys_numeric)
 
       keys_categorical <- setdiff(keys, keys_numeric)
-      print("keys_categorical")
-      print(keys_categorical)
-
+      keys_categorical <- Filter(function(key) {
+          length(unique(metadata[, key])) < min(50, nrow(metadata)-1) # don't want to show too many vaues
+      }, keys_categorical)
+      
       keys_groups <- Filter(function(key) {
         length(unique(metadata[, key])) > 1
       }, keys_categorical)
-      print("keys_groups")
-      print(keys_groups)
 
       keys_classification <- list(
           "filters" = keys_categorical,
           "groups"  = keys_groups,
           "numeric" = keys_numeric
       )
-      print("keys_classification")
-      print(keys_classification)
-
+      
       return(keys_classification)
   })
 

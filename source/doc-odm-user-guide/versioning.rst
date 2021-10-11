@@ -11,7 +11,7 @@ With the versioning feature enabled the Metadata Editor now has two modes: View 
 In the View mode changes to the metadata cannot be made, and the samples table allows more samples to be viewed without pagination.
 
 .. image:: images/versioning-view.png
-   :scale: 30 %
+   :scale: 25 %
    :align: center
 
 To change to Edit mode (curators only) click the **Edit** button in the bottom left of the Metadata Editor tab.

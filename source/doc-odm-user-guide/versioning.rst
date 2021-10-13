@@ -20,7 +20,7 @@ To change to Edit mode (curators only) click the **Edit** button in the bottom l
    :scale: 35 %
    :align: center
 
-Edit mode allows curators to change the metadata. Changes are saved on the fly but held in a staging (unpublished) copy until a new version is created by publishing. If a tab contains unpublished metadata it is marked with a blue dot. Only curators can see unpublished metadata, non-curators will continue to see the most recently published version.
+Edit mode allows curators to change the metadata. Changes are saved on the fly but held in a draft (unpublished) copy until a new version is created by publishing. If a tab contains unpublished metadata it is marked with a blue dot. Only curators can see unpublished metadata, non-curators will continue to see the most recently published version though they can view previous versions and the change history by clicking on the clock icon.
 
 .. image:: images/versioning-pending-tabs.png
    :scale: 35 %
@@ -36,12 +36,22 @@ When a curator publishes a metadata tab they create a new version of the metadat
    :scale: 35 %
    :align: center
 
-Note publishing only publishes pending changes on the current tab (Study, Samples etc.)
+Note publishing only publishes pending changes on the current tab (Study, Samples etc.).
+
+Discarding unpublished changes
+------------------------------
+
+After changes have been made but before they have been published it is possible to discard the draft copy by clicking on the three dot menu at the bottom of the screen and selecting **Discard changes**.
+
+.. image:: images/versioning-discard.png
+   :scale: 35 %
+   :align: center
+
 
 Viewing change history and restoring previous versions
 ------------------------------------------------------
 
-To view and optionally restore previous versions, first click on the clock icon in the bottom left of a metadata tab:
+To view and optionally restore (if a curator user) previous versions, first click on the clock icon in the bottom left of a metadata tab:
 
 .. image:: images/versioning-history-icon.png
    :scale: 35 %

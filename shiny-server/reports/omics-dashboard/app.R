@@ -562,6 +562,7 @@ server <- function(input, output, session) {
   study_id <- reactive({
     query <- getQueryString()
     query$study
+    "GSF018581"
   })
 
   samples_metadata <- reactive({
@@ -585,7 +586,7 @@ server <- function(input, output, session) {
       
       metadata <- samples_metadata()
       print("get_keys_classification")
-      keys_blacklist <- c("genestack:accession", "Sample Source ID", "Arvados URL", "groupId", "genestack:name", "Name")
+      keys_blacklist <- c("genestack:accession", "Arvados URL", "groupId", "genestack:name", "Name")
       keys <- setdiff(names(metadata), keys_blacklist)
     
       keys_numeric <- Filter(function(key) {
@@ -640,9 +641,9 @@ server <- function(input, output, session) {
     keys_groups  <- keys_classification[["groups"]]
     keys_numeric <- keys_classification[["numeric"]]
 
-    if (has_expression_data()) {
-      keys_numeric <- c(keys_numeric, expression_key_A, expression_key_B)
-    }
+    # if (has_expression_data()) {
+    #   keys_numeric <- c(keys_numeric, expression_key_A, expression_key_B)
+    # }
 
     if (input$visualizationType == vtype_boxplot) {
       updateSelectizeInput(session, "xaxis", choices = keys_groups, selected = keys_groups[1],

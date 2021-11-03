@@ -56,6 +56,13 @@ When you click on the study name, a drop-down menu will appear allowing you to:
    :scale: 35 %
    :align: center
 
+You can also click the Export button near the top right of any Metadata editor tab.
+
+.. image:: images/export_button.png
+   :scale: 35 %
+   :align: center
+
+
 - **Rename** study
 
 .. image:: images/rename.png
@@ -81,6 +88,7 @@ When you click on the study name, a drop-down menu will appear allowing you to:
 .. image:: images/template_selection.png
    :scale: 35 %
    :align: center
+
 
 There are several tabs that can be shown on the Metadata Editor page, namely Study, Samples, Expression (optional),
 Variants (optional) which represent metadata describing experiment, samples and processed files,

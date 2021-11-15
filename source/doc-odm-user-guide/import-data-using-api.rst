@@ -136,10 +136,8 @@ We will go through the following steps:
 1. **Generate an API token**
 
 When using the APIs, you need to provide an API token for authentication.
-You can generate this by going to your profile_, which can be found by clicking your username at the top right corner
+You can generate this by going to your profile, which can be found by clicking your username at the top right corner
 of the User Interface, or from the Dashboard.
-
-.. _profile: https://occam.genestack.com/frontend/endpoint/application/run/genestack/profile
 
 .. image:: images/dashboard.png
 
@@ -159,10 +157,8 @@ warnings because some of the required attributes from the default metadata templ
 
 .. literalinclude:: import-study-2.py
 
-You can also confirm this visually, by going to the `Study Browser`_ and check that a new study has been created,
+You can also confirm this visually, by going to the **Study Browser** and check that a new study has been created,
 owned by you:
-
-.. _Study Browser: https://occam.genestack.com/frontend/endpoint/application/run/genestack/studybrowser-odm?accessFilter=genestack%3Apersonal
 
 .. image:: images/empty_study.png
 
@@ -335,10 +331,8 @@ We will go through the following steps:
 1. **Generate an API token**
 
 When using the APIs, you need to provide an API token for authentication.
-You can generate this by going to your profile_, which can be found by clicking your username at the top right corner
+You can generate this by going to your **profile**, which can be found by clicking your username at the top right corner
 of the User Interface, or from the Dashboard.
-
-.. _profile: https://occam.genestack.com/frontend/endpoint/application/run/genestack/profile
 
 .. image:: images/dashboard.png
 
@@ -358,10 +352,8 @@ warnings because some of the required attributes from the default metadata templ
 
 .. literalinclude:: import-RM-study-2.py
 
-You can also confirm this visually, by going to the `Study Browser`_ and check that a new study has been created,
+You can also confirm this visually, by going to the **Study Browser** and check that a new study has been created,
 owned by you:
-
-.. _Study Browser: https://occam.genestack.com/frontend/endpoint/application/run/genestack/studybrowser-odm?accessFilter=genestack%3Apersonal
 
 .. image:: images/empty-RM-study.png
 

@@ -7,7 +7,7 @@ BASE_URL = '/frontend/rs/genestack/studyCurator/default-released'
 
 EXAMPLE_TEXT = '''example:
 
- python %(prog)s.py --srv https://qa.magnum.genestack.com --study GSF010529 --token <token>
+ python %(prog)s.py --srv https://qa.magnum.genestack.com --study GSF010529 GSF010530 --token <token>
  '''
 
 def delete_study(study_accession, srv, token):
@@ -18,7 +18,7 @@ def delete_study(study_accession, srv, token):
     url_delete_object = app_endpoint + 'arvados-importer/wipeStudy'
     header = {'Genestack-API-Token': token}
     response = s.post(url=url_delete_object, json=[study_accession], headers=header)
-    print(response.status_code)
+    return response.status_code
 
 
 def main():
@@ -28,11 +28,13 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
 
     parser.add_argument('--srv', type=str, help='url of the server', required=True)
-    parser.add_argument('--study', type=str, help='study accession', required=True)
+    parser.add_argument('--study', type=str, nargs='+', help='study accessions', required=True)
     parser.add_argument('--token', type=str, help='token', required=True)
     args = parser.parse_args()
     host = args.srv[:-1] if args.srv.endswith('/') else args.srv
-    delete_study(args.study, host, args.token)
+    for acc in args.study:
+        result = delete_study(acc, host, args.token)
+        print(acc, result)
 
 
 if __name__ == "__main__":

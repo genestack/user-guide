@@ -28,8 +28,7 @@ by the text present in any metadata field.
 
 .. note:: Harmonising metadata texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage
 
-The search is also controlled vocabulary/ontology aware, and will suggest auto-completion options for you for specific
-terms or even synonyms. You can use asterisks (*) to allow any positive number of wildcard characters: *ale will find "male" and "female" for example.
+The search is also controlled vocabulary/ontology aware and will expand results to include synonyms, with optional extension to include child terms. You can use asterisks (*) to allow any positive number of wildcard characters: *ale will find "male" and "female" for example.
 
 The facets beneath the search bar allow you to filter down the results of a search based on the metadata fields that
 are present in your results.

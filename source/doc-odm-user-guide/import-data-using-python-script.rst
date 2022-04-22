@@ -21,9 +21,9 @@ Optional experimental (signal) data files
 
 You can optionally also provide:
 
-- The accession of a template to validate against rather than the default. Use **--template <ACCESSION>** to specify.
+- The accession of a template to validate against rather than the default. Use ``--template <ACCESSION>`` to specify.
 
-- The server address if you want to apply the script to a different ODM server.  Use **--server <ADDRESS>** to specify.
+- The server address if you want to apply the script to a different ODM server.  Use ``--server <ADDRESS>`` to specify.
 
 - Expression data in GCT_ format, hosted at an HTTPS web address
 
@@ -41,7 +41,7 @@ You can optionally also provide:
 
 - Flow cytometry metadata in TSV format, hosted at an HTTPS web address
 
-- A cross-reference mapping file, in TSV format, hosted at an HTTPS web address. You can also use **--mapping_file_accession** instead to specify a previously uploaded mapping file.
+- A cross-reference mapping file, in TSV format, hosted at an HTTPS web address. You can also use ``--mapping_file_accession`` instead to specify a previously uploaded mapping file.
 
 - A libraries file in TSV format, hosted at an HTTPS web address, or the accession of an existing library file
 

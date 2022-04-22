@@ -1,7 +1,7 @@
 Import Data Using Python Script
 +++++++++++++++++++++++++++++++
 
-This page demonstrates how to use the python load&link script to input data
+This page demonstrates how to use the *import_ODM_data.py* script to input data
 into ODM. Please note that you need to be a member of the curator group in ODM
 to be able to import and edit data in ODM.
 
@@ -10,14 +10,18 @@ Requirements
 
 You need to have:
 
-- The load&link python script itself (this will be provided soon or can be
-  requested)
+- working Python_ installation (Python 3.5 or newer recommended) with requests_
+  package installed
+- *import_ODM_data.py* script itself (can be requested)
 - A Genestack API token
 - Either a Study file containing metadata about the study in TSV format, hosted
   at an HTTPS web address, OR the accession of an existing study in ODM that
   you will add files to.
 - A Samples file containing metadata about the samples in TSV format, hosted at
   an HTTPS web address
+
+.. _Python: https://python.org
+.. _requests: https://docs.python-requests.org/en/latest/user/install/
 
 Optional experimental (signal) data files
 -----------------------------------------

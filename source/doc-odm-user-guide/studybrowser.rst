@@ -31,7 +31,7 @@ the accession of a study, sample or signal object, or by any text that is in any
 all of the data you have visibility of. As you begin typing you will be offered auto-complete suggestions
 based on dictionaries of terms that are present in ODM.
 
-The search is synonym-aware, so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans.
+The search is synonym-aware (exact and related), so if you type in 'human' the auto-complete suggests 'Homo sapiens' as the preferred label of humans and the results from synonyms are automatically included in search results.
 
 Question marks (?) match any character, and you can use asterisks (*) to allow any number of (including zero) wildcard characters: *ale will find "male" and "female" for example. Use quotes (“”) to search for an exact phrase. For example, “single cell” will find results that contain the whole phrase only.
 
@@ -40,6 +40,8 @@ Terms can be joined with the AND operator (by default the OR operator is used), 
 The main panel displays the results of your search and filter options, if you have any,
 otherwise all studies are displayed that your user account has visibility of,
 ordered by date with the newest at the top.
+
+If your search term matches a term from an ontology which has child terms, then once initial results have been retrieved there is the option to toggle 'extend query', which will add search results for child terms (those with the subClassOf property in the ontology). This is only available if the number of terms (including synonyms) is fewer than 30,000.
 
 Filter panel
 ************

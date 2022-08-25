@@ -73,7 +73,7 @@ address in the top right and select "Profile"
 
 Then click the "Create new token" button under API tokens:
 
-.. image:: images/odm_profile1.png
+.. image:: images/odm_profile.png
    :scale: 40 %
    :align: center
 

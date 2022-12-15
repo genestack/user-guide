@@ -124,19 +124,23 @@ In this example, we will import tiny subset of data from the 1000 Genomes Projec
 
 We will go through the following steps:
 
-#. Generate an API token
-#. Import a study
-#. Import samples
-#. Link samples to study
-#. Import and link expression data to samples
-#. Import and link variant data to samples
-#. Check that you can query the relationships between objects
+1.  Authorization Token
+1.a Generate an API token
+1.b Use Access Token
+2.  Import a study
+3.  Import samples
+4.  Link samples to study
+5.  Import and link expression data to samples
+6.  Import and link variant data to samples
+7.  Check that you can query the relationships between objects
 
+1. **Authorization Token**
 
-1. **Generate an API token**
+When using the APIs, you need to provide a token for authentication.
 
-When using the APIs, you need to provide an API token for authentication.
-You can generate this by going to your profile, which can be found by clicking your username at the top right corner
+1.a **Generate an API token**
+
+You can generate a Genestack API token by going to your profile, which can be found by clicking your username at the top right corner
 of the User Interface, or from the Dashboard.
 
 .. image:: images/dashboard.png
@@ -144,6 +148,17 @@ of the User Interface, or from the Dashboard.
 
 The API token is permanent — there is no expiration date. However, you can revoke it at any time and have multiple
 tokens.
+
+1.b **Use Access Token**
+
+You could also be provided with an Access Token. To use it, in the follow examples replace the authorization header part
+
+.. literalinclude:: genestack-api-token-header.py
+
+with
+
+.. literalinclude:: access-token-header.py
+
 
 2. **Import a study**
 

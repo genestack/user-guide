@@ -13,7 +13,7 @@ You need to have:
 - working Python_ installation (Python 3.5 or newer recommended) with requests_
   package installed
 - *import_ODM_data.py* script itself (can be requested)
-- A Genestack API token or an Access Token
+- A Genestack API token
 - Either a Study file containing metadata about the study in TSV format, hosted
   at an HTTPS web address, OR the accession of an existing study in ODM that
   you will add files to.
@@ -82,16 +82,10 @@ You will then be emailed a link to download your token as plain text. Use this t
 Script usage
 ------------
 
-If you are using Genestack API Token, run the script by typing:
+Run the script by typing:
 
 .. literalinclude:: import-data-script-1.py
 
-Or if you are using Access Token, run the script specifying the token and `template accession`:
-
-.. literalinclude:: import-data-script-1a.py
-
-**Important Note**: you should always specify the `template accession` whenever you are uploading the
-study with a `file URL` and an `Access Token`.
 
 Optionally include data files by appending any or all of the following to the above command:
 

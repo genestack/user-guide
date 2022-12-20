@@ -1,0 +1,1 @@
+python import_ODM_data.py --access-token [access-token] --study [URL to study file] --samples [URL to samples file] --template [template accession]

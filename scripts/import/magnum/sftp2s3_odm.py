@@ -103,13 +103,16 @@ def get_samples_parent(study_accession, host, token):
 
 def get_samples_by_parent_accession(host, token, sample_parent):
     url_authenticate = get_app_endpoint(host) + 'signin/authenticateByApiToken'
-    url_get_table_content_view = get_app_endpoint(host) + 'study-metainfo-editor/getTableContentView'
+    url_get_collection_refs_descriptor = get_app_endpoint(host) + 'study-metainfo-editor/getCollectionRefsDescriptor'
+    url_get_collection_items = get_app_endpoint(host) + 'study-metainfo-editor/getCollectionItems'
     s = requests.Session()
-    session = s.post(url_authenticate, json=[token])
-    raw_samples = s.post(
-        url=url_get_table_content_view,
-        json=[sample_parent, None, 0, 500000, {}])
-    samples = json.loads(raw_samples.text)["result"]["fileKinds"][1]["table"]
+    s.post(url_authenticate, json=[token])
+    collection_refs_descriptor = s.post(url=url_get_collection_refs_descriptor, json=[sample_parent]).json()
+    edit_collection_descriptor = collection_refs_descriptor['result']['editCollectionRef']
+    samples = s.post(
+        url=url_get_collection_items,
+        json=[edit_collection_descriptor, [], {'limit': 500000, 'offset': 0}]
+    ).json()['result']
     # xx[0]['metainfo']['Data Files / Raw']
     # {'key': 'Data Files / Raw', 'displayValues': None, 'metainfoType': 'com.genestack.api.metainfo.ExternalLink'}
     # {'key': 'url', 'displayValues': ['sftp://test.rebex.net:22/pub/example/KeyGenerator.png', 'sftp://test.rebex.net:22/pub/example/mail-editor.png'], 'metainfoType': 'com.genestack.api.metainfo.StringValue'}
@@ -336,9 +339,9 @@ def collect_all_sftp_s3_links(samples, fields):
     sftp_links = set()
     s3_links = set()
     for sample_record in samples:
-        metainfo = sample_record['metainfo']
+        metainfo = sample_record['extendedMetadata']
         for field in fields:
-            values = metainfo[field]['displayValues']
+            values = None if field not in metainfo else [value['displayValue'] for value in metainfo[field]]
             values = values if values is not None else []
             values = values if isinstance(values, list) else [values]
             for value in values:
@@ -395,12 +398,11 @@ def copy_one_file_sftp2s3(sftp_url, s3_url, aws_cred, ftp_connection, in_memory,
             upload_to_aws(temp_file_name, aws_cred, s3_key, aws_callback)
 
 
-
 def collect_sftp_links_for_one_sample(sample_record, fields):
-    metainfo = sample_record['metainfo']
+    metainfo = sample_record['extendedMetadata']
     sftp_links = set()
     for field in fields:
-        values = metainfo[field]['displayValues']
+        values = None if field not in metainfo else [value['displayValue'] for value in metainfo[field]]
         values = values if values is not None else []
         values = values if isinstance(values, list) else [values]
         for value in values:
@@ -432,12 +434,12 @@ def copy_sftp_links(sftp_links, all_s3_links, study_accession, ftp_cred, aws_cre
 
 
 def update_sample_metainfo(sample_record, fields, study_accession, aws_cred, host, token):
-    metainfo = sample_record['metainfo']
-    sample_accession = metainfo['genestack:accession']['displayValues']
+    metainfo = sample_record['extendedMetadata']
+    sample_accession = metainfo['genestack:accession'][0]['displayValue']
     sftp_links = set()
     update_dict = dict()
     for field in fields:
-        values = metainfo[field]['displayValues']
+        values = None if field not in metainfo else [value['displayValue'] for value in metainfo[field]]
         if values is None:
             continue
         new_values = list()
@@ -547,6 +549,7 @@ class ProgressInformation(object):
         if self.speed is not None:
             header += f" speed {self.speed:.2f} kb/s"
         print(header, end=end, file=sys.stderr)
+
 
 if __name__ == "__main__":
     main()

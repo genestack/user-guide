@@ -1,7 +1,7 @@
-Omics Data Manager user guide
+Open Data Manager user guide
 ##############################
 
-Our **Omics Data Manager (ODM)** workspace increases the productivity of all
+Our **Open Data Manager (ODM)** workspace increases the productivity of all
 kinds of data-related projects across Life Sciences - from Agritech to
 Genomics. With so much breadth, it’s easy to get confused as to what exactly we
 do regarding **Data Management** and **File Management**. You might even think

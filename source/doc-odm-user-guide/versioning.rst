@@ -1,7 +1,7 @@
 Metadata Versioning
 +++++++++++++++++++
 
-Metadata versioning is a beta feature which improves the curation experience when enabled on an ODM instance.
+Metadata versioning is a feature which improves the curation experience when enabled on an ODM instance.
 
 Metadata Editor View and Edit modes
 -----------------------------------

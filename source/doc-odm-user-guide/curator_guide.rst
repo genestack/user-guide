@@ -9,10 +9,9 @@ Dashboard
 
 From the Dashboard where you first log in, select "Browse studies" to enter the Study Browser:
 
-.. image:: images/dashboard_studybrowser.png
+.. image:: images/quickstart_user_dashboard.png
    :scale: 30 %
    :align: center
-
 
 Study Browser
 -------------
@@ -28,7 +27,7 @@ Metadata Editor
 ---------------
 
 .. image:: images/Study-metainfo-editor-new-study.png
-   :scale: 40 %
+   :scale: 50 %
    :align: center
 
 The Metadata Editor application is where you can make changes to the Study, Samples and any processed/experimental, metadata.

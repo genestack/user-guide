@@ -31,7 +31,52 @@ Samples metadata is supplied in TSV format file. There needs to be a **Sample So
 | 1003 Genomes Project |     HG00176      | Homo sapiens |  F  | Finnish    |
 +----------------------+------------------+--------------+-----+------------+
 
-Expression data (transcriptomics)
+
+ .. _format-label:
+
+
+Tabular data
+------------
+In ODM, you can upload any tabular data that is formatted in **TSV (tab-separated values)**. As long as your file represents a data frame, ODM can import and index it. A data frame is a data structure that organizes data into a 2-dimensional table of rows and columns, similar to a spreadsheet.
+
+.. hint:: In you have a table file and you want totransform in TSV format, open it in Excel, Numbers, Google Sheet ot any other spreadsheet editing software and simply save/export it selecting TSV as a format.
+
+Below, we break down the basics of the data frames you should be familiar with.
+
+A data frame contains two main elements, especially in the context of Life Sciences:
+
+- **Features**: These are the entities measured in an experiment (e.g., genes, proteins, metabolites, pathways, sales regions, etc.).
+- **Measurements (or values)**: These are the actual values captured for each feature under different conditions (e.g., gene expression values, protein abundance, pathway activity, sales volume, etc.).
+The first example below demonstrates the simplest and most popular type of data frame. Here, the features are genes listed in the first column, while the rest of the table contains measurements of gene expression for a number of samples. Each column represents a list of corresponding gene expression values in different samples (each column name represents a sample).
+
+.. image:: images/data-frame1.png
+   :scale: 40 %
+   :align: center
+
+In the second example, we present a more complex version of the data frame. Here, features are represented by more than one column containing additional information. Such columns might represent gene names, protein names, peptide sequences, PTM sites, pathway names, countries, etc. There can also be more than one type of measurements or calculated values for each feature in each sample. For example, for each gene (feature), we might have its expression level, quality flag, sequencing depth, Fold Change of differential expression, p-value, q-value per sample.
+
+.. image:: images/data-frame2.png
+   :scale: 40 %
+   :align: center
+
+This format provides a wide range of data types that can be uploaded and indexed in ODM.
+
+However, the current **BETA** version has some limitations on the file content. Please ensure your file adheres to the following requirements:
+
+- All columns must have names.
+- All feature columns must be consecutive on the left side of the file. You need to explicitly specify the number of feature columns during the uploading process.
+- Missing values: If your file intentionally contains missing data/values, ensure such values are coded as one of the following: " " (as a space symbol), empty (no symbol between two tabs), “NaN”, “null”, “N/A”, “N\A”, “NA”, “filtered”, “Inf”, “-Inf”.
+- The system automatically identifies all feature columns as either string value or numeric value columns. If a column that should be numeric contains at least one value with a non-numeric character (except for the missing value coded as indicated above), it will be considered a string value column, disabling the ranged search capabilities.
+- Columns with measurements must contain only either numeric values or missing values (as specified above).
+- If your file contains more than one measurement per Sample (Library or Preparation), e.g., Fold Change and P-value, the system will automatically recognize it using the following criteria:
+ - The column name contains a dot symbol as a separator between the Sample (Library or Preparation) name and the measurement type. If the column name contains more than one dot symbol (e.g., Sample1.p.value ), the first dot will be used as a separator.
+ - All columns must contain the dot symbol.
+ - All samples (libraries or preparations) must have the same types of measurements in the file. For example, if you have three samples and measure Intensity and Quality Pass, then your file must have six columns named: Sample1.Intensity, Sample1.QualityPass, Sample2.Intensity, Sample2.QualityPass, Sample3.Intensity, Sample3.QualityPass.
+
+
+
+
+Expression data in GCT (transcriptomics)
 ---------------------------------
 
 - `Test_1000g.gct`_, an example GCT file

@@ -12,7 +12,8 @@ You need to have:
 
 - working Python_ installation (Python 3.5 or newer recommended) with requests_
   package installed
-- *import_ODM_data.py* script itself (can be requested)
+- Genestack Python Client_ installed
+- Genestack Auxiliary scripts_ installed
 - A Genestack API token or an Access Token
 - Either a Study file containing metadata about the study in TSV format, hosted
   at an HTTPS web address, OR the accession of an existing study in ODM that
@@ -22,6 +23,9 @@ You need to have:
 
 .. _Python: https://python.org
 .. _requests: https://docs.python-requests.org/en/latest/user/install/
+.. _Client: https://github.com/genestack/public-odm-docs/tree/develop/00.%20Packages%20to%20install/1.%20Genestack%20python%20client
+.. _scripts: https://github.com/genestack/public-odm-docs/tree/develop/00.%20Packages%20to%20install/2.%20Genestack%20auxiliary%20scripts
+
 
 Optional experimental (signal) data files
 -----------------------------------------
@@ -32,10 +36,11 @@ You can optionally also provide:
   ``--template <ACCESSION>`` to specify.
 - The server address if you want to apply the script to a different ODM server.
   Use ``--server <ADDRESS>`` to specify.
-- Expression data in GCT_ format, hosted at an HTTPS web address
-- Expression metadata in TSV format, hosted at an HTTPS web address
-- Variant data in VCF_ format, hosted at an HTTPS web address
-- Variant metadata in TSV format, hosted at an HTTPS web address
+- Any data in the Tabular format (Data Frame) as a TSV, hosted at an HTTPS web address
+- Gene expression data in GCT_ format, hosted at an HTTPS web address
+- Gene expression metadata in TSV format, hosted at an HTTPS web address
+- Gene variant data in VCF_ format, hosted at an HTTPS web address
+- Gene variant metadata in TSV format, hosted at an HTTPS web address
 - Flow cytometry data in .facs format, hosted at an HTTPS web address
 - Flow cytometry metadata in TSV format, hosted at an HTTPS web address
 - A cross-reference mapping file, in TSV format, hosted at an HTTPS web
@@ -108,10 +113,10 @@ Optionally include data files by appending any or all of the following to the ab
 .. literalinclude:: import-data-script-9.py
 
 
-Updating (signal) data files
+Updating data files
 ----------------------------
 
-To update a signal data file (e.g. GCT, VCF file) rather than adding another
+To update a data file (e.g. TSV, GCT, VCF file) rather than adding another
 data file, append the accession of the data file to be updated in square
 brackets to the URL of the data file import. Existing study and sample
 accessions must be supplied. See the example below:

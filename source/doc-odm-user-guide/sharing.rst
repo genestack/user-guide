@@ -14,9 +14,9 @@ The three dot button next to any study name opens a menu which allows you to sel
    :scale: 50 %
    :align: center
 
-You will be prompted to choose which group of users to share the study with, then click the **Share** button.
+You see who already has access to the study and will be prompted to choose which group of users to share the study with, then click the **Share** button.
 
-.. image:: images/share_groups.png
+.. image:: images/share.png
    :scale: 40 %
    :align: center
 

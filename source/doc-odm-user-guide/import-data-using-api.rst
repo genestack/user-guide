@@ -7,31 +7,31 @@ you can try. Please note that you need to be a member of the curator group in OD
 What can I import?
 ------------------
 
-You can import studies, samples, and signals:
+You can import studies, samples, and any data in the tabular format:
 
 - *Study*: the context of an experiment, such as the aim and statistical design.
 
 - *Sample*: the biological attributes of a sample, such as tissue, disease, and treatment.
 
-- *Signal*: expression, variant, or flow cytometry data. You can import the metadata (e.g. genome version, normalization
+- *Data*: Includes transcriptomics, proteomics, gene variant, flow cytometry data, and more. You can import the metadata (e.g. genome version, normalization
   method, and the locations of raw/processed data in your storage) together with the processed data (e.g. expression counts, genotypes).
 
-Once imported, studies, samples, and signal metadata will be queryable and editable from both the User Interface and APIs, whilst the signal data will only queryable via APIs.
+Once imported, studies, samples, and data metadata will be queryable and editable from both the User Interface and APIs, whilst the signal data will only queryable via APIs.
 
 You can optionally also import:
 
 - *Cross-reference mapping*: a list of transcript and gene ids and how they map to each other.
 
-- *Libraries metadata*: metadata about sample library preparation for expression data.
+- *Libraries metadata*: metadata about sample library preparation for transcriptomics data.
 
-- *Preprations metadata*: metadata about sample preparation for proteomics data.
+- *Preparations metadata*: metadata about sample preparation for proteomics data.
 
 
-Can I capture the relationships between studies, samples, and signals?
+Can I capture the relationships between studies, samples, and data?
 ----------------------------------------------------------------------
 
-Importing data has two stages. First, you import studies, samples, and signals separately. Then, you link them
-together: a study can be linked to multiple samples and a sample can be linked to multi-omics signals. The **Sample Source ID** is used as the linking key, make sure that this is present and consistent in all the files you wish to link. The data model and how it looks in the User Interface is shown below:
+Importing data has two stages. First, you import studies, samples, and data separately. Then, you link them
+together: a study can be linked to multiple samples and a sample can be linked to multi-omics or other types of data. The **Sample Source ID** is used as the default linking key. You can choose another attribute from the template for linking data to samples.. The data model and how it looks in the User Interface is shown below:
 
 .. image:: images/data-model+metainfo-editor.png
    :scale: 50 %
@@ -222,10 +222,7 @@ the expression object GSF282812 to the sample HG00119 (that’s been linked to t
 
 .. literalinclude:: exp-data-3.py
 
-If successful, in the Study Browser you should see (after refreshing the page) that the Signals of your study has
-changed from ‘no data’ to ‘Exp’.
 
-.. image:: images/expression_added.png
 
 6. **Import and link variant data to samples**
 
@@ -244,9 +241,7 @@ To link the variant object GSF282825 with the sample HG00119:
 
 .. literalinclude:: var-3.py
 
-Check in the Study Browser that you see both expression and variant signals next to your imported study:
 
-.. image:: images/variant_added.png
 
 7. **Check that you can query the relationships between objects**
 
@@ -255,16 +250,6 @@ Once you’ve created and linked the study, sample, expression, and variant obje
 In the User Interface, you should be able to find your imported study using the study, sample, and signal filters:
 
 
-.. image:: images/variant_filter.png
-
-To do this via APIs, you can use the integration/omics endpoint to filter across studies, samples, and signals,
-and retrieve a specific object type. For example, to get the expression of gene ENSG00000077044 from the sample GSF282801:
-
-.. literalinclude:: check-query-1.py
-
-Which will return:
-
-.. literalinclude:: check-query-output.py
 
 Step-by-step example 2
 ----------------------
@@ -412,7 +397,7 @@ If successful you will see a library tab appear in the Metadata Editor:
   :scale: 40 %
   :align: center
 
-6. **Import and link expression data to libraries**
+6. **Import and link gene expression data to libraries**
 
 Now we'll import expression data, supplying two files, one for the metadata, and another for the
 processed data, and this time link them to the libraries file:
@@ -428,12 +413,8 @@ You can then link this expression group object to the library object. :
 
 .. literalinclude:: exp-RM-data-3.py
 
-If successful, in the Study Browser you should see (after refreshing the page) that the Signals of your study has
-changed from ‘no data’ to ‘Exp’.
+If successful, in the Metadata Editor you should see (after refreshing the page) that the loaded file is displayed on the Data tab.
 
-.. image:: images/expression-RM-added.png
-  :scale: 30 %
-  :align: center
 
 7. **Check that you can query the relationships between objects**
 

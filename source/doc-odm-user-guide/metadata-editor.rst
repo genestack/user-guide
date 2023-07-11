@@ -1,15 +1,15 @@
 Metadata Editor
 +++++++++++++++
 
-The **Metadata Editor** allows you to explore study, sample and omics metadata and validate it against templates, correcting/curating it if needed.
+The **Metadata Editor** allows you to explore study, sample and data information and metadata and validate it against templates, correcting/curating it if needed.
 
 Getting to the Metadata Editor
 ------------------------------
 
 To open an existing experiment with Metadata Editor, click on the study name in the search results in the Study Browser application.
 
-.. image:: images/open-me-1.png
-   :scale: 40 %
+.. image:: images/quickstart_user_dashboard.png
+   :scale: 30 %
    :align: center
 
 You can also get to the Metadata Editor when you click **Create a new study** button on the Dashboard. The Metadata Editor app will open and it suggests you specify a metadata template (by default, the Default template is applied).
@@ -17,12 +17,12 @@ You can explore each template by hovering over it's name and clicking **Explore*
 By default, new study contains two tabs, namely Study and Sample providing metadata for Study and Samples, respectively.
 
 .. image:: images/open-me.png
-   :scale: 40 %
+   :scale: 35 %
    :align: center
 
 
 Note that users not included in the **"Curator" group** do not have permissions to make changes (update metadata, change
-templates etc.) for experiments which are not owned by them.
+templates etc.) to any experiments.
 
 Exploring the Metadata Editor
 -----------------------------
@@ -113,13 +113,6 @@ Columns containing invalid metadata are highlighted in red and **Invalid metadat
    :scale: 50 %
    :align: center
 
-Click on the Invalid metadata flag to explore validation summary and correct metadata.
-
-.. image:: images/study-invalid-metadata.png
-   :scale: 50 %
-   :align: center
-
-
 
 Samples tab
 ***********
@@ -129,7 +122,7 @@ organism, cell line, disease. Metadata columns coming from the applied template 
 
 **Add and delete samples**
 
-When you create new study, by default it contains four samples. You can add more samples or delete samples if necessary.
+When you create a new study, by default it contains four samples. You can add more samples or delete samples if necessary.
 To add them, click on the "+" button, then in the appeared window specify number of samples you would like to add to the study and click "Add".
 
 .. image:: images/add-samples-1.png
@@ -174,10 +167,10 @@ As a result only samples obtained from H. sapiens are shown in the Samples tab.
    :scale: 35 %
    :align: center
 
-Omics tabs
+Data tab
 **********
 
-The remaining tabs in the Metadata Editor display metadata for the omics data files associated with a study, such as GCT files. If more than one version of an omics file is available the different versions can be toggled.
+The remaining tab in the Metadata Editor display metadata for the data files associated with a study. If more than one version of an omics file is available the different versions can be toggled.
 
 .. image:: images/data-versions.png
    :scale: 35 %
@@ -208,7 +201,7 @@ To **correct metadata manually**, click the field you wish to change and type a 
 When all the fields in a tab have been corrected the Invalid metadata flag will be replaced with a green
 **Metadata is valid** flag.
 Metadata fields for which **dictionaries or ontologies** are specified in the template allow you to click the
-triangle sigh and select a term from a list of suggested terms from the associated dictionary.
+arrow and select a term from a list of suggested terms from the associated dictionary.
 You can also start typing a term and auto-complete will help you to select an appropriate term from the dictionary.
 
 .. image:: images/autocomplete.png
@@ -258,7 +251,7 @@ window will open, allowing you to type in the correct value.
 There are special terms "Not applicable" and "Not recorded" that can be entered if you wish the value to always pass validation.
 
 As well as editing metadata manually you can also import and validate the metadata. Click on the "Import" icon in
-the upper-right corner and select a local CSV or Excel file containing metadata you would like
+the upper-right corner and select a local TSV file containing metadata you would like
 to associate with the imported files.
 
 .. image:: images/import-from-spreadsheet.png

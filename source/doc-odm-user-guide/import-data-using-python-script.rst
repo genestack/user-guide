@@ -8,23 +8,10 @@ to be able to import and edit data in ODM.
 Requirements
 ------------
 
-You need to have:
+Read the full list of requirements here_
 
-- working Python_ installation (Python 3.5 or newer recommended) with requests_
-  package installed
-- Genestack Python Client_ installed
-- Genestack Auxiliary scripts_ installed
-- A Genestack API token or an Access Token
-- Either a Study file containing metadata about the study in TSV format, hosted
-  at an HTTPS web address, OR the accession of an existing study in ODM that
-  you will add files to.
-- A Samples file containing metadata about the samples in TSV format, hosted at
-  an HTTPS web address
+.. _here: https://github.com/genestack/public-odm-docs/blob/develop/04.%20Working%20with%20study/Uploading%20a%20study/README.md
 
-.. _Python: https://python.org
-.. _requests: https://docs.python-requests.org/en/latest/user/install/
-.. _Client: https://github.com/genestack/public-odm-docs/tree/develop/00.%20Packages%20to%20install/1.%20Genestack%20python%20client
-.. _scripts: https://github.com/genestack/public-odm-docs/tree/develop/00.%20Packages%20to%20install/2.%20Genestack%20auxiliary%20scripts
 
 
 Optional experimental (signal) data files

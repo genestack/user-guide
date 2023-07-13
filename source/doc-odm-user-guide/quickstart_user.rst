@@ -18,7 +18,7 @@ Study Browser
 -------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 25 %
+   :scale: 35 %
    :align: center
 
 By default all studies are shown that you have permission to see, but since you aren't expected to scroll through

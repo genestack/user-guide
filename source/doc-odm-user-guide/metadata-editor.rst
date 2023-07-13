@@ -31,12 +31,6 @@ Exploring the Metadata Editor
    :scale: 35 %
    :align: center
 
-Click on application name to show a drop-down menu, allowing you to create new study ('New study...'), explore and/or change the
-applied template if needed ('Default template' > 'Explore' or 'Apply another'), and open tutorials ('User Guide').
-
-.. image:: images/me-dropdown.png
-   :scale: 35 %
-   :align: center
 
 When you click on the study name, a drop-down menu will appear allowing you to:
 
@@ -102,7 +96,7 @@ Study tab provides general information about the study, namely experiment descri
 details and so on.
 
 .. image:: images/study-tab.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
 To rename the study, click on the study title link at the top of the page and select "Rename". Type in the new name and click the blue "Rename" button.
@@ -110,7 +104,7 @@ To rename the study, click on the study title link at the top of the page and se
 Columns containing invalid metadata are highlighted in red and **Invalid metadata** flag is specified.
 
 .. image:: images/study-invalid-metadata.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
 
@@ -158,7 +152,7 @@ You can also start typing metadata value of your interest ("H. sapiens" in this 
 Then, click on the "Apply" button.
 
 .. image:: images/filters-2.png
-   :scale: 35 %
+   :scale: 30 %
    :align: center
 
 As a result only samples obtained from H. sapiens are shown in the Samples tab.

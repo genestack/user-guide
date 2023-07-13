@@ -1,4 +1,4 @@
-Omics Data Manager user guide
+Open Data Manager user guide
 #############################
 
 This repository contains source files for **ODM User Guide** documentation

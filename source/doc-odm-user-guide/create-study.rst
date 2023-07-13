@@ -25,5 +25,5 @@ You can also create a new study from the Metadata Editor page:
 click the application name and select **New Study**:
 
 .. image:: images/new-study-me2.png
-   :scale: 70 %
+   :scale: 50 %
    :align: center

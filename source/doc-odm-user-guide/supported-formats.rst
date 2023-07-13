@@ -65,6 +65,7 @@ However, the current **BETA** version has some limitations on the file content. 
 
 - All columns must have names.
 - All feature columns must be consecutive on the left side of the file. You need to explicitly specify the number of feature columns during the uploading process.
+- **Recommended**: for a file with more than one feature column; to enable faster search when the file is uploaded, we recommend put the most importnat feature (any sort of ID, e.g., Gene Name, Protein Name, etc.) as the first column.
 - Missing values: If your file intentionally contains missing data/values, ensure such values are coded as one of the following: " " (as a space symbol), empty (no symbol between two tabs), “NaN”, “null”, “N/A”, “N\A”, “NA”, “filtered”, “Inf”, “-Inf”.
 - The system automatically identifies all feature columns as either string value or numeric value columns. If a column that should be numeric contains at least one value with a non-numeric character (except for the missing value coded as indicated above), it will be considered a string value column, disabling the ranged search capabilities.
 - Columns with measurements must contain only either numeric values or missing values (as specified above).
@@ -72,8 +73,6 @@ However, the current **BETA** version has some limitations on the file content. 
  - The column name contains a dot symbol as a separator between the Sample (Library or Preparation) name and the measurement type. If the column name contains more than one dot symbol (e.g., Sample1.p.value ), the first dot will be used as a separator.
  - All columns must contain the dot symbol.
  - All samples (libraries or preparations) must have the same types of measurements in the file. For example, if you have three samples and measure Intensity and Quality Pass, then your file must have six columns named: Sample1.Intensity, Sample1.QualityPass, Sample2.Intensity, Sample2.QualityPass, Sample3.Intensity, Sample3.QualityPass.
-
-
 
 
 Expression data in GCT (transcriptomics)

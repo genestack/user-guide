@@ -247,9 +247,6 @@ To link the variant object GSF282825 with the sample HG00119:
 
 Once you’ve created and linked the study, sample, expression, and variant objects, you can do integration-aware query via both the User Interface and APIs.
 
-In the User Interface, you should be able to find your imported study using the study, sample, and signal filters:
-
-
 
 Step-by-step example 2
 ----------------------

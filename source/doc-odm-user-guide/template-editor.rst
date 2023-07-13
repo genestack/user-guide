@@ -14,7 +14,7 @@ To get started, click **Set up templates** on the Dashboard:
 
 Or use the shortcut dock and select **Template Editor**:
 
-.. image:: images/shortcuts_1_37.png
+.. image:: images/shortcut_1_37.png
    :scale: 75 %
    :align: center
 

@@ -20,7 +20,7 @@ You will be taken to a page which generates an export link - this will download 
 
 Previous export links that have been generated will be listed at the bottom of the screen. These are archive versions and will reflect the data at the time the link was generated, not necessarily the latest version.
 
-It is possible to export just one dataset of interest. For doing it navigate to a tab with analysis of interest and click on the “Export dataset” button. The data file with the corresponding metadata file and the description will be compressed into an archive and available via the link.
+It is possible to export just one dataset of interest. For doing it navigate to a tab with analysis of interest and click on the “Download data” button. The data file with the corresponding metadata file and the description will be compressed into an archive and available via the link.
 
 .. image:: images/add_data-button.png
    :scale: 35 %

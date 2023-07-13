@@ -8,15 +8,17 @@ What Can Be Imported?
 
 ODM supports the import of studies, samples, and data in tabular format, or the attachment of any file relevant to your study:
 
-- *Study* descritpion: This refers to the context of an experiment, including the aim and statistical design.
+- *Study* descritption: This refers to the context of an experiment, including the aim and statistical design.
 - *Sample* information (sometimes referred as Metadata): This pertains to the biological attributes of a sample, such as tissue type, disease, and treatment.
 - *Data*: Includes transcriptomics, proteomics, gene variant, flow cytometry data, and more.
 - *Files*: You can attach any file that is relevant to your study (reports, presentations, documents, images, scientific publications, etc.).
 - *Libraries* and *Preparations*: These can only be uploaded via the API at present. GUI functionality will be introduced in future releases.
 
 
+
 If your study doesn't already have samples metadata with linked data (for example you have just created a new study) it is possible to import a spreadsheet of samples metadata through the interface. This functionality is available in the Metadata Editor, on the samples tab.
 
+The data uploading happens in Metadata Editor when you open (or create) a Study. 
 
 Importing Sample Information (Metadata)
 ---------------------------------------

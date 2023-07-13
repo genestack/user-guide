@@ -60,9 +60,10 @@ of that group. Any user can create one or several groups and invite their collab
 
 Depending on the role a users has, they can have different privileges in sharing process and managing the group, namely:
 
-- *Group member* — have an access to the shared files but also can share data themselves;
+- *Group member* — have an access to the shared files but also can share data (only if the user is the study owner);
 - *Group admin* — in addition to the sharing user rights, can invite or remove users and change their privileges.
-  By default, you'll be a group administrator of any group that is created by your user.
+
+By default, you'll be a group administrator of any group that is created by your user.
 
 For more information on using groups and sharing files, see the section :ref:`sharing-label`.
 

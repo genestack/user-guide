@@ -9,7 +9,7 @@ Getting to the Study Browser
 Click 'Browse studies' on the dashboard after you sign in to launch the Study Browser.
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 30 %
+   :scale: 35 %
    :align: center
 
 You can also use the short cut dock in the top lefthand corner of any window.
@@ -23,7 +23,7 @@ Exploring the Study Browser
 ---------------------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 25 %
+   :scale: 35 %
    :align: center
 
 At the top of the window is the main search bar. In the text box you can search by the name of a study,
@@ -82,7 +82,7 @@ Results panel
 *************
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 25 %
+   :scale: 35 %
    :align: center
 
 The main panel in the study browser shows the results of your search, or if no search terms/filters have been applied, all studies that you have visibility of. The first column displays the name of the study, and you can click this to look at the study in more detail. It also lists information about which user created or imported the study, and the date.

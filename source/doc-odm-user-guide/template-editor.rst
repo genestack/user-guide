@@ -8,13 +8,13 @@ Accessing the Template Editor
 
 To get started, click **Set up templates** on the Dashboard:
 
-.. image:: images/set-up-templates.png
+.. image:: images/quickstart_user_dashboard.png
    :scale: 30 %
    :align: center
 
 Or use the shortcut dock and select **Template Editor**:
 
-.. image:: images/shortcuts-template-editor.png
+.. image:: images/shortcut_1_37.png
    :scale: 75 %
    :align: center
 
@@ -40,10 +40,10 @@ Templates include the following metadata options:
 - *Required* — determines whether the metadata field should be mandatory or not; if a field is marked as required
   and is left blank or it is incorrectly filled in, it is highlighted in red;
 - *Metainfo type* — indicates metadata type for the filed, namely: text, integer, decimal, date, yes/no and external link;
-- *Single* — indicates if several values can be added to a given field;
 - *Read-only* — represents permissions for editing, where "yes" means that you cannot edit; the metadata
 - *Dictionary* — allows you to specify a dictionary providing standardized and unified terms that can be used in data
   curation and to help validate and harmonise metadata.
+- *Description* - description for the attribute that will be shown during curation as a hint.
 
 
 .. image:: images/template-example.png

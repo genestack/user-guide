@@ -1,7 +1,7 @@
 Cross-reference Mapping
 +++++++++++++++++++++++
 
-ODM provides the capability to import and link a cross-reference (xref) mapping file. This allows you to look up genes for a given set of transcripts and vice versa for example. Mappings are associated with expression data files, but if desired all mapping files can be queried to return all mappings. Currently all mapping file operations are carried out via API.
+ODM provides the capability to import and link a cross-reference (xref) mapping file. This allows you to look up genes for a given set of transcripts and vice versa. Mappings are associated with expression data files, but if desired all mapping files can be queried to return all mappings. Currently all mapping file operations are carried out via API.
 
 What can I import?
 ------------------
@@ -21,7 +21,7 @@ Metadata about the transcript mapped (for e.g. 'organism') can be supplied as ke
 Importing a cross-reference mapping
 -----------------------------------
 
-You import cross-reference mapping in two stages. First, import the mapping file. Then, link the mapping file to the expression matrix file (GCT). Importing uses ODM's APIs - you will need an API token (see :ref:`token-label` )
+You import cross-reference mapping in two stages. First, import the mapping file. Then, link the mapping file to the data file. Importing uses ODM's APIs - you will need an API token (see :ref:`token-label` )
 
 Importing the cross-reference mapping file
 ******************************************

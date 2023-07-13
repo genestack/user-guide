@@ -1,7 +1,7 @@
-Omics Data Manager user guide
+Open Data Manager user guide
 ##############################
 
-Our **Omics Data Manager (ODM)** workspace increases the productivity of all
+Our **Open Data Manager (ODM)** workspace increases the productivity of all
 kinds of data-related projects across Life Sciences - from Agritech to
 Genomics. With so much breadth, it’s easy to get confused as to what exactly we
 do regarding **Data Management** and **File Management**. You might even think
@@ -70,12 +70,12 @@ Want to know more? Learn more by watching our videos below.
 
 .. _our article here: https://genestack.com/news/blog/data-management-in-life-sciences-key-concepts/
 .. _Get familiar with ODM basics: https://www.youtube.com/watch?v=-p-_0MMAtHM&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=6
-.. _In this video: https://www.youtube.com/watch?v=bZAhTVz9YvQ&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=8
-.. _What a data template is: https://www.youtube.com/watch?v=V8Q4dXIDbIA&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=5
-.. _How to work with dictionaries and ontologies: https://www.youtube.com/watch?v=8TZ4SdF5WVI&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=3
-.. _How to create a Study and upload your data: https://www.youtube.com/watch?v=dQeevS5-7Xk&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=7
-.. _How to curate your data: https://www.youtube.com/watch?v=2190sUH-5PA&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=2
-.. _How to search for the data needed: https://www.youtube.com/watch?v=CcXJ_F2DncQ&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=4
+.. _In this video: https://www.youtube.com/watch?v=8Jz0VT6ZwG0&list=PLqGSwEO9VFw1L0gPg2CgrLMnPsS3oGn3T&index=2
+.. _What a data template is: https://www.youtube.com/watch?v=PJkr5AMVPGo&list=PLqGSwEO9VFw1L0gPg2CgrLMnPsS3oGn3T&index=5
+.. _How to work with dictionaries and ontologies: https://www.youtube.com/watch?v=M62EmQZz0kw&list=PLqGSwEO9VFw1L0gPg2CgrLMnPsS3oGn3T&index=4
+.. _How to create a Study and upload your data: https://www.youtube.com/watch?v=Z_wrz1JT6-s&list=PLqGSwEO9VFw1L0gPg2CgrLMnPsS3oGn3T&index=6
+.. _How to curate your data: https://www.youtube.com/watch?v=22z-bUvjPO0&list=PLqGSwEO9VFw1L0gPg2CgrLMnPsS3oGn3T&index=1
+.. _How to search for the data needed: https://www.youtube.com/watch?v=Gunh_fFIHB4&list=PLqGSwEO9VFw1L0gPg2CgrLMnPsS3oGn3T&index=3
 .. _How to unlock the power of ODM with the advanced usage of APIs: https://www.youtube.com/watch?v=7bLXBLp6Cxs&list=PLqGSwEO9VFw0fuFPC7MD0CLJw7ZLmXiLk&index=1
 
 |

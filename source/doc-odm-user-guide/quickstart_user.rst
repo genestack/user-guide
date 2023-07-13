@@ -1,14 +1,14 @@
 User Quick Start Guide
 ++++++++++++++++++++++
 
-The first thing you see when logging in to Omics Data Manager is the Dashboard:
+The first thing you see when logging in to Open Data Manager is the Dashboard:
 
 
 Dashboard
 ---------
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 70 %
+   :scale: 30 %
    :align: center
 
 As a regular user the main tasks of interest are searching and browsing studies. Clicking on the **Browse studies**
@@ -18,7 +18,7 @@ Study Browser
 -------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
 By default all studies are shown that you have permission to see, but since you aren't expected to scroll through
@@ -26,11 +26,11 @@ thousands of studies there are, of course, search and filtering options to help 
 These are given in the left hand panel of the Study Browser and they allow you to search by study name, accession or
 by the text present in any metadata field.
 
-.. note:: Harmonising metadata texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage
+.. note:: Harmonising your study and sample data (metadata) texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage
 
-The search is also controlled vocabulary/ontology aware and will expand results to include synonyms, with optional extension to include child terms. You can use asterisks (*) to allow any positive number of wildcard characters: *ale will find "male" and "female" for example.
+The search is also controlled vocabulary/ontology aware and will expand results to include synonyms, with optional extension to include child terms. You can use asterisks (*) to allow any positive number of wildcard characters: "*ale" will find "male" and "female" for example. Click on the question mark next to the search bar to open **Help** with more details about advanced search functionality.
 
-The facets beneath the search bar allow you to filter down the results of a search based on the metadata fields that
+The facets beneath the search bar allow you to filter down the results of a search based on the samaple data (metadata) fields that
 are present in your results.
 
 To access more details about a study and to explore it further click the name of the study which will launch
@@ -41,7 +41,7 @@ Metadata Editor
 ---------------
 
 .. image:: images/quickstart_user_studymetainfoeditor.png
-   :scale: 70 %
+   :scale: 35 %
    :align: center
 
 The Metadata Editor allows you to see all the information about a study, the samples contained in the study and any

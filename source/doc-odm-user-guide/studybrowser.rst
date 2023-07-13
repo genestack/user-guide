@@ -9,12 +9,12 @@ Getting to the Study Browser
 Click 'Browse studies' on the dashboard after you sign in to launch the Study Browser.
 
 .. image:: images/quickstart_user_dashboard.png
-   :scale: 65 %
+   :scale: 35 %
    :align: center
 
 You can also use the short cut dock in the top lefthand corner of any window.
 
-.. image:: images/shortcut_dock.png
+.. image:: images/shortcut_1_37.png
    :scale: 75 %
    :align: center
 
@@ -23,7 +23,7 @@ Exploring the Study Browser
 ---------------------------
 
 .. image:: images/quickstart_user_studybrowser.png
-   :scale: 50 %
+   :scale: 35 %
    :align: center
 
 At the top of the window is the main search bar. In the text box you can search by the name of a study,
@@ -81,22 +81,21 @@ You can add facets to the filter panel by clicking the **New facet** button and 
 Results panel
 *************
 
-.. image:: images/studybrowser_resultspanel.png
+.. image:: images/quickstart_user_studybrowser.png
    :scale: 35 %
    :align: center
 
 The main panel in the study browser shows the results of your search, or if no search terms/filters have been applied, all studies that you have visibility of. The first column displays the name of the study, and you can click this to look at the study in more detail. It also lists information about which user created or imported the study, and the date.
 
-To the left of the study titles is a three dot link. Click this is open a menu that allows you to rename the study (if you have permission), copy the accession of the study, add it to your bookmarks, or view more information.
+To the left of the study titles is a three dot link. Click this to open a menu that allows you to share the study (if you have permission), export data, copy the accession of the study, add it to your bookmarks, or view more information.
 
 .. image:: images/three_dots_menu.png
    :scale: 35 %
    :align: center
 
 
-The next column shows the type of the study. If there is information about the general type of study, for example: 'expression profiling by high throughput sequencing', or 'RNA-seq of coding RNA from Single Cells' then it is displayed here.
 
-The third column is a summary of the metadata that is associated with the study. This displays information such as the organism, tissue, cell-type, disease and so on and is pulled straight from the metadata fields of the samples in the study.
+Under the study title there is a summary of the metadata that is associated with the study. This displays information such as the organism, tissue, cell-type, disease and so on and is pulled straight from the metadata fields of the samples in the study.
 
 You can hover over any name in the summary column and the name of the metadata field where the data comes from will appear.
 
@@ -104,12 +103,8 @@ You can hover over any name in the summary column and the name of the metadata f
    :scale: 50 %
    :align: center
 
-The next column tells us how many samples are present in each study.
+There is also information of who imported the study into ODM and when.
+To the right of the study title you can see how many samples are present in the study.
 
-The penultimate column shows what types of experimental signal data are present for each study.
-
-.. image:: images/studybrowser_signals.png
-   :scale: 50 %
-   :align: center
 
 And finally you can use the bookmark flag at the end to flag studies for viewing later.

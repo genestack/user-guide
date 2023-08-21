@@ -1,1 +1,7 @@
-curl -X POST "https://occam.genestack.com/frontend/rs/genestack/libraryCurator/default-released/libraries" -H  "accept: application/json" -H  "Genestack-API-Token: <token>" -H  "Content-Type: application/json" -d "{  \"link\":\"https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.libraries.tsv\"}"
+#  Copyright (c) 2011-2023 Genestack Limited
+#  All Rights Reserved
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF GENESTACK LIMITED
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+
+curl -X POST "https://odm-demos.genestack.com/frontend/rs/genestack/libraryCurator/default-released/libraries" -H  "accept: application/json" -H  "Genestack-API-Token: <token>" -H  "Content-Type: application/json" -d "{  \"link\":\"https://bio-test-data.s3.amazonaws.com/Research_Model_BR-205/Test_RM.libraries.tsv\"}"

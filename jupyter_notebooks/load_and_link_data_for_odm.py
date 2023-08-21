@@ -1,3 +1,9 @@
+#  Copyright (c) 2011-2023 Genestack Limited
+#  All Rights Reserved
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF GENESTACK LIMITED
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+
 # !/usr/bin/env python2.7
 # coding=utf-8
 
@@ -55,7 +61,7 @@ See https://odm-user-guide.readthedocs.io/en/latest/doc-odm-user-guide/import-da
   via -f or --flow_cytometry [URL] and -fm or --flow_cytometry_metadata [URL] respectively. 
 """ + green_text(u"* Optional. ") + u"""If you need to specify different from Default template, then provide template accession 
 via -tmpl or --template [ACCESSION],  Marked as "Default" template will be used, if no specific template accession specified. 
-""" + green_text(u"* Optional. ") + u"""You can set server address via -srv or--server (by default it is https://occam.genestack.com/)
+""" + green_text(u"* Optional. ") + u"""You can set server address via -srv or--server (by default it is https://odm-demos.genestack.com/)
 
 """ + green_text(u"* Note. ") + u"""Also you can provide several sample files and several signal files for each samples file.
 This feature works positionally. This mean you must set signal files parameters after corresponding samples file.
@@ -394,13 +400,13 @@ parser.add_argument("-t", "--token",
                     dest="TOKEN",
                     nargs="?",
                     help="API_TOKEN")
-parser.add_argument("-srv", "--server",
+parser.add_argument("-H", "--host", "-srv", "--server",
                     action="store",
-                    const="https://occam.genestack.com/",
-                    default="https://occam.genestack.com/",
+                    const="https://odm-demos.genestack.com/",
+                    default="https://odm-demos.genestack.com/",
                     nargs="?",
                     dest="SERVER",
-                    help="link on server (Occam is default)")
+                    help="URL of the instance data is being loaded to")
 parser.add_argument("-tmpl", "--template",
                     action="store",
                     const=None,

@@ -2,7 +2,7 @@ library(shiny)
 library(shinyStore)
 
 # -----------------------------  Constants  -----------------------------------
-# default_odm_host <- "occam.genestack.com"
+# default_odm_host <- "odm-demos.genestack.com"
 default_odm_host <- "inc-dev-6.genestack.com"
 # version <- "default-released"
 version <- "v0.1"

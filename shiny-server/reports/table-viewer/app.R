@@ -4,7 +4,7 @@ library(RCurl)
 
 #odm_host <- Sys.getenv("ODM_HOST")
 
-odm_host <- "occam.genestack.com"
+odm_host <- "odm-demos.genestack.com"
 token <- "c7eb6c07150e851141e19b8bf07a2ceaee9cfef2"
 #study_id <- "GSF1235133"
 #name <- 'GWAS Analysis'

@@ -86,7 +86,7 @@ Thuis script will create a study, uploads and links samples metadata to the stud
 of the newly created study.
 Example:
 ```bash
->python upload_local_study_to_odm.py --srv https://qa.magnum.genestack.com/ --study study_example_sftp.tsv --samples samples_example_sftp.tsv --token <token>
+>python upload_local_study_to_odm.py --host https://qa.magnum.genestack.com/ --study study_example_sftp.tsv --samples samples_example_sftp.tsv --token <token>
 GSF013296
 ```
 NB: The samples metadata still contains sftp urls at this point.
@@ -127,7 +127,7 @@ This script can take a long time to finish the execution and in case of network 
 it is safe to restart the script with the same arguments several times until there will be no sftp urls to process.
 
 ```
->python sftp2s3_odm.py --srv  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.qa.json --sftp ftp_cred.json --token <token> --field 'url'
+>python sftp2s3_odm.py --host  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.qa.json --sftp ftp_cred.json --token <token> --field 'url'
 There are 5 sftp urls in 5 samples to process
  processed: 5 of 5 samples, time=20.60 samples/sec=0.24 done=1.00 /pub/example/pocketftpSmall.png speed 4.21 kb/sb
 The number of changed sftp urls: 7
@@ -135,14 +135,14 @@ The number of changed sftp urls: 7
 ## Check s3 urls in the samples metadata in ODM
 The script `check_s3_urls.py` will inspect all the s3 urls in the specified columns and will check the existence of the corresponding files.
 ```
->python check_s3_urls.py --srv  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.qa.json  --token tknPublic123 --field 'url'
+>python check_s3_urls.py --host  https://qa.magnum.genestack.com/ --study_accession GSF013296 --s3 aws_cred.qa.json  --token tknPublic123 --field 'url'
 There are 5 s3 urls in 5 samples to process
  processed: 5 of 5 samples, time=1.89 samples/sec=2.64 done=1.00
 There are 5 s3 urls with total size 241273
 ```
 
 ```
->python check_s3_urls.py --srv  https://prod.magnum.genestack.com/ --study_accession GSF000652 --s3 aws_cred.prod.json  --token <token>
+>python check_s3_urls.py --host  https://prod.magnum.genestack.com/ --study_accession GSF000652 --s3 aws_cred.prod.json  --token <token>
 There are 2055 s3 urls in 2055 samples to process
  processed: 2055 of 2055 samples, time=743.78 samples/sec=2.76 done=1.00
 There are 2055 s3 urls with total size 498217096548 (475136.85Mb/464.00Gb)

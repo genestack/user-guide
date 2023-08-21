@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 
+#  Copyright (c) 2011-2023 Genestack Limited
+#  All Rights Reserved
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF GENESTACK LIMITED
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+
 import argparse
 import boto3
 import io
@@ -23,9 +29,9 @@ DEFAULT_FIELDS = ['Data Files / Raw', 'Data Files / Processed']
 
 EXAMPLE_TEXT = '''example:
 
- python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study_accession GSF000160 --s3 aws_cred.json --sftp ftp_cred.json --token <token>
+ python %(prog)s.py --host https://qa.magnum.genestack.com/ --study_accession GSF000160 --s3 aws_cred.json --sftp ftp_cred.json --token <token>
  
- python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study_accession GSF000160 --s3 aws_cred.json --sftp ftp_cred.json --token <token> --field 'Data Files / Raw' --field 'Data Files / Processed'
+ python %(prog)s.py --host https://qa.magnum.genestack.com/ --study_accession GSF000160 --s3 aws_cred.json --sftp ftp_cred.json --token <token> --field 'Data Files / Raw' --field 'Data Files / Processed'
  
  # where aws_cred.json is
  {
@@ -476,7 +482,7 @@ def main():
                                      epilog=EXAMPLE_TEXT,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
 
-    parser.add_argument('--srv', type=str, help='url of the server', required=True)
+    parser.add_argument('-H', '--host', '-srv', '--server', type=str, help='url of the server', required=True)
     parser.add_argument('--study_accession', type=str, help='Study accession', required=True)
     parser.add_argument('--s3', type=str, help='Path to the AWS credentials file', required=True)
     parser.add_argument('--sftp', type=str, help='Path to the SFTP credentials file, if needed', required=True)

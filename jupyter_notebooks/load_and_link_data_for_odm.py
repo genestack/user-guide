@@ -61,7 +61,7 @@ See https://odm-user-guide.readthedocs.io/en/latest/doc-odm-user-guide/import-da
   via -f or --flow_cytometry [URL] and -fm or --flow_cytometry_metadata [URL] respectively. 
 """ + green_text(u"* Optional. ") + u"""If you need to specify different from Default template, then provide template accession 
 via -tmpl or --template [ACCESSION],  Marked as "Default" template will be used, if no specific template accession specified. 
-""" + green_text(u"* Optional. ") + u"""You can set server address via -srv or--server (by default it is https://odm-demos.genestack.com/)
+""" + green_text(u"* Optional. ") + u"""You can set server address via -H or--host (by default it is https://odm-demos.genestack.com/)
 
 """ + green_text(u"* Note. ") + u"""Also you can provide several sample files and several signal files for each samples file.
 This feature works positionally. This mean you must set signal files parameters after corresponding samples file.

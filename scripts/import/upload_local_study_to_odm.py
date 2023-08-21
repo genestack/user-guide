@@ -1,5 +1,11 @@
 #!/usr/bin/python
 
+#  Copyright (c) 2011-2023 Genestack Limited
+#  All Rights Reserved
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF GENESTACK LIMITED
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+
 import argparse
 import csv
 import json
@@ -11,9 +17,9 @@ MULTI_VALUE_SEPARATOR = '|'
 
 EXAMPLE_TEXT = '''example:
 
- python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --token <token>
+ python %(prog)s.py --host https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --token <token>
  
- python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --template GSF000065 --token <token> 
+ python %(prog)s.py --host https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --template GSF000065 --token <token> 
  '''
 
 def get_rest_endpoint(host):
@@ -137,7 +143,7 @@ def main():
                                      description='Upload study and samples metadata to ODM',
                                      epilog=EXAMPLE_TEXT,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--srv', type=str, help='url of the server', required=True)
+    parser.add_argument('-H', '--host', '-srv', '--server', type=str, help='url of the server', required=True)
     parser.add_argument('--study', type=str, help='Path to the study TSV-file', required=True)
     parser.add_argument('--samples', type=str, help='Path to the samples TSV-file', required=False)
     parser.add_argument('--template', type=str, help='template accession (or default template will be selected)', required=False)

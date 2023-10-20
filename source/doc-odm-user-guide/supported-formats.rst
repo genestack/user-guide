@@ -199,6 +199,7 @@ Fixed fields are:
 - **CIGAR** : cigar string describing how to align an alternate allele to the reference allele
 - **DB** : dbSNP membership
 - **DP** : combined depth across samples, e.g. DP=154
+- **EFF** : functional effect of the genomic variant. Note the exact requirements for this field below.
 - **END** : end position of the variant described in this record (for use with symbolic alleles)
 - **H2** : membership in hapmap2
 - **H3** : membership in hapmap3
@@ -209,6 +210,29 @@ Fixed fields are:
 - **SOMATIC** : indicates that the record is a somatic mutation, for cancer genomics
 - **VALIDATED** : validated by follow-up experiment
 - **1000G** : membership in 1000 Genomes
+
+
+**EFF** filed format specification. Each piece of data within the EFF field is separated by a pipe symbol **\|**. If one piece of data is missing, two pipe symbols mark the absent data **\||**. Below are the components expected in the EFF field, listed in the order they should appear:
+
+- Variant Effect: An alphanumeric descriptor indicating the type of the variant effect. The rest of the fields follow in brackets **()**.
+- Effect Impact: Classifies the impact level of the variant, options include HIGH, MODERATE, LOW, or MODIFIER.
+- Functional Class: Indicates the functional class of the variant, with potential values being NONE, SILENT, MISSENSE, or NONSENSE.
+- Codon Change / Distance: Provides information on codon changes or the distance measure, accepts any character excluding the pipe symbol **\|**.
+- Amino Acid Change: Indicates the changes in the amino acid, formatted similarly to the Codon Change / Distance field.
+- Amino Acid Length (numeric): Specifies the length of the amino acid sequence with a numeric value.
+- Gene Name: Denotes the gene's name affected by the variant.
+- Transcript BioType: States the biotype of the affected transcript.
+- Gene Coding: Identifies whether the gene is CODING or NON_CODING.
+- Transcript ID: Provides the ID associated with the transcript affected by the variant.
+- Exon/Intron Rank (numeric): Assigns a numeric rank to the affected exon or intron.
+- Genotype Number (numeric): Indicates the genotype number with a numeric value.
+
+Examples:
+
+EFF=INTRON(MODIFIER|||||HPS4|retained_intron|CODING|ENST00000485842|4|1)
+EFF=STOP_GAINED(HIGH|NONSENSE|Cga/Tga|R241*|721|HPS4|protein_coding|CODING|ENST00000398141|8|1)
+EFF=STOP_GAINED(HIGH|NONSENSE|Cag/Tag|Q236*|749|NOC2L||CODING|NM_015658||)
+EFF=STOP_GAINED(HIGH|NONSENSE|Cag/Tag|Q141*|642|KLHL17||CODING|NM_198317||)
 
 The exact format of each INFO sub-field should be specified in the meta-information (as described above). Example for an INFO field: DP=154;MQ=52;H2. Keys without corresponding values are allowed in order to indicate group membership (e.g. H2 indicates the SNP is found in HapMap 2). It is not necessary to list all the properties that a site does NOT have, by e.g. H2=0. See below for additional reserved INFO sub-fields used to encode structural variants.
 

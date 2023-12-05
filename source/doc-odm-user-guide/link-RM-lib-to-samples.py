@@ -1,1 +1,1 @@
-curl -X POST "https://occam.genestack.com/frontend/rs/genestack/integrationCurator/default-released/integration/link/library/group/GSF1243211/to/sample/group/GSF1243205" -H  "accept: application/json" -H  "Genestack-API-Token: <token>" -d ""
+curl -X POST "<HOST>/frontend/rs/genestack/integrationCurator/default-released/integration/link/library/group/GSF1243211/to/sample/group/GSF1243205" -H  "accept: application/json" -H  "Genestack-API-Token: <token>" -d ""

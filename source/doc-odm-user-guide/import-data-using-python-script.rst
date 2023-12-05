@@ -22,7 +22,7 @@ You can optionally also provide:
 - The accession of a template to validate against rather than the default. Use
   ``--template <ACCESSION>`` to specify.
 - The server address if you want to apply the script to a different ODM server.
-  Use ``--server <ADDRESS>`` to specify.
+  Use ``--host <HOST>`` to specify.
 - Any data in the Tabular format (Data Frame) as a TSV, hosted at an HTTPS web address
 - Gene expression data in GCT_ format, hosted at an HTTPS web address
 - Gene expression metadata in TSV format, hosted at an HTTPS web address

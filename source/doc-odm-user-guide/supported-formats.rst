@@ -70,8 +70,9 @@ However, the current **BETA** version has some limitations on the file content. 
 - The system automatically identifies all feature columns as either string value or numeric value columns. If a column that should be numeric contains at least one value with a non-numeric character (except for the missing value coded as indicated above), it will be considered a string value column, disabling the ranged search capabilities.
 - Columns with measurements must contain only either numeric values or missing values (as specified above).
 - If your file contains more than one measurement per Sample (Library or Preparation), e.g., Fold Change and P-value, the system will automatically recognize it using the following criteria:
- - The column name contains a dot symbol as a separator between the Sample (Library or Preparation) name and the measurement type. If the column name contains more than one dot symbol (e.g., Sample1.p.value ), the first dot will be used as a separator.
- - All columns must contain the dot symbol.
+ - The column name contains a special symbol (or their combination) as a separator between the Sample (Library or Preparation) name and the measurement type. If the column name contains more than one measurement separator (e.g., Sample1.p.value contains two dots), the first one will be used for separation.
+ - The separator must be explicitly specified on data upload request either through API or GUI.
+ - All columns must contain the separator.
  - All samples (libraries or preparations) must have the same types of measurements in the file. For example, if you have three samples and measure Intensity and Quality Pass, then your file must have six columns named: Sample1.Intensity, Sample1.QualityPass, Sample2.Intensity, Sample2.QualityPass, Sample3.Intensity, Sample3.QualityPass.
 
 

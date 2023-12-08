@@ -151,8 +151,9 @@ In the subsequent dialog window, several parameters need to be defined:
 
 If your file includes more than one measurement per Sample (Library or Preparation), e.g., Fold Change and P-value, the system will automatically recognize it based on the following criteria:
 
-- Dot Symbol in Column Name: Each column name should contain a dot symbol. If a column name has more than one dot symbol (for instance, 'Sample1.p.value'), the first one will be used as a separator.
-- Presence of Dot Symbol: Every column must include a dot symbol.
+- Measurement Separator Symbol in Column Name: Each column name should contain a symbol (or symbols combination), separating sample (library or preparation) name from measurement type, e.g., it would be a dot for 'Sample1.p-value'. If a column name has more than one measurement separator (for instance, 'Sample1.p.value'), the first one will be used for separation.
+- Measurement Separator Symbol on upload request: The separator must be explicitly specified on data upload request either through API or GUI.
+- Presence of Measurement Separator Symbol: Every column must include a measurement separator.
 - Consistency of Measurement Types: All samples (libraries or preparations) must have the same types of measurements in the file. For example, if you have three samples and each has measurements for Intensity and Quality Pass, your file should have six columns named: 'Sample1.Intensity', 'Sample1.QualityPass', 'Sample2.Intensity', 'Sample2.QualityPass', 'Sample3.Intensity', 'Sample3.QualityPass'.
 
 In the second step, you'll need to choose the file you wish to upload. There are two options:

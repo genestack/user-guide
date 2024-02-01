@@ -1,5 +1,11 @@
 #!/usr/bin/python
 
+#  Copyright (c) 2011-2024 Genestack Limited
+#  All Rights Reserved
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF GENESTACK LIMITED
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+
 import argparse
 import requests
 
@@ -37,5 +43,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# python upload_study_and_samples.py --srv https://qa.magnum.genestack.com --study study_example_local.tsv --samples samples_example_local.final.tsv --aws_cred aws_cred.json --script_path '~/gits/work/unified/applications/odm-spots/scripts/dataloading/load_and_link_data_for_odm.py' --token tknPublic123

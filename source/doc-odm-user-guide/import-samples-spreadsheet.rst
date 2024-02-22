@@ -131,7 +131,7 @@ In the subsequent dialog window, several parameters need to be defined:
 
 - Gene variant (VCF) - VCF format.
 
-- Flow Cytometry - FCS format.
+- Flow Cytometry - FACS format.
 
 - Other - TSV format.
 

@@ -1,0 +1,13 @@
+name: Pre-commit
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  pre-commit:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.6
+      - uses: pre-commit/action@v3.0.1

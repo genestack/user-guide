@@ -20,7 +20,7 @@ Directory `set-up` contains a `Dockerfile`, list of R requirements (`requirement
 
 Directory `reports` contains a list of R Shiny web applications, one folder for one application. Main file of the application must be named as `app.R` to be recognised by `shiny-server`.
 
-### Run dockerized shiny-server 
+### Run dockerized shiny-server
 
 After downloading ... one should do the following steps.
 

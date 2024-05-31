@@ -13,10 +13,10 @@ MULTI_VALUE_SEPARATOR = '|'
 EXAMPLE_TEXT = '''example:
 
  python %(prog)s.py --srv https://odm-demos.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --token <token>
- 
+
  python %(prog)s.py --srv https://odm-demos.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --expression expression.json --token <token>
- 
- python %(prog)s.py --srv https://odm-demos.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --template GSF000065 --token <token> 
+
+ python %(prog)s.py --srv https://odm-demos.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --template GSF000065 --token <token>
  '''
 
 DEFAULT_GCT_100_LINK = 'https://bio-test-data.s3.amazonaws.com/public/dummy/dummy100.gct'

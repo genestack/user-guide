@@ -61,7 +61,7 @@ Still unsure? Learn more by watching our videos below.
 Guide for data consumers
 ------------------------
 
-Those who are data all-consuming have one goal in mind when using ODM - generating that key insight! 
+Those who are data all-consuming have one goal in mind when using ODM - generating that key insight!
 
 Want to know more? Learn more by watching our videos below.
 

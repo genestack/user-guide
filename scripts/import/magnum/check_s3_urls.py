@@ -17,7 +17,7 @@ DEFAULT_FIELDS = ['Data Files / Raw', 'Data Files / Processed']
 EXAMPLE_TEXT = '''example:
 
  python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study_accession GSF000160 --s3 aws_cred.json --token <token>
- 
+
   python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study_accession GSF000160 --s3 aws_cred.json --token <token> --field 'Data Files / Raw' --field 'Data Files / Processed'
 
  # where aws_cred.json is
@@ -182,7 +182,7 @@ def main():
     print('There are {} s3 urls in {} samples to process'.format(len(all_s3_links), total))
     if len(all_s3_links) == 0:
         return
-    
+
     start_time = time.perf_counter()
     total_size = 0
     for index, sample_record in enumerate(samples):

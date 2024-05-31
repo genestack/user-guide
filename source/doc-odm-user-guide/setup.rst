@@ -99,6 +99,6 @@ You can also delete the created group by clicking on **Remove group**. If a grou
    :scale: 40 %
    :align: center
 
-In the dialog that appears, you'll be prompted for the new member email. 
+In the dialog that appears, you'll be prompted for the new member email.
 
 By default new users are added to the group as group members. You will be able to change their role to group admin.

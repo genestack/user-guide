@@ -107,18 +107,18 @@ get_samples_metadata <- function(odm_sample_api, study_id) {
   #     page_offset = offset,
   #     page_limit = limit
   #   )
-  # 
+  #
   #   data_frames <- c(data_frames, list(response$content$data))
   #   offset <- offset + limit
-  # 
+  #
   #   if (offset >= response$content$meta$pagination$total) {
   #     break
   #   }
   # }
-  # 
+  #
   # # Bind all data.frames together.
   # metadata <- rbindlist(data_frames, fill = TRUE)
-  
+
   # response <- integrationCurator::OmicsQueriesApi_search_samples(
   #     id = study_id,
   #     page_offset = offset,
@@ -126,7 +126,7 @@ get_samples_metadata <- function(odm_sample_api, study_id) {
   # )
   # metadata = response$content$data
   # print(metadata)
-  
+
   response <- integrationCurator::OmicsQueriesApi_search_samples(
       study_filter = paste0('genestack:accession=',study_id),
       page_limit = limit
@@ -155,20 +155,20 @@ get_samples_metadata <- function(odm_sample_api, study_id) {
   # Remove empty/NA columns
   metadata <- metadata[,colSums(is.na(metadata))<nrow(metadata)]
   metadata <- metadata[,colSums(metadata != "", na.rm=TRUE) != 0]
-  
+
   # Replace <NA> values with strings "No value". That allows to simplify keys classification and filtering logic.
   metadata[is.na(metadata)] <- no_value
   metadata[metadata == ""]  <- no_value
-  
+
   # Remove columns where all values are the same.
   selector <- apply(metadata, 2, function(column) length(unique(column)) > 1)
   metadata[, selector]
-  
+
   print(nrow(metadata))
-  
+
   metadata
-  
-  
+
+
 }
 
 # Transform metadata key into shiny selectize input id (filter).
@@ -582,12 +582,12 @@ server <- function(input, output, session) {
   })
 
   get_keys_classification <- reactive({
-      
+
       metadata <- samples_metadata()
       print("get_keys_classification")
       keys_blacklist <- c("genestack:accession", "Sample Source ID", "Arvados URL", "groupId", "genestack:name", "Name")
       keys <- setdiff(names(metadata), keys_blacklist)
-    
+
       keys_numeric <- Filter(function(key) {
         notna <- metadata[metadata[, key] != no_value, key]
         length(notna) > 0 & !anyNA(suppressWarnings(as.numeric(notna)))
@@ -597,7 +597,7 @@ server <- function(input, output, session) {
       keys_categorical <- Filter(function(key) {
           length(unique(metadata[, key])) < min(50, nrow(metadata)-1) # don't want to show too many vaues
       }, keys_categorical)
-      
+
       keys_groups <- Filter(function(key) {
         length(unique(metadata[, key])) > 1
       }, keys_categorical)
@@ -607,7 +607,7 @@ server <- function(input, output, session) {
           "groups"  = keys_groups,
           "numeric" = keys_numeric
       )
-      
+
       return(keys_classification)
   })
 

@@ -18,7 +18,7 @@ ODM supports the import of studies, samples, and data in tabular format, or the 
 
 If your study doesn't already have samples metadata with linked data (for example you have just created a new study) it is possible to import a spreadsheet of samples metadata through the interface. This functionality is available in the Metadata Editor, on the samples tab.
 
-The data uploading happens in Metadata Editor when you open (or create) a Study. 
+The data uploading happens in Metadata Editor when you open (or create) a Study.
 
 Importing Sample Information (Metadata)
 ---------------------------------------
@@ -137,11 +137,11 @@ In the subsequent dialog window, several parameters need to be defined:
 
 .. note:: In the BETA the list of the Data Type options is fixed. Make sure you chose the right data class for your dataset. The ability to add custom data classes as well as change the selected data class for the uploaded data will be added in future releases.
 
-**Link With**: Choose the entity you wish to link your data to. For instance, if you're uploading a transcriptomics file with gene expression measurements for each sample, you should link your data to the samples. 
+**Link With**: Choose the entity you wish to link your data to. For instance, if you're uploading a transcriptomics file with gene expression measurements for each sample, you should link your data to the samples.
 
 .. note:: In the BETA version, you need to have sample information (metadata) created/uploaded on the Samples tab to enable data import. If no Libraries or Preparations exist for the Study, 'Sample' is the only available option.
 
-**Link By**: Choose the ID column at the Sample (Library, Preparation) tab that will be used to identify Sample (Library, Preparation) names in the uploaded file. 
+**Link By**: Choose the ID column at the Sample (Library, Preparation) tab that will be used to identify Sample (Library, Preparation) names in the uploaded file.
 
 .. note:: In the BETA version, the only option to link your data is through the 'Sample Source ID' column you must provide at the Sample (Library or Preparation tab). To link by any Sample/Library/Preparion metadata column, you'll need to use the API.
 

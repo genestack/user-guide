@@ -30,7 +30,7 @@ server <- function(input, output, session) {
     query <- getQueryString()
     query$metadataKey
   })
-  
+
   output$title_panel <- renderText({metadata_key()})
   output$metainfo <- renderTable( {
     client <- studyCurator::ApiClient$new(host    = odm_host,

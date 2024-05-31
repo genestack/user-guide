@@ -1,0 +1,17 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+    - id: check-yaml
+      args: [--allow-multiple-documents]
+      exclude: 'templates/'
+    - id: trailing-whitespace
+    - id: check-json
+    - id: check-toml
+    - id: check-merge-conflict
+    - id: end-of-file-fixer
+    # - id: detect-private-key
+    - id: check-case-conflict
+#    - id: mixed-line-ending
+#      args:
+#      - --fix=lf

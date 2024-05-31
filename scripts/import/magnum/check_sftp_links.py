@@ -17,9 +17,9 @@ DEFAULT_FIELDS = ['Data Files / Raw', 'Data Files / Processed']
 EXAMPLE_TEXT = '''example:
 
  python %(prog)s.py --metadata samples.tsv --sftp sftp_cred.json
- 
+
  python %(prog)s.py --metadata samples.tsv --sftp sftp_cred.json --field 'Data Files / Raw' --field 'Data Files / Processed'
- 
+
 # sftp_cred.json is
 {
     "username": "demo",

@@ -12,7 +12,7 @@ It is expected that study metadata contains `Study Source ID`, `Study Source`, `
 
 Example:
 ```
->cat 300460.study.tsv 
+>cat 300460.study.tsv
 Study Source	Study Source ID	Study Description	Study Type
 Source	Study ID 1	Just an example	Unknown
 ```
@@ -22,7 +22,7 @@ using `|` as a delimiter. By default we assume that sftp links for the raw data 
 
 Example:
 ```
->cat 300460.samples.10.tsv 
+>cat 300460.samples.10.tsv
 Sample Source ID	Sample Source	Data Files / Raw
 A1	300460	sftp://185.106.248.149:2222/300460/trimming/A1/R1.fastq.gz
 A2	300460	sftp://185.106.248.149:2222/300460/trimming/A2/R1.fastq.gz
@@ -98,7 +98,7 @@ There are two S3 buckets: `gs-saas-magnum-qa` and `gs-saas-magnum-qa`. It make s
 two separated files.
 
 ```bash
-cat aws_cred.qa.json 
+cat aws_cred.qa.json
 {
 	"s3_bucket_name": "gs-saas-magnum-qa",
 	"aws_server_public_key": "<Public Key>",
@@ -108,7 +108,7 @@ cat aws_cred.qa.json
 ```
 
 ```bash
-cat aws_cred.prod.json 
+cat aws_cred.prod.json
 {
 	"s3_bucket_name": "gs-saas-magnum-prod",
 	"aws_server_public_key": "<Public Key>",

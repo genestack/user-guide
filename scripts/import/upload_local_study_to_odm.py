@@ -12,8 +12,8 @@ MULTI_VALUE_SEPARATOR = '|'
 EXAMPLE_TEXT = '''example:
 
  python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --token <token>
- 
- python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --template GSF000065 --token <token> 
+
+ python %(prog)s.py --srv https://qa.magnum.genestack.com/ --study study_metadata.tsv --samples samples_metadata.tsv --template GSF000065 --token <token>
  '''
 
 def get_rest_endpoint(host):

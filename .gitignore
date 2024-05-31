@@ -6,3 +6,13 @@ shiny-server/set-up/ODM-API-Clients/*
 _build/
 *.Rhistory
 .Rproj.user
+
+venv
+build/
+dist/
+
+# Earthly stuff
+.env
+.env-woq
+.arg
+.secret

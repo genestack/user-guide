@@ -29,7 +29,13 @@ They allow you to search by study name, accession, or any metadata field that co
 !!! note 
     Harmonising your study and sample data (metadata) texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage.
 
-The search is also controlled vocabulary/ontology aware and will expand results to include synonyms, with optional extension to include child terms. You can use asterisks (*) to allow any positive number of wildcard characters: "*ale" will find "male" and "female" for example. Click on the question mark next to the search bar to open **Help** with more details about advanced search functionality.
+The search is also controlled vocabulary/ontology aware and will expand results to include synonyms, with optional extension to include child terms. You can use asterisks (*) to allow any positive number of wildcard characters: "*ale" will find "male" and "female" for example. 
+
+.. image:: images/quickstart_user_search.png
+   :scale: 30 %
+   :align: center
+
+Click on the question mark next to the search bar to open **Help** with more details about advanced search functionality.
 
 The facets beneath the search bar allow you to filter down the results of a search based on the samaple data (metadata) fields that
 are present in your results.

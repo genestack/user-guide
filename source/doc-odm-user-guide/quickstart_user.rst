@@ -27,7 +27,6 @@ You can find these options in the left-hand panel of the Study Browser.
 They allow you to search by study name, accession, or any metadata field that contains relevant text.
 
 !!! note
-
     Harmonising your study and sample data (metadata) texts by using controlled vocabularies and 
     ontologies helps searches find all relevant data by preventing missed results due to          
     misspellings or non-standard term usage.

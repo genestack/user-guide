@@ -1,7 +1,7 @@
 User Quick Start Guide
 ++++++++++++++++++++++
 
-The first thing you see when logging in to Open Data Manager is the Dashboard:
+When you log in to Open Data Manager, you will see the Dashboard, which provides options to create a new study, browse existing studies, and set up templates. Additionally, it includes links to tutorials, documentation, videos, and API documentation.
 
 
 Dashboard
@@ -21,10 +21,10 @@ Study Browser
    :scale: 35 %
    :align: center
 
-By default all studies are shown that you have permission to see, but since you aren't expected to scroll through
-thousands of studies there are, of course, search and filtering options to help you find studies of interest.
-These are given in the left hand panel of the Study Browser and they allow you to search by study name, accession or
-by the text present in any metadata field.
+By default, the system displays all studies that you have permission to access.
+However, since there could be thousands of studies, it provides search and filtering options to help you find the ones that you are interested in. 
+You can find these options in the left-hand panel of the Study Browser. 
+They allow you to search by study name, accession, or any metadata field that contains relevant text.
 
 .. note:: Harmonising your study and sample data (metadata) texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage
 

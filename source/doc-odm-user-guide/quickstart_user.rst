@@ -26,8 +26,8 @@ However, since there could be thousands of studies, it provides search and filte
 You can find these options in the left-hand panel of the Study Browser. 
 They allow you to search by study name, accession, or any metadata field that contains relevant text.
 
-!!! note
-    Harmonising your study and sample data (metadata) texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage.
+    !!! note
+        Harmonising your study and sample data (metadata) texts by using controlled vocabularies and ontologies helps searches find all relevant data by preventing missed results due to misspellings or non-standard term usage.
 
 The search is also controlled vocabulary/ontology aware and will expand results to include synonyms, with optional extension to include child terms. You can use asterisks (*) to allow any positive number of wildcard characters: "*ale" will find "male" and "female" for example. Click on the question mark next to the search bar to open **Help** with more details about advanced search functionality.
 

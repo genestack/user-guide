@@ -21,7 +21,7 @@ def delete_study(study_accession, srv, token):
     url_authenticate = app_endpoint + 'signin/authenticateByApiToken'
     s = requests.Session()
     s.post(url_authenticate, json=[token])
-    url_delete_object = app_endpoint + 'arvados-importer/wipeStudy'
+    url_delete_object = app_endpoint + 'study-metainfo-editor/wipeStudy'
     header = {'Genestack-API-Token': token}
     response = s.post(url=url_delete_object, json=[study_accession], headers=header)
     print(response.status_code)
